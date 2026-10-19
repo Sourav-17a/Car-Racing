@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Nitro Horizon 3D &mdash; Arcade Car Racing</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="relative w-full h-full overflow-hidden select-none">
+
+  <!-- 3D Viewport Container -->
+  <div id="canvas-container"></div>
+
+  <!-- Floating Dynamic Feedback Container -->
+  <div id="popup-container" class="pointer-events-none fixed inset-x-0 top-24 z-30 flex flex-col items-center gap-1"></div>
+
+  <!-- Top Navigation & Status Bar -->
+  <header class="fixed top-0 inset-x-0 z-20 p-2.5 sm:p-4 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
+    <!-- Left Brand & Banked Coins -->
+    <div class="flex items-center gap-2 pointer-events-auto">
+      <button id="btn-home-menu" type="button" class="glass-pill px-3 py-1.5 rounded-xl flex items-center gap-2 hover:bg-slate-800/90 transition shadow-lg" title="Main Menu">
+        <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse"></span>
+        <span class="font-extrabold tracking-tight text-sm sm:text-base bg-gradient-to-r from-amber-300 via-orange-400 to-rose-400 bg-clip-text text-transparent">NITRO HORIZON 3D</span>
+      </button>
+
+      <div class="glass-pill px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow-lg">
+        <span class="text-amber-400 text-base leading-none">&#9733;</span>
+        <span class="text-xs text-slate-300 font-medium hidden sm:inline">Coins:</span>
+        <span id="hud-total-coins" class="font-bold text-amber-300 text-sm sm:text-base tabular-nums">0</span>
+      </div>
+    </div>
+
+    <!-- Center Race Progress Bar (Visible during race) -->
+    <div id="hud-race-progress-wrap" class="hidden flex-1 max-w-xs sm:max-w-md mx-auto glass-pill px-3 py-1.5 rounded-xl items-center gap-2.5 shadow-lg">
+      <span id="hud-level-badge" class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-400/30 whitespace-nowrap">LVL 1</span>
+      <div class="flex-1 h-2.5 bg-slate-800 rounded-full overflow-hidden border border-slate-700">
+        <div id="hud-progress-fill" class="h-full bg-gradient-to-r from-emerald-400 via-sky-400 to-amber-400 transition-all duration-100" style="width: 0%"></div>
+      </div>
+      <span id="hud-progress-text" class="text-xs font-bold text-slate-200 tabular-nums w-10 text-right">0%</span>
+    </div>
+
+    <!-- Right Quick Actions -->
+    <div class="flex items-center gap-1.5 sm:gap-2 pointer-events-auto">
+      <button id="btn-open-garage" type="button" class="glass-pill px-2.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-200 hover:bg-slate-800/90 hover:text-amber-300 transition flex items-center gap-1.5 shadow-lg">
+        <span>&#128663;</span>
+        <span class="hidden sm:inline">Garage</span>
+      </button>
+      <button id="btn-open-levels" type="button" class="glass-pill px-2.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-200 hover:bg-slate-800/90 hover:text-sky-300 transition flex items-center gap-1.5 shadow-lg">
+        <span>&#127937;</span>
+        <span class="hidden sm:inline">Levels</span>
+      </button>
+      <button id="btn-toggle-pause" type="button" class="hidden glass-pill px-2.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-200 hover:bg-slate-800/90 transition shadow-lg" title="Pause Game (P)">
+        <span id="pause-icon">&#10074;&#10074;</span>
+      </button>
+      <button id="btn-toggle-sound" type="button" class="glass-pill px-2.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-200 hover:bg-slate-800/90 transition shadow-lg" title="Toggle Sound Effects">
+        <span id="sound-icon">&#128266;</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- In-Race Telemetry HUD (Top Sub-bar) -->
+  <div id="hud-telemetry" class="hidden fixed top-14 sm:top-16 inset-x-0 z-10 px-3 sm:px-6 flex items-center justify-between pointer-events-none">
+    <!-- Left: Hearts / Shield & Race Coins -->
+    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-1.5 sm:gap-3">
+      <div class="glass-pill px-3 py-1 rounded-xl flex items-center gap-1.5">
+        <span class="text-xs text-slate-400 font-semibold uppercase">Armor</span>
+        <div id="hud-hearts" class="flex items-center gap-1 text-rose-400 text-sm sm:text-base"></div>
+        <span id="hud-shield-tag" class="hidden ml-1 px-1.5 py-0.5 text-[10px] font-bold bg-cyan-500/30 text-cyan-200 rounded border border-cyan-400/40">SHIELD</span>
+      </div>
+      <div class="glass-pill px-3 py-1 rounded-xl flex items-center gap-2">
+        <span class="text-xs text-slate-400 font-semibold uppercase">Run Coins</span>
+        <span id="hud-race-coins" class="text-sm font-extrabold text-amber-300 tabular-nums">+0</span>
+      </div>
+    </div>
+
+    <!-- Right: Speedometer & Nitro Bar -->
+    <div class="flex flex-col items-end gap-1.5">
+      <div class="glass-pill px-3 py-1 rounded-xl flex items-baseline gap-1.5">
+        <span id="hud-speed" class="text-lg sm:text-2xl font-black text-white tabular-nums">0</span>
+        <span class="text-[11px] font-bold text-sky-400 uppercase">KM/H</span>
+      </div>
+      <div class="glass-pill px-2.5 py-1 rounded-xl flex items-center gap-2 w-36 sm:w-44">
+        <span class="text-[10px] font-extrabold uppercase tracking-wider text-cyan-300">NITRO</span>
+        <div class="flex-1 h-2 bg-slate-800 rounded-full overflow-hidden">
+          <div id="hud-nitro-fill" class="h-full bg-gradient-to-r from-cyan-400 to-blue-500 transition-all duration-75" style="width: 100%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- On-Screen Touch / Click Driving Controls (Visible during race) -->
+  <div id="hud-controls" class="hidden fixed bottom-3 sm:bottom-5 inset-x-0 z-20 px-3 sm:px-8 flex items-end justify-between pointer-events-none">
+    <!-- Left / Right Steering Buttons -->
+    <div class="flex items-center gap-2.5 sm:gap-3 pointer-events-auto">
+      <button id="btn-steer-left" type="button" class="control-btn glass-panel w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex flex-col items-center justify-center text-white shadow-xl border border-slate-600/60" aria-label="Steer Left">
+        <span class="text-2xl sm:text-3xl leading-none">&#9664;</span>
+        <span class="text-[10px] font-bold text-slate-300 mt-1">LEFT</span>
+      </button>
+      <button id="btn-steer-right" type="button" class="control-btn glass-panel w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex flex-col items-center justify-center text-white shadow-xl border border-slate-600/60" aria-label="Steer Right">
+        <span class="text-2xl sm:text-3xl leading-none">&#9654;</span>
+        <span class="text-[10px] font-bold text-slate-300 mt-1">RIGHT</span>
+      </button>
+    </div>
+
+    <!-- Center Helper Hint (Desktop) -->
+    <div class="hidden md:flex flex-col items-center gap-1 glass-pill px-3.5 py-1.5 rounded-xl text-xs text-slate-300 pointer-events-auto">
+      <div><span class="font-bold text-white">A / D</span> or <span class="font-bold text-white">&larr; / &rarr;</span> Steer &bull; <span class="font-bold text-cyan-300">SPACE / W</span> Nitro &bull; <span class="font-bold text-amber-300">S</span> Brake</div>
+    </div>
+
+    <!-- Right Brake & Nitro Buttons -->
+    <div class="flex items-center gap-2.5 sm:gap-3 pointer-events-auto">
+      <button id="btn-brake" type="button" class="control-btn glass-panel w-14 h-16 sm:w-16 sm:h-20 rounded-2xl flex flex-col items-center justify-center text-rose-300 shadow-xl border border-rose-500/40" aria-label="Brake">
+        <span class="text-lg sm:text-xl leading-none">&#9660;</span>
+        <span class="text-[10px] font-bold mt-1">BRAKE</span>
+      </button>
+      <button id="btn-nitro" type="button" class="control-btn glass-panel w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex flex-col items-center justify-center text-cyan-300 shadow-xl border border-cyan-400/60 bg-cyan-950/50" aria-label="Nitro Boost">
+        <span class="text-2xl sm:text-3xl leading-none">&#9889;</span>
+        <span class="text-[10px] font-extrabold mt-1">NITRO</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- MAIN OVERLAY CONTAINER (Menus, Garage, Level Select, Results) -->
+  <div id="overlay-screen" class="fixed inset-0 z-30 flex items-center justify-center p-3 sm:p-6 pointer-events-auto">
+
+    <!-- 1. MAIN HUB / DASHBOARD PANEL -->
+    <div id="panel-main" class="glass-panel w-full max-w-4xl rounded-3xl p-5 sm:p-7 shadow-2xl border border-slate-700/80 flex flex-col gap-5 max-h-[90vh] overflow-y-auto custom-scroll">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-700/70 pb-4">
+        <div>
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-xs font-bold mb-1">
+            <span>3D ARCADE RACING</span>
+            <span>&bull;</span>
+            <span>5 LEVELS &amp; 5 CARS</span>
+          </div>
+          <h1 class="text-2xl sm:text-4xl font-black tracking-tight text-white">NITRO HORIZON 3D</h1>
+          <p class="text-xs sm:text-sm text-slate-300 mt-0.5">Steer through traffic, collect spinning gold coins, fire nitro boosts, and unlock faster 3D rides.</p>
+        </div>
+        <div class="flex items-center gap-2 self-start sm:self-center">
+          <button id="btn-claim-bonus" type="button" class="px-3 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/40 text-amber-300 text-xs font-bold transition flex items-center gap-1.5">
+            <span>+100 Free Coins</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Current Selection Summary Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Selected Car Preview Card -->
+        <div class="bg-slate-900/75 border border-slate-700/80 rounded-2xl p-4 flex flex-col justify-between gap-3">
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <span class="text-[11px] font-bold uppercase tracking-wider text-amber-400">Selected Car</span>
+              <h2 id="menu-car-name" class="text-lg sm:text-xl font-extrabold text-white mt-0.5">Street Cruiser</h2>
+              <p id="menu-car-desc" class="text-xs text-slate-400 mt-0.5">Balanced turbo coupe built for smooth cornering.</p>
+            </div>
+            <span id="menu-car-badge" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">OWNED</span>
+          </div>
+
+          <!-- Stats Bars -->
+          <div class="space-y-2 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="w-20 text-slate-400 font-medium">Top Speed</span>
+              <div class="flex-1 h-2 bg-slate-800 rounded-full overflow-hidden">
+                <div id="stat-speed-bar" class="h-full bg-amber-400 rounded-full" style="width: 60%"></div>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-20 text-slate-400 font-medium">Handling</span>
+              <div class="flex-1 h-2 bg-slate-800 rounded-full overflow-hidden">
+                <div id="stat-handling-bar" class="h-full bg-sky-400 rounded-full" style="width: 70%"></div>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-20 text-slate-400 font-medium">Coin Magnet</span>
+              <div class="flex-1 h-2 bg-slate-800 rounded-full overflow-hidden">
+                <div id="stat-magnet-bar" class="h-full bg-emerald-400 rounded-full" style="width: 50%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-slate-800">
+            <div class="flex items-center gap-1.5">
+              <button id="btn-prev-car" type="button" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold transition">&larr; Prev</button>
+              <button id="btn-next-car" type="button" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold transition">Next &rarr;</button>
+            </div>
+            <button id="btn-car-action" type="button" class="px-3.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs transition">
+              Equipped
+            </button>
+          </div>
+        </div>
+
+        <!-- Selected Level Preview Card -->
+        <div class="bg-slate-900/75 border border-slate-700/80 rounded-2xl p-4 flex flex-col justify-between gap-3">
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <span class="text-[11px] font-bold uppercase tracking-wider text-sky-400">Selected Track</span>
+              <h2 id="menu-level-name" class="text-lg sm:text-xl font-extrabold text-white mt-0.5">1. Sunny Coastline</h2>
+              <p id="menu-level-desc" class="text-xs text-slate-400 mt-0.5">Bright coastal highway with palm trees and light breeze.</p>
+            </div>
+            <span id="menu-level-distance" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-sky-500/20 text-sky-300 border border-sky-400/30">1,000m</span>
+          </div>
+
+          <!-- Level Quick Pills -->
+          <div id="menu-level-pills" class="grid grid-cols-5 gap-1.5 pt-1"></div>
+
+          <div class="flex items-center justify-between text-xs text-slate-300 pt-2 border-t border-slate-800">
+            <span>Reward Multiplier: <strong id="menu-level-mult" class="text-amber-300">1.0x Coins</strong></span>
+            <span>Traffic: <strong id="menu-level-traffic" class="text-sky-300">Easy</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Launch Controls -->
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-1">
+        <label class="flex items-center gap-2.5 text-xs sm:text-sm text-slate-300 cursor-pointer bg-slate-900/60 px-3.5 py-2.5 rounded-xl border border-slate-800">
+          <input id="chk-auto-accel" type="checkbox" checked class="w-4 h-4 accent-emerald-400 rounded cursor-pointer" />
+          <span><strong>Easy Cruise Control:</strong> Auto-accelerate so you only need to steer &amp; boost</span>
+        </label>
+
+        <button id="btn-start-race" type="button" class="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-400 via-teal-400 to-sky-500 hover:from-emerald-300 hover:to-sky-400 text-slate-950 font-black text-base sm:text-lg tracking-wide shadow-xl shadow-emerald-500/20 transition transform hover:scale-[1.01] active:scale-95">
+          &#9654; START RACE
+        </button>
+      </div>
+    </div>
+
+    <!-- 2. GARAGE MODAL PANEL -->
+    <div id="panel-garage" class="hidden glass-panel w-full max-w-4xl rounded-3xl p-5 sm:p-7 shadow-2xl border border-slate-700/80 flex-col gap-4 max-h-[90vh] overflow-y-auto custom-scroll">
+      <div class="flex items-center justify-between border-b border-slate-700/70 pb-3">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-black text-white">3D CAR GARAGE</h2>
+          <p class="text-xs sm:text-sm text-slate-300">Spend race coins to unlock faster cars with stronger coin magnets.</p>
+        </div>
+        <button id="btn-close-garage" type="button" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-bold transition">
+          &larr; Back
+        </button>
+      </div>
+
+      <div id="garage-cars-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5"></div>
+    </div>
+
+    <!-- 3. LEVEL SELECT MODAL PANEL -->
+    <div id="panel-levels" class="hidden glass-panel w-full max-w-4xl rounded-3xl p-5 sm:p-7 shadow-2xl border border-slate-700/80 flex-col gap-4 max-h-[90vh] overflow-y-auto custom-scroll">
+      <div class="flex items-center justify-between border-b border-slate-700/70 pb-3">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-black text-white">SELECT RACING STAGE</h2>
+          <p class="text-xs sm:text-sm text-slate-300">Choose any stage to play immediately or progress from Level 1 to Level 5.</p>
+        </div>
+        <button id="btn-close-levels" type="button" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-bold transition">
+          &larr; Back
+        </button>
+      </div>
+
+      <div id="levels-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5"></div>
+    </div>
+
+    <!-- 4. PAUSE / LEVEL COMPLETE / CRASH RESULT PANEL -->
+    <div id="panel-result" class="hidden glass-panel w-full max-w-md rounded-3xl p-6 shadow-2xl border border-slate-700/80 flex-col items-center text-center gap-4">
+      <div id="result-badge" class="px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+        STAGE COMPLETE
+      </div>
+      <h2 id="result-title" class="text-2xl sm:text-3xl font-black text-white">Victory Lap!</h2>
+      <p id="result-subtitle" class="text-xs sm:text-sm text-slate-300">You crossed the finish line in style.</p>
+
+      <div class="w-full bg-slate-900/80 border border-slate-800 rounded-2xl p-4 grid grid-cols-3 gap-2 text-center">
+        <div>
+          <div class="text-[11px] text-slate-400 font-semibold uppercase">Distance</div>
+          <div id="result-distance" class="text-base sm:text-lg font-extrabold text-white mt-0.5">1,000m</div>
+        </div>
+        <div>
+          <div class="text-[11px] text-slate-400 font-semibold uppercase">Coins Earned</div>
+          <div id="result-coins" class="text-base sm:text-lg font-extrabold text-amber-300 mt-0.5">+45</div>
+        </div>
+        <div>
+          <div class="text-[11px] text-slate-400 font-semibold uppercase">Bank Total</div>
+          <div id="result-bank" class="text-base sm:text-lg font-extrabold text-emerald-300 mt-0.5">145</div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-2.5 w-full pt-1">
+        <button id="btn-resume-race" type="button" class="hidden flex-1 py-3 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-sm transition">
+          Resume Race
+        </button>
+        <button id="btn-next-level" type="button" class="hidden flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-400 to-sky-400 hover:from-emerald-300 hover:to-sky-300 text-slate-950 font-extrabold text-sm transition">
+          Next Level &rarr;
+        </button>
+        <button id="btn-retry-race" type="button" class="flex-1 py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-sm border border-slate-600 transition">
+          Replay Stage
+        </button>
+        <button id="btn-result-menu" type="button" class="flex-1 py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-sm border border-slate-700 transition">
+          Main Menu
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="js/game.js"></script>
+</body>
+</html>
