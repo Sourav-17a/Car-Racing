@@ -28,6 +28,12 @@ Play directly in your desktop or mobile browser at:
   - Each car features a dedicated braking power rating (`car.braking`).
   - High-tier cars with carbon-ceramic brakes slow down significantly faster for aggressive late-braking maneuvers.
   - Full visual details: visible metallic brake rotor discs and bright Brembo brake calipers behind the alloy wheels, plus illuminated brake lights when decelerating.
+- **Real-World Enhanced Graphics Pipeline**:
+  - **PBR Automotive Clearcoat Paint**: Vehicles feature multi-layer `THREE.MeshPhysicalMaterial` with realistic metallic base coats, crystal-clear reflective clearcoat (`clearcoat: 1.0`), tinted automotive glass, and diamond-cut alloy wheels.
+  - **Real-Time Soft Shadows**: Powered by `THREE.PCFSoftShadowMap` with 2048x2048 high-resolution shadow maps cast by a warm directional sun onto the asphalt and terrain.
+  - **Procedural High-Res Asphalt & Curbs**: 512x512 procedural tarmac with fine aggregate mineral specks, dark rubber racing tire tracks along all three lanes, and high-contrast red/white checkered rumble curbs.
+  - **Vehicle Weight & Suspension Dynamics**: Authentic chassis weight transfer with rear squat during acceleration/nitro, forward nose dive on hard braking, cornering body roll, front wheel turn angles, and visceral high-speed engine vibration (> 115 km/h).
+  - **Cinematic Atmosphere & High-Speed FX**: Volumetric projector headlight beams, dynamic active glowing brake lights, tire smoke puffs emitted on heavy braking, aerodynamic speed wind streaks, modern highway electronic gantries, and curved streetlights.
 - **Detailed 3D Car Models**:
   - Real-world signature styling cues: BMW dual-kidney grilles, Bugatti horseshoe grille and C-line curve, Audi carbon side blades, Porsche GT3 RS swan-neck wing, Mustang racing stripes, and custom quad exhausts.
   - Dual nitro flame exhausts shooting directly from exhaust tips.
