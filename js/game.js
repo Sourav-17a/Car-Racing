@@ -273,7 +273,7 @@
       raceCoins: 0,
       speed: 0,
       nitro: 100,
-      hearts: 3,
+      hearts: 1,
       invulnerableTimer: 0,
       shieldTimer: 0,
       playerX: 0,
@@ -1848,7 +1848,7 @@
       state.raceCoins = 0;
       state.speed = 35;
       state.nitro = 100;
-      state.hearts = 3;
+      state.hearts = 1;
       state.invulnerableTimer = 0;
       state.shieldTimer = 0;
       state.playerX = 0;
@@ -2024,19 +2024,17 @@
             state.playerX = Math.sign(state.playerX) * (barrierContactLimit - 0.35);
             cameraShake = 0.35;
           } else if (state.invulnerableTimer <= 0) {
-            state.hearts -= 1;
-            state.invulnerableTimer = 1.6;
-            state.speed = Math.max(25, state.speed * 0.55);
+            // Sudden death: 1 chance mode - barrier collision
+            state.hearts = 0;
+            state.speed = 0;
             playSound('crash');
             spawnParticleBurst(new THREE.Vector3(Math.sign(state.playerX) * (ROAD_WIDTH / 2 - 0.2), 0.6, 0), 0xef4444);
-            cameraShake = 0.7;
-            showFloatingPopup('BARRIER CRASH! -1 ARMOR', 'text-rose-400');
+            cameraShake = 0.85;
+            showFloatingPopup('BARRIER CRASH! GAME OVER', 'text-rose-400 font-black');
             state.playerX = Math.sign(state.playerX) * (barrierContactLimit - 0.45);
-            if (state.hearts <= 0) {
-              updateHUD();
-              finishRace(false);
-              return;
-            }
+            updateHUD();
+            finishRace(false);
+            return;
           }
         }
       }
@@ -2258,22 +2256,21 @@
             scene.remove(t.mesh);
             trafficList.splice(i, 1);
             continue;
-          } else if (state.invulnerableTimer <= 0) {
-            state.hearts -= 1;
-            state.invulnerableTimer = 2.0;
-            state.speed = Math.max(30, state.speed * 0.55);
+          } else {
+            // 1 Single Chance mode: touching a car triggers immediate Game Over!
+            state.hearts = 0;
+            state.speed = 0;
             playSound('crash');
-            cameraShake = 0.75;
-            spawnParticleBurst(playerCarGroup.position, 0xef4444);
-            showFloatingPopup('CAR CRASH! -1 ARMOR', 'text-rose-400');
+            cameraShake = 0.95;
+            spawnParticleBurst(playerCarGroup ? playerCarGroup.position : t.mesh.position, 0xef4444);
+            const side = Math.sign(t.mesh.position.x - state.playerX) || 1;
+            spawnFrictionSparks(t.mesh.position.x, 0.5, t.mesh.position.z, side);
+            showFloatingPopup('CAR HIT! GAME OVER', 'text-rose-400 font-black');
             scene.remove(t.mesh);
             trafficList.splice(i, 1);
-            if (state.hearts <= 0) {
-              updateHUD();
-              finishRace(false);
-              return;
-            }
-            continue;
+            updateHUD();
+            finishRace(false);
+            return;
           }
         }
 
@@ -2351,15 +2348,11 @@
 
 
         const heartsContainer = document.getElementById('hud-hearts');
-        let heartsHtml = '';
-        for (let i = 0; i < 3; i++) {
-          if (i < state.hearts) {
-            heartsHtml += '<span>&#10084;</span>';
-          } else {
-            heartsHtml += '<span class="opacity-30">&#10084;</span>';
-          }
+        if (state.hearts > 0) {
+          heartsContainer.innerHTML = '<span class="animate-pulse text-base">&#10084;</span> <span class="text-[11px] font-black tracking-wider text-rose-300">1 CHANCE</span>';
+        } else {
+          heartsContainer.innerHTML = '<span class="opacity-40 text-slate-500 text-base">&#128128;</span> <span class="text-[11px] font-black text-rose-500">CRASHED</span>';
         }
-        heartsContainer.innerHTML = heartsHtml;
 
         const shieldTag = document.getElementById('hud-shield-tag');
         shieldTag.classList.toggle('hidden', state.shieldTimer <= 0);
@@ -2723,7 +2716,7 @@
         badge.textContent = 'CRASHED OUT';
         badge.className = 'px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider bg-rose-500/20 text-rose-300 border border-rose-400/30';
         title.textContent = 'Car Destroyed!';
-        sub.textContent = 'Watch out for track edge barriers and traffic. You keep all collected coins!';
+        sub.textContent = '1 Touch = Game Over! Avoid all traffic cars and edge barriers. You keep all collected coins!';
       }
 
       showOverlayPanel('panel-result');
