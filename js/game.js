@@ -1,4 +1,4 @@
-﻿    const CARS = [
+    const CARS = [
       {
         id: 'cruiser',
         name: 'Street Cruiser',
@@ -71,88 +71,94 @@
       }
     ];
 
-    const LEVELS = [
-      {
-        id: 1,
-        name: 'Sunny Coastline',
-        desc: 'Breezy ocean highway lined with tropical palms and golden sand.',
-        distance: 1000,
-        coinMult: 1.0,
-        trafficLabel: 'Easy',
-        trafficInterval: 1.15,
-        trafficSpeedRatio: 0.42,
-        skyColor: 0x38bdf8,
-        fogColor: 0x7dd3fc,
-        groundColor: 0xfde68a,
-        roadColor: 0x334155,
-        stripeColor: 0xf8fafc,
-        sceneryType: 'palm'
-      },
-      {
-        id: 2,
-        name: 'Sunset Canyon',
-        desc: 'Warm dusk sprint through towering red rock mesas and desert cacti.',
-        distance: 1500,
-        coinMult: 1.25,
-        trafficLabel: 'Moderate',
-        trafficInterval: 0.95,
-        trafficSpeedRatio: 0.48,
-        skyColor: 0xf97316,
-        fogColor: 0xfb923c,
-        groundColor: 0xd97706,
-        roadColor: 0x292524,
-        stripeColor: 0xfde047,
-        sceneryType: 'canyon'
-      },
-      {
-        id: 3,
-        name: 'Neon Cyber City',
-        desc: 'High-speed midnight expressway lit by glowing synthwave towers.',
-        distance: 2000,
-        coinMult: 1.5,
-        trafficLabel: 'Fast',
-        trafficInterval: 0.82,
-        trafficSpeedRatio: 0.52,
-        skyColor: 0x0f172a,
-        fogColor: 0x1e1b4b,
-        groundColor: 0x090d16,
-        roadColor: 0x1e293b,
-        stripeColor: 0x22d3ee,
-        sceneryType: 'city'
-      },
-      {
-        id: 4,
-        name: 'Alpine Snow Pass',
-        desc: 'Crisp mountain highway winding past frosted pines and icy peaks.',
-        distance: 2500,
-        coinMult: 1.75,
-        trafficLabel: 'Dense',
-        trafficInterval: 0.72,
-        trafficSpeedRatio: 0.56,
-        skyColor: 0x93c5fd,
-        fogColor: 0xdbeafe,
-        groundColor: 0xf1f5f9,
-        roadColor: 0x475569,
-        stripeColor: 0x38bdf8,
-        sceneryType: 'snow'
-      },
-      {
-        id: 5,
-        name: 'Volcano Inferno',
-        desc: 'Championship finale across obsidian roads and glowing magma vents.',
-        distance: 3200,
-        coinMult: 2.0,
-        trafficLabel: 'Intense',
-        trafficInterval: 0.64,
-        trafficSpeedRatio: 0.60,
-        skyColor: 0x450a0a,
-        fogColor: 0x7f1d1d,
-        groundColor: 0x1c1917,
-        roadColor: 0x27272a,
-        stripeColor: 0xf97316,
-        sceneryType: 'volcano'
-      }
+    const LEVEL_ZONES = [
+      { name: 'All 50 Stages', range: [1, 50] },
+      { name: '1. Coastline', range: [1, 5] },
+      { name: '2. Canyon', range: [6, 10] },
+      { name: '3. Cyber City', range: [11, 15] },
+      { name: '4. Alpine Snow', range: [16, 20] },
+      { name: '5. Volcano', range: [21, 25] },
+      { name: '6. Jungle', range: [26, 30] },
+      { name: '7. Sakura', range: [31, 35] },
+      { name: '8. Storm', range: [36, 40] },
+      { name: '9. Nebula', range: [41, 45] },
+      { name: '10. Apex Grand Prix', range: [46, 50] }
     ];
+
+    const LEVELS = [
+      // Zone 1: Sunny Coastline (Levels 1-5)
+      { id: 1, name: 'Sunny Coastline', desc: 'Breezy ocean highway lined with tropical palms and golden sand.', distance: 1000, coinMult: 1.0, trafficLabel: 'Easy', trafficInterval: 1.25, trafficSpeedRatio: 0.38, skyColor: 0x38bdf8, fogColor: 0x7dd3fc, groundColor: 0xfde68a, roadColor: 0x334155, stripeColor: 0xf8fafc, sceneryType: 'palm' },
+      { id: 2, name: 'Palm Bay Breeze', desc: 'Smooth coastal cruise past swaying palms and azure lagoons.', distance: 1150, coinMult: 1.1, trafficLabel: 'Easy', trafficInterval: 1.20, trafficSpeedRatio: 0.40, skyColor: 0x0ea5e9, fogColor: 0x38bdf8, groundColor: 0xfef08a, roadColor: 0x334155, stripeColor: 0xf8fafc, sceneryType: 'palm' },
+      { id: 3, name: 'Oceanview Highway', desc: 'Long winding ocean straightaway with accelerating beach traffic.', distance: 1300, coinMult: 1.2, trafficLabel: 'Easy+', trafficInterval: 1.15, trafficSpeedRatio: 0.42, skyColor: 0x0284c7, fogColor: 0x38bdf8, groundColor: 0xfde047, roadColor: 0x1e293b, stripeColor: 0xfef08a, sceneryType: 'palm' },
+      { id: 4, name: 'Coral Shore Drift', desc: 'Vibrant turquoise shoreline road with fast incoming traffic.', distance: 1450, coinMult: 1.3, trafficLabel: 'Moderate', trafficInterval: 1.10, trafficSpeedRatio: 0.44, skyColor: 0x06b6d4, fogColor: 0x67e8f9, groundColor: 0xfacc15, roadColor: 0x334155, stripeColor: 0xffffff, sceneryType: 'palm' },
+      { id: 5, name: 'Sunset Coast Sprint', desc: 'Golden hour coastal sprint into the setting horizon sun.', distance: 1600, coinMult: 1.4, trafficLabel: 'Moderate', trafficInterval: 1.05, trafficSpeedRatio: 0.45, skyColor: 0xf59e0b, fogColor: 0xfbbf24, groundColor: 0xd97706, roadColor: 0x1e293b, stripeColor: 0xfef08a, sceneryType: 'palm' },
+
+      // Zone 2: Sunset Canyon (Levels 6-10)
+      { id: 6, name: 'Red Rock Canyon', desc: 'Warm dusk sprint through towering red rock mesas and desert cacti.', distance: 1750, coinMult: 1.5, trafficLabel: 'Moderate', trafficInterval: 1.00, trafficSpeedRatio: 0.46, skyColor: 0xf97316, fogColor: 0xfb923c, groundColor: 0xd97706, roadColor: 0x292524, stripeColor: 0xfde047, sceneryType: 'canyon' },
+      { id: 7, name: 'Dune Valley Pass', desc: 'Rally through deep orange dunes and rocky sandstone ridges.', distance: 1900, coinMult: 1.6, trafficLabel: 'Moderate+', trafficInterval: 0.96, trafficSpeedRatio: 0.48, skyColor: 0xea580c, fogColor: 0xf97316, groundColor: 0xb45309, roadColor: 0x292524, stripeColor: 0xfde047, sceneryType: 'canyon' },
+      { id: 8, name: 'Mirage Desert Way', desc: 'Heat-shimmering asphalt stretching across arid clay flats.', distance: 2050, coinMult: 1.7, trafficLabel: 'Fast', trafficInterval: 0.92, trafficSpeedRatio: 0.49, skyColor: 0xc2410c, fogColor: 0xf97316, groundColor: 0x9a3412, roadColor: 0x1c1917, stripeColor: 0xfef08a, sceneryType: 'canyon' },
+      { id: 9, name: 'Sandstorm Gorge', desc: 'High-speed blast through a narrow desert corridor with rising dust.', distance: 2200, coinMult: 1.8, trafficLabel: 'Fast', trafficInterval: 0.88, trafficSpeedRatio: 0.50, skyColor: 0x9a3412, fogColor: 0xc2410c, groundColor: 0x7c2d12, roadColor: 0x292524, stripeColor: 0xfde047, sceneryType: 'canyon' },
+      { id: 10, name: 'Obsidian Canyon Run', desc: 'Chamber finale between towering black basalt and crimson sandstone.', distance: 2400, coinMult: 1.9, trafficLabel: 'Fast+', trafficInterval: 0.85, trafficSpeedRatio: 0.52, skyColor: 0x7c2d12, fogColor: 0x9a3412, groundColor: 0x431407, roadColor: 0x1c1917, stripeColor: 0xf97316, sceneryType: 'canyon' },
+
+      // Zone 3: Neon Cyber City (Levels 11-15)
+      { id: 11, name: 'Neon Cyber City', desc: 'High-speed midnight expressway lit by glowing synthwave towers.', distance: 2550, coinMult: 2.0, trafficLabel: 'Fast', trafficInterval: 0.82, trafficSpeedRatio: 0.52, skyColor: 0x0f172a, fogColor: 0x1e1b4b, groundColor: 0x090d16, roadColor: 0x1e293b, stripeColor: 0x22d3ee, sceneryType: 'city' },
+      { id: 12, name: 'Synthwave Boulevard', desc: 'Pulsing purple neon towers and aggressive rush-hour tuners.', distance: 2700, coinMult: 2.1, trafficLabel: 'Dense', trafficInterval: 0.80, trafficSpeedRatio: 0.53, skyColor: 0x312e81, fogColor: 0x4338ca, groundColor: 0x0f172a, roadColor: 0x1e1b4b, stripeColor: 0xe879f9, sceneryType: 'city' },
+      { id: 13, name: 'Midnight Skyline', desc: 'Elevated urban freeway with dazzling skyscrapers and fast traffic.', distance: 2850, coinMult: 2.2, trafficLabel: 'Dense', trafficInterval: 0.77, trafficSpeedRatio: 0.54, skyColor: 0x1e1b4b, fogColor: 0x2e1065, groundColor: 0x090d16, roadColor: 0x0f172a, stripeColor: 0x38bdf8, sceneryType: 'city' },
+      { id: 14, name: 'Cyber Grid Freeway', desc: 'Futuristic hyper-loop avenue flanked by glowing holographic signs.', distance: 3000, coinMult: 2.3, trafficLabel: 'Dense+', trafficInterval: 0.74, trafficSpeedRatio: 0.55, skyColor: 0x030712, fogColor: 0x1e1b4b, groundColor: 0x111827, roadColor: 0x1f2937, stripeColor: 0x06b6d4, sceneryType: 'city' },
+      { id: 15, name: 'Neon Overdrive', desc: 'Max-speed urban pursuit through midnight electronic downtown.', distance: 3200, coinMult: 2.5, trafficLabel: 'Intense', trafficInterval: 0.72, trafficSpeedRatio: 0.56, skyColor: 0x18181b, fogColor: 0x27272a, groundColor: 0x090d16, roadColor: 0x18181b, stripeColor: 0xf43f5e, sceneryType: 'city' },
+
+      // Zone 4: Alpine Snow Pass (Levels 16-20)
+      { id: 16, name: 'Pine Ridge Pass', desc: 'Crisp mountain highway winding past frosted pines and icy peaks.', distance: 3350, coinMult: 2.6, trafficLabel: 'Dense', trafficInterval: 0.72, trafficSpeedRatio: 0.56, skyColor: 0x93c5fd, fogColor: 0xdbeafe, groundColor: 0xf1f5f9, roadColor: 0x475569, stripeColor: 0x38bdf8, sceneryType: 'snow' },
+      { id: 17, name: 'Glacier Valley', desc: 'Frozen sub-zero pass flanked by crystal blue glacial walls.', distance: 3500, coinMult: 2.7, trafficLabel: 'Dense', trafficInterval: 0.70, trafficSpeedRatio: 0.57, skyColor: 0x60a5fa, fogColor: 0xbfdbfe, groundColor: 0xe2e8f0, roadColor: 0x334155, stripeColor: 0x0284c7, sceneryType: 'snow' },
+      { id: 18, name: 'Frozen Summit Way', desc: 'High altitude mountain ridge where biting wind tests your handling.', distance: 3650, coinMult: 2.8, trafficLabel: 'Intense', trafficInterval: 0.68, trafficSpeedRatio: 0.58, skyColor: 0x3b82f6, fogColor: 0x93c5fd, groundColor: 0xffffff, roadColor: 0x1e293b, stripeColor: 0x38bdf8, sceneryType: 'snow' },
+      { id: 19, name: 'Blizzard Mountain', desc: 'Whiteout snowstorm sprint demanding ultra-sharp reflexes.', distance: 3800, coinMult: 3.0, trafficLabel: 'Intense', trafficInterval: 0.66, trafficSpeedRatio: 0.59, skyColor: 0x1d4ed8, fogColor: 0x60a5fa, groundColor: 0xf8fafc, roadColor: 0x334155, stripeColor: 0x67e8f9, sceneryType: 'snow' },
+      { id: 20, name: 'Arctic Aurora Pass', desc: 'Glowing polar sky shimmering over high-speed frozen highway.', distance: 4000, coinMult: 3.2, trafficLabel: 'Intense+', trafficInterval: 0.64, trafficSpeedRatio: 0.60, skyColor: 0x0c4a6e, fogColor: 0x0284c7, groundColor: 0xe0f2fe, roadColor: 0x0f172a, stripeColor: 0x38bdf8, sceneryType: 'snow' },
+
+      // Zone 5: Volcano Inferno (Levels 21-25)
+      { id: 21, name: 'Magma Foothills', desc: 'Championship finale road across obsidian rock and glowing magma vents.', distance: 4150, coinMult: 3.3, trafficLabel: 'Intense', trafficInterval: 0.64, trafficSpeedRatio: 0.60, skyColor: 0x450a0a, fogColor: 0x7f1d1d, groundColor: 0x1c1917, roadColor: 0x18181b, stripeColor: 0xef4444, sceneryType: 'volcano' },
+      { id: 22, name: 'Ashfall Causeway', desc: 'Volcanic highway covered in glowing embers and smoke clouds.', distance: 4300, coinMult: 3.5, trafficLabel: 'Intense', trafficInterval: 0.62, trafficSpeedRatio: 0.61, skyColor: 0x581c87, fogColor: 0x701a75, groundColor: 0x18181b, roadColor: 0x27272a, stripeColor: 0xf97316, sceneryType: 'volcano' },
+      { id: 23, name: 'Molten Ridge', desc: 'Fiery highway bounded by boiling lava pools and sharp turns.', distance: 4450, coinMult: 3.6, trafficLabel: 'Expert', trafficInterval: 0.60, trafficSpeedRatio: 0.62, skyColor: 0x7f1d1d, fogColor: 0x991b1b, groundColor: 0x292524, roadColor: 0x1c1917, stripeColor: 0xfbbf24, sceneryType: 'volcano' },
+      { id: 24, name: 'Obsidian Crater', desc: 'Black volcanic glass highway through a smoking lava basin.', distance: 4600, coinMult: 3.8, trafficLabel: 'Expert', trafficInterval: 0.58, trafficSpeedRatio: 0.62, skyColor: 0x3b0764, fogColor: 0x581c87, groundColor: 0x18181b, roadColor: 0x090d16, stripeColor: 0xf43f5e, sceneryType: 'volcano' },
+      { id: 25, name: 'Inferno Caldera', desc: 'Extreme survival race at the heart of an erupting volcano.', distance: 4800, coinMult: 4.0, trafficLabel: 'Expert', trafficInterval: 0.56, trafficSpeedRatio: 0.63, skyColor: 0x7f1d1d, fogColor: 0xb91c1c, groundColor: 0x1c1917, roadColor: 0x0c0a09, stripeColor: 0xf59e0b, sceneryType: 'volcano' },
+
+      // Zone 6: Emerald Jungle (Levels 26-30)
+      { id: 26, name: 'Rainforest Canopy', desc: 'Dense jungle corridor winding beneath towering tropical trees.', distance: 4950, coinMult: 4.2, trafficLabel: 'Expert', trafficInterval: 0.56, trafficSpeedRatio: 0.63, skyColor: 0x064e3b, fogColor: 0x047857, groundColor: 0x065f46, roadColor: 0x1f2937, stripeColor: 0x34d399, sceneryType: 'jungle' },
+      { id: 27, name: 'Emerald Falls Highway', desc: 'Mist-shrouded jungle road following roaring tropical waterfalls.', distance: 5100, coinMult: 4.4, trafficLabel: 'Expert+', trafficInterval: 0.55, trafficSpeedRatio: 0.63, skyColor: 0x065f46, fogColor: 0x059669, groundColor: 0x047857, roadColor: 0x111827, stripeColor: 0x6ee7b7, sceneryType: 'jungle' },
+      { id: 28, name: 'Deep Jungle Serpent', desc: 'Curving asphalt through ancient moss-covered ruins and lush vines.', distance: 5250, coinMult: 4.5, trafficLabel: 'Extreme', trafficInterval: 0.54, trafficSpeedRatio: 0.64, skyColor: 0x022c22, fogColor: 0x065f46, groundColor: 0x064e3b, roadColor: 0x1f2937, stripeColor: 0xa7f3d0, sceneryType: 'jungle' },
+      { id: 29, name: 'Monsoon Corridor', desc: 'High-speed rainforest sprint under dramatic tropical downpours.', distance: 5400, coinMult: 4.7, trafficLabel: 'Extreme', trafficInterval: 0.53, trafficSpeedRatio: 0.64, skyColor: 0x042f2e, fogColor: 0x0f766e, groundColor: 0x134e4a, roadColor: 0x1e293b, stripeColor: 0x2dd4bf, sceneryType: 'jungle' },
+      { id: 30, name: 'Temple of Jade', desc: 'Sacred jungle plateau sprint lined by golden totems and statues.', distance: 5600, coinMult: 5.0, trafficLabel: 'Extreme', trafficInterval: 0.52, trafficSpeedRatio: 0.64, skyColor: 0x064e3b, fogColor: 0x10b981, groundColor: 0x065f46, roadColor: 0x0f172a, stripeColor: 0xfacc15, sceneryType: 'jungle' },
+
+      // Zone 7: Sakura Twilight (Levels 31-35)
+      { id: 31, name: 'Cherry Blossom Valley', desc: 'Peaceful twilight road blanketed by swirling pink sakura blossoms.', distance: 5750, coinMult: 5.2, trafficLabel: 'Extreme', trafficInterval: 0.52, trafficSpeedRatio: 0.64, skyColor: 0x4c1d95, fogColor: 0x6d28d9, groundColor: 0x3b0764, roadColor: 0x1e1b4b, stripeColor: 0xf472b6, sceneryType: 'sakura' },
+      { id: 32, name: 'Twilight Lantern Trail', desc: 'Atmospheric evening avenue lined with glowing red Japanese lanterns.', distance: 5900, coinMult: 5.4, trafficLabel: 'Extreme+', trafficInterval: 0.51, trafficSpeedRatio: 0.65, skyColor: 0x581c87, fogColor: 0x7e22ce, groundColor: 0x3b0764, roadColor: 0x18181b, stripeColor: 0xfb7185, sceneryType: 'sakura' },
+      { id: 33, name: 'Mount Fuji Horizon', desc: 'Majestic twilight speedway facing the snow-capped peak silhouette.', distance: 6050, coinMult: 5.6, trafficLabel: 'Insane', trafficInterval: 0.50, trafficSpeedRatio: 0.65, skyColor: 0x312e81, fogColor: 0x4338ca, groundColor: 0x1e1b4b, roadColor: 0x0f172a, stripeColor: 0xf43f5e, sceneryType: 'sakura' },
+      { id: 34, name: 'Golden Pagoda Freeway', desc: 'High-speed sprint flanked by ancient tier pagodas and blossom groves.', distance: 6200, coinMult: 5.8, trafficLabel: 'Insane', trafficInterval: 0.49, trafficSpeedRatio: 0.65, skyColor: 0x3b0764, fogColor: 0x581c87, groundColor: 0x2e1065, roadColor: 0x18181b, stripeColor: 0xfacc15, sceneryType: 'sakura' },
+      { id: 35, name: 'Midnight Sakura Drift', desc: 'Championship drift zone under a luminous full moon and falling petals.', distance: 6400, coinMult: 6.0, trafficLabel: 'Insane', trafficInterval: 0.48, trafficSpeedRatio: 0.65, skyColor: 0x1e1b4b, fogColor: 0x312e81, groundColor: 0x0f172a, roadColor: 0x030712, stripeColor: 0xe879f9, sceneryType: 'sakura' },
+
+      // Zone 8: Electric Thunderstorm (Levels 36-40)
+      { id: 36, name: 'Thunder Valley Route', desc: 'Dark supercell storm pass illuminated by violent lightning strikes.', distance: 6550, coinMult: 6.2, trafficLabel: 'Insane', trafficInterval: 0.48, trafficSpeedRatio: 0.65, skyColor: 0x1e293b, fogColor: 0x334155, groundColor: 0x0f172a, roadColor: 0x020617, stripeColor: 0x38bdf8, sceneryType: 'storm' },
+      { id: 37, name: 'Tempest Canyon', desc: 'Howling gale forces and charged ozone energy alongside narrow cliff walls.', distance: 6700, coinMult: 6.4, trafficLabel: 'Insane+', trafficInterval: 0.47, trafficSpeedRatio: 0.65, skyColor: 0x0f172a, fogColor: 0x1e293b, groundColor: 0x020617, roadColor: 0x1e293b, stripeColor: 0x818cf8, sceneryType: 'storm' },
+      { id: 38, name: 'Lightning Ridge', desc: 'Electrified high-altitude expressway where sparks leap off guardrails.', distance: 6850, coinMult: 6.6, trafficLabel: 'Master', trafficInterval: 0.46, trafficSpeedRatio: 0.65, skyColor: 0x1e1b4b, fogColor: 0x2e1065, groundColor: 0x0f172a, roadColor: 0x030712, stripeColor: 0xa855f7, sceneryType: 'storm' },
+      { id: 39, name: 'Supercell Vortex', desc: 'Racing inside the swirling eye of an immense lightning supercell.', distance: 7000, coinMult: 6.8, trafficLabel: 'Master', trafficInterval: 0.45, trafficSpeedRatio: 0.65, skyColor: 0x0c0a09, fogColor: 0x1c1917, groundColor: 0x18181b, roadColor: 0x090d16, stripeColor: 0x22d3ee, sceneryType: 'storm' },
+      { id: 40, name: 'Storm Chaser Grand Prix', desc: 'Championship electrical storm race pushing hypercars to the brink.', distance: 7200, coinMult: 7.0, trafficLabel: 'Master', trafficInterval: 0.44, trafficSpeedRatio: 0.65, skyColor: 0x030712, fogColor: 0x1e1b4b, groundColor: 0x020617, roadColor: 0x000000, stripeColor: 0x38bdf8, sceneryType: 'storm' },
+
+      // Zone 9: Cosmic Nebula (Levels 41-45)
+      { id: 41, name: 'Quantum Bypass', desc: 'Interstellar expressway running across a celestial starlight ribbon.', distance: 7400, coinMult: 7.2, trafficLabel: 'Master', trafficInterval: 0.44, trafficSpeedRatio: 0.65, skyColor: 0x0b0f19, fogColor: 0x111827, groundColor: 0x030712, roadColor: 0x0f172a, stripeColor: 0x22d3ee, sceneryType: 'quantum' },
+      { id: 42, name: 'Starlight Nebula', desc: 'Luminous galactic dust clouds and pulsar beams surrounding the track.', distance: 7600, coinMult: 7.5, trafficLabel: 'Master+', trafficInterval: 0.43, trafficSpeedRatio: 0.65, skyColor: 0x170b28, fogColor: 0x241242, groundColor: 0x090412, roadColor: 0x130924, stripeColor: 0xe879f9, sceneryType: 'quantum' },
+      { id: 43, name: 'Cosmic Rift Causeway', desc: 'Spanning gravitational rifts where speed warps the horizon lights.', distance: 7800, coinMult: 7.8, trafficLabel: 'Legend', trafficInterval: 0.43, trafficSpeedRatio: 0.65, skyColor: 0x061826, fogColor: 0x0c2f4d, groundColor: 0x020b12, roadColor: 0x081f33, stripeColor: 0x38bdf8, sceneryType: 'quantum' },
+      { id: 44, name: 'Supernova Highway', desc: 'Blinding stellar explosion shockwaves illuminating pure velocity.', distance: 8000, coinMult: 8.0, trafficLabel: 'Legend', trafficInterval: 0.42, trafficSpeedRatio: 0.65, skyColor: 0x240715, fogColor: 0x420c27, groundColor: 0x12020a, roadColor: 0x210413, stripeColor: 0xf43f5e, sceneryType: 'quantum' },
+      { id: 45, name: 'Event Horizon Speedzone', desc: 'Racing at the razor boundary of a supermassive cosmic anomaly.', distance: 8250, coinMult: 8.5, trafficLabel: 'Legend', trafficInterval: 0.42, trafficSpeedRatio: 0.65, skyColor: 0x020617, fogColor: 0x0f172a, groundColor: 0x000000, roadColor: 0x090d16, stripeColor: 0x06b6d4, sceneryType: 'quantum' },
+
+      // Zone 10: Apex Championship (Levels 46-50)
+      { id: 46, name: "Champion's Ascent", desc: 'The golden championship road opening for the galaxy’s greatest drivers.', distance: 8500, coinMult: 8.8, trafficLabel: 'Legend+', trafficInterval: 0.42, trafficSpeedRatio: 0.65, skyColor: 0x1e1b4b, fogColor: 0x312e81, groundColor: 0x0f172a, roadColor: 0x18181b, stripeColor: 0xfacc15, sceneryType: 'apex' },
+      { id: 47, name: 'Hyper Velocity Circuit', desc: 'Hypersonic proving grounds built for maximum adrenaline and nitro.', distance: 8800, coinMult: 9.0, trafficLabel: 'Apex', trafficInterval: 0.41, trafficSpeedRatio: 0.65, skyColor: 0x18181b, fogColor: 0x27272a, groundColor: 0x090d16, roadColor: 0x0f172a, stripeColor: 0x38bdf8, sceneryType: 'apex' },
+      { id: 48, name: 'Apex Titans Expressway', desc: 'Immense golden championship arches rising above a 10-mile runway.', distance: 9100, coinMult: 9.3, trafficLabel: 'Apex', trafficInterval: 0.41, trafficSpeedRatio: 0.65, skyColor: 0x2e1065, fogColor: 0x3b0764, groundColor: 0x18181b, roadColor: 0x1e1b4b, stripeColor: 0xf59e0b, sceneryType: 'apex' },
+      { id: 49, name: 'Horizon Omega Speedway', desc: 'The penultimate grand championship showdown against relentless traffic.', distance: 9500, coinMult: 9.6, trafficLabel: 'Apex+', trafficInterval: 0.40, trafficSpeedRatio: 0.65, skyColor: 0x0f172a, fogColor: 0x1e293b, groundColor: 0x020617, roadColor: 0x000000, stripeColor: 0x10b981, sceneryType: 'apex' },
+      { id: 50, name: 'Ultimate Horizon Champion', desc: 'The 10,000-meter supreme master challenge. Cross the finish line to become the legendary Horizon God!', distance: 10000, coinMult: 10.0, trafficLabel: 'Godlike', trafficInterval: 0.40, trafficSpeedRatio: 0.65, skyColor: 0x000000, fogColor: 0x18181b, groundColor: 0x0a0a0a, roadColor: 0x141414, stripeColor: 0xfacc15, sceneryType: 'apex' }
+    ];
+
+    let activeZoneIndex = 0;
+    let cameraShake = 0;
 
     const state = {
       coins: 0,
@@ -184,8 +190,8 @@
             state.unlockedCars = parsed.unlockedCars;
           }
           if (parsed.selectedCarId) state.selectedCarId = parsed.selectedCarId;
-          if (parsed.selectedLevelId) state.selectedLevelId = parsed.selectedLevelId;
-          if (parsed.highestUnlockedLevel) state.highestUnlockedLevel = parsed.highestUnlockedLevel;
+          if (parsed.selectedLevelId) state.selectedLevelId = Math.min(LEVELS.length, Math.max(1, parsed.selectedLevelId));
+          if (parsed.highestUnlockedLevel) state.highestUnlockedLevel = Math.min(LEVELS.length, Math.max(1, parsed.highestUnlockedLevel));
         }
       } catch (e) {
         // Ignore storage error
@@ -226,69 +232,92 @@
       if (!audioCtx) return;
 
       const now = audioCtx.currentTime;
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
 
       if (type === 'coin') {
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(880, now);
-        osc.frequency.exponentialRampToValueAtTime(1320, now + 0.09);
-        gain.gain.setValueAtTime(0.16, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
-        osc.start(now);
-        osc.stop(now + 0.18);
-      } else if (type === 'powerup') {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
         osc.type = 'triangle';
-        osc.frequency.setValueAtTime(520, now);
-        osc.frequency.exponentialRampToValueAtTime(1040, now + 0.22);
+        osc.frequency.setValueAtTime(880, now);
+        osc.frequency.exponentialRampToValueAtTime(1760, now + 0.12);
         gain.gain.setValueAtTime(0.18, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.14);
+      } else if (type === 'powerup') {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(440, now);
+        osc.frequency.linearRampToValueAtTime(880, now + 0.1);
+        osc.frequency.linearRampToValueAtTime(1320, now + 0.22);
+        gain.gain.setValueAtTime(0.25, now);
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
         osc.start(now);
         osc.stop(now + 0.25);
       } else if (type === 'crash') {
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(150, now);
-        osc.frequency.exponentialRampToValueAtTime(42, now + 0.28);
-        gain.gain.setValueAtTime(0.24, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
-        osc.start(now);
-        osc.stop(now + 0.3);
+        const bufferSize = audioCtx.sampleRate * 0.35;
+        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.3));
+        }
+        const noise = audioCtx.createBufferSource();
+        noise.buffer = buffer;
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(850, now);
+        filter.frequency.exponentialRampToValueAtTime(120, now + 0.35);
+
+        const gain = audioCtx.createGain();
+        gain.gain.setValueAtTime(0.45, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+
+        noise.connect(filter);
+        filter.connect(gain);
+        gain.connect(audioCtx.destination);
+        noise.start(now);
       } else if (type === 'win') {
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(523.25, now);
-        osc.frequency.setValueAtTime(659.25, now + 0.1);
-        osc.frequency.setValueAtTime(783.99, now + 0.2);
-        osc.frequency.setValueAtTime(1046.5, now + 0.3);
-        gain.gain.setValueAtTime(0.2, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
-        osc.start(now);
-        osc.stop(now + 0.55);
+        const notes = [523.25, 659.25, 783.99, 1046.5];
+        notes.forEach((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.11);
+          gain.gain.setValueAtTime(0.2, now + idx * 0.11);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.11 + 0.25);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + idx * 0.11);
+          osc.stop(now + idx * 0.11 + 0.25);
+        });
       } else if (type === 'click') {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(620, now);
-        gain.gain.setValueAtTime(0.08, now);
+        osc.frequency.setValueAtTime(600, now);
+        osc.frequency.exponentialRampToValueAtTime(300, now + 0.05);
+        gain.gain.setValueAtTime(0.12, now);
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
         osc.start(now);
         osc.stop(now + 0.05);
       }
     }
 
     let scene, camera, renderer;
-    let playerCarGroup = null;
-    let playerWheels = [];
-    let nitroFlameMesh = null;
-    let shieldBubbleMesh = null;
-
-    let roadGroup, groundMesh, roadMesh;
+    let roadMesh, groundMesh, finishGateGroup;
+    let playerCarGroup, playerWheels = [], nitroFlameMesh, shieldBubbleMesh;
     let laneDashMeshes = [];
     let sceneryItems = [];
+    let trafficList = [];
     let coinsList = [];
     let powerupsList = [];
-    let trafficList = [];
-    let particlesList = [];
-    let finishGateGroup = null;
+    let particleBursts = [];
 
     const ROAD_WIDTH = 14;
     const LANES = [-4.2, 0, 4.2];
@@ -300,52 +329,82 @@
 
       scene = new THREE.Scene();
       scene.background = new THREE.Color(0x38bdf8);
-      scene.fog = new THREE.FogExp2(0x7dd3fc, 0.009);
+      scene.fog = new THREE.FogExp2(0x7dd3fc, 0.0068);
 
-      camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 260);
+      camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 450);
       camera.position.set(0, 4.2, 9.5);
-      camera.lookAt(0, 1.0, -10);
+      camera.lookAt(0, 1.2, -15);
 
-      renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: 'high-performance' });
       renderer.setSize(w, h);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-      renderer.shadowMap.enabled = true;
-      container.innerHTML = '';
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.05;
       container.appendChild(renderer.domElement);
 
-      const ambientLight = new THREE.AmbientLight(0xffffff, 0.72);
-      scene.add(ambientLight);
+      const hemiLight = new THREE.HemisphereLight(0xffffff, 0x334155, 0.75);
+      hemiLight.position.set(0, 50, 0);
+      scene.add(hemiLight);
 
-      const dirLight = new THREE.DirectionalLight(0xffffff, 0.85);
-      dirLight.position.set(18, 36, 20);
-      dirLight.castShadow = true;
+      const dirLight = new THREE.DirectionalLight(0xfffbeb, 1.15);
+      dirLight.position.set(25, 45, 20);
       scene.add(dirLight);
 
-      roadGroup = new THREE.Group();
+      const roadGroup = new THREE.Group();
       scene.add(roadGroup);
 
-      const groundGeo = new THREE.PlaneGeometry(360, 400);
+      const groundGeo = new THREE.PlaneGeometry(380, 420);
       const groundMat = new THREE.MeshLambertMaterial({ color: 0xfde68a });
       groundMesh = new THREE.Mesh(groundGeo, groundMat);
       groundMesh.rotation.x = -Math.PI / 2;
       groundMesh.position.set(0, -0.05, -120);
       roadGroup.add(groundMesh);
 
-      const roadGeo = new THREE.PlaneGeometry(ROAD_WIDTH, 400);
+      const roadGeo = new THREE.PlaneGeometry(ROAD_WIDTH, 420);
       const roadMat = new THREE.MeshPhongMaterial({ color: 0x334155, shininess: 18 });
       roadMesh = new THREE.Mesh(roadGeo, roadMat);
       roadMesh.rotation.x = -Math.PI / 2;
       roadMesh.position.set(0, 0, -120);
       roadGroup.add(roadMesh);
 
-      const curbGeo = new THREE.BoxGeometry(0.45, 0.16, 400);
+      // Elevated 3D Racing Guardrails (Left and Right)
+      const curbGeo = new THREE.BoxGeometry(0.5, 0.22, 420);
       const curbMat = new THREE.MeshLambertMaterial({ color: 0xf43f5e });
       const leftCurb = new THREE.Mesh(curbGeo, curbMat);
-      leftCurb.position.set(-ROAD_WIDTH / 2 - 0.2, 0.08, -120);
+      leftCurb.position.set(-ROAD_WIDTH / 2 - 0.22, 0.11, -120);
       const rightCurb = new THREE.Mesh(curbGeo, curbMat);
-      rightCurb.position.set(ROAD_WIDTH / 2 + 0.2, 0.08, -120);
+      rightCurb.position.set(ROAD_WIDTH / 2 + 0.22, 0.11, -120);
       roadGroup.add(leftCurb, rightCurb);
 
+      const railBeamGeo = new THREE.BoxGeometry(0.32, 0.55, 420);
+      const railMat = new THREE.MeshPhongMaterial({ color: 0x94a3b8, shininess: 80 });
+      const leftRail = new THREE.Mesh(railBeamGeo, railMat);
+      leftRail.position.set(-ROAD_WIDTH / 2 - 0.25, 0.5, -120);
+      const rightRail = new THREE.Mesh(railBeamGeo, railMat);
+      rightRail.position.set(ROAD_WIDTH / 2 + 0.25, 0.5, -120);
+      roadGroup.add(leftRail, rightRail);
+
+      // Neon Reflective Guardrail Top Strip
+      const neonStripGeo = new THREE.BoxGeometry(0.34, 0.09, 420);
+      const neonStripMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
+      const leftStrip = new THREE.Mesh(neonStripGeo, neonStripMat);
+      leftStrip.position.set(-ROAD_WIDTH / 2 - 0.25, 0.8, -120);
+      const rightStrip = new THREE.Mesh(neonStripGeo, neonStripMat);
+      rightStrip.position.set(ROAD_WIDTH / 2 + 0.25, 0.8, -120);
+      roadGroup.add(leftStrip, rightStrip);
+
+      // Guardrail Support Posts
+      const postGeo = new THREE.BoxGeometry(0.36, 0.85, 0.36);
+      const postMat = new THREE.MeshLambertMaterial({ color: 0x475569 });
+      for (let pz = 10; pz >= -300; pz -= 12) {
+        const pLeft = new THREE.Mesh(postGeo, postMat);
+        pLeft.position.set(-ROAD_WIDTH / 2 - 0.25, 0.42, pz);
+        const pRight = new THREE.Mesh(postGeo, postMat);
+        pRight.position.set(ROAD_WIDTH / 2 + 0.25, 0.42, pz);
+        roadGroup.add(pLeft, pRight);
+      }
+
+      // Lane Dashes
       const dashGeo = new THREE.PlaneGeometry(0.24, 3.6);
       const dashMat = new THREE.MeshBasicMaterial({ color: 0xf8fafc });
       for (let i = 0; i < 24; i++) {
@@ -459,26 +518,26 @@
         });
         const neon = new THREE.Mesh(neonGeo, neonMat);
         neon.rotation.x = -Math.PI / 2;
-        neon.position.y = 0.04;
+        neon.position.y = 0.08;
         group.add(neon);
 
-        const flameGeo = new THREE.ConeGeometry(0.35, 1.5, 10);
+        const flameGeo = new THREE.ConeGeometry(0.45, 1.8, 8);
         flameGeo.rotateX(Math.PI / 2);
-        const flameMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.85 });
+        const flameMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
         nitroFlameMesh = new THREE.Mesh(flameGeo, flameMat);
-        nitroFlameMesh.position.set(0, 0.45, 2.75);
+        nitroFlameMesh.position.set(0, 0.55, 2.8);
         nitroFlameMesh.visible = false;
         group.add(nitroFlameMesh);
 
-        const shieldGeo = new THREE.SphereGeometry(2.65, 20, 16);
-        const shieldMat = new THREE.MeshBasicMaterial({
+        const bubbleGeo = new THREE.SphereGeometry(2.5, 18, 14);
+        const bubbleMat = new THREE.MeshBasicMaterial({
           color: 0x22d3ee,
           wireframe: true,
           transparent: true,
-          opacity: 0.38
+          opacity: 0.35
         });
-        shieldBubbleMesh = new THREE.Mesh(shieldGeo, shieldMat);
-        shieldBubbleMesh.position.set(0, 0.8, 0);
+        shieldBubbleMesh = new THREE.Mesh(bubbleGeo, bubbleMat);
+        shieldBubbleMesh.position.set(0, 0.9, 0);
         shieldBubbleMesh.visible = false;
         group.add(shieldBubbleMesh);
       }
@@ -487,12 +546,12 @@
     }
 
     function rebuildPlayerCar() {
-      if (!scene) return;
       if (playerCarGroup) {
         scene.remove(playerCarGroup);
       }
-      const carSpec = getSelectedCar();
-      const built = createCarMesh(carSpec, false);
+      playerWheels = [];
+      const spec = getSelectedCar();
+      const built = createCarMesh(spec, false);
       playerCarGroup = built.group;
       playerWheels = built.wheels;
       playerCarGroup.position.set(state.playerX, 0, 0);
@@ -555,7 +614,71 @@
         );
         pine.position.y = 3.8;
         group.add(trunk, pine);
+      } else if (type === 'jungle') {
+        const trunk = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.3, 0.45, 5.2, 6),
+          new THREE.MeshLambertMaterial({ color: 0x14532d })
+        );
+        trunk.position.y = 2.6;
+        const leaves1 = new THREE.Mesh(
+          new THREE.ConeGeometry(2.5, 3.0, 6),
+          new THREE.MeshLambertMaterial({ color: 0x15803d })
+        );
+        leaves1.position.y = 4.8;
+        const leaves2 = new THREE.Mesh(
+          new THREE.ConeGeometry(1.8, 2.4, 6),
+          new THREE.MeshLambertMaterial({ color: 0x22c55e })
+        );
+        leaves2.position.y = 6.2;
+        group.add(trunk, leaves1, leaves2);
+      } else if (type === 'sakura') {
+        const trunk = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.24, 0.38, 4.0, 6),
+          new THREE.MeshLambertMaterial({ color: 0x3f2d24 })
+        );
+        trunk.position.y = 2.0;
+        const blossom = new THREE.Mesh(
+          new THREE.DodecahedronGeometry(2.1, 1),
+          new THREE.MeshLambertMaterial({ color: 0xf472b6 })
+        );
+        blossom.position.y = 4.4;
+        group.add(trunk, blossom);
+      } else if (type === 'storm') {
+        const pylon = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.18, 0.5, 8.5, 4),
+          new THREE.MeshLambertMaterial({ color: 0x334155 })
+        );
+        pylon.position.y = 4.25;
+        const coil = new THREE.Mesh(
+          new THREE.TorusGeometry(1.2, 0.15, 8, 16),
+          new THREE.MeshBasicMaterial({ color: 0x38bdf8 })
+        );
+        coil.rotation.x = Math.PI / 2;
+        coil.position.y = 7.0;
+        group.add(pylon, coil);
+      } else if (type === 'quantum') {
+        const prism = new THREE.Mesh(
+          new THREE.OctahedronGeometry(2.2, 0),
+          new THREE.MeshPhongMaterial({ color: 0xa855f7, emissive: 0x6b21a8, shininess: 120 })
+        );
+        prism.position.y = 3.5;
+        prism.scale.set(1.0, 2.2, 1.0);
+        group.add(prism);
+      } else if (type === 'apex') {
+        const obelisk = new THREE.Mesh(
+          new THREE.ConeGeometry(1.4, 9.0, 4),
+          new THREE.MeshPhongMaterial({ color: 0xfacc15, emissive: 0x854d0e, shininess: 140 })
+        );
+        obelisk.position.y = 4.5;
+        const ring = new THREE.Mesh(
+          new THREE.TorusGeometry(1.8, 0.18, 8, 20),
+          new THREE.MeshBasicMaterial({ color: 0xfef08a })
+        );
+        ring.rotation.x = Math.PI / 2;
+        ring.position.y = 7.5;
+        group.add(obelisk, ring);
       } else {
+        // Default volcano spire
         const spire = new THREE.Mesh(
           new THREE.ConeGeometry(2.1, 6.5, 5),
           new THREE.MeshLambertMaterial({ color: 0x27272a })
@@ -623,17 +746,16 @@
 
     function spawnTrafficCar(zPos) {
       const lane = LANES[Math.floor(Math.random() * LANES.length)];
-      const tooClose = trafficList.some(t => Math.abs(t.mesh.position.z - zPos) < 15 && Math.abs(t.mesh.position.x - lane) < 2.2);
+      const tooClose = trafficList.some(t => Math.abs(t.mesh.position.z - zPos) < 15 && Math.abs(t.mesh.position.x - lane) < 1.0);
       if (tooClose) return;
 
-      const palette = [0x3b82f6, 0xeab308, 0xec4899, 0x8b5cf6, 0x14b8a6, 0xf97316, 0x64748b];
-      const randomColor = palette[Math.floor(Math.random() * palette.length)];
-      const built = createCarMesh({
-        bodyColor: randomColor,
-        accentColor: 0xe2e8f0,
-        style: 'coupe'
-      }, true);
-
+      const randomSpec = CARS[Math.floor(Math.random() * CARS.length)];
+      const trafficSpec = {
+        ...randomSpec,
+        bodyColor: Math.random() > 0.4 ? randomSpec.bodyColor : 0x475569,
+        accentColor: 0x0f172a
+      };
+      const built = createCarMesh(trafficSpec, true);
       built.group.position.set(lane, 0, zPos);
       scene.add(built.group);
       trafficList.push({
@@ -648,17 +770,17 @@
       if (finishGateGroup) scene.remove(finishGateGroup);
       finishGateGroup = new THREE.Group();
 
-      const pillarGeo = new THREE.BoxGeometry(0.8, 6.5, 0.8);
-      const pillarMat = new THREE.MeshLambertMaterial({ color: 0xf8fafc });
+      const pillarGeo = new THREE.BoxGeometry(0.9, 6.5, 0.9);
+      const pillarMat = new THREE.MeshPhongMaterial({ color: 0x1e293b });
       const leftPillar = new THREE.Mesh(pillarGeo, pillarMat);
       leftPillar.position.set(-ROAD_WIDTH / 2, 3.25, 0);
       const rightPillar = new THREE.Mesh(pillarGeo, pillarMat);
       rightPillar.position.set(ROAD_WIDTH / 2, 3.25, 0);
 
       const bannerGeo = new THREE.BoxGeometry(ROAD_WIDTH + 1.2, 1.4, 0.6);
-      const bannerMat = new THREE.MeshBasicMaterial({ color: 0x10b981 });
+      const bannerMat = new THREE.MeshPhongMaterial({ color: 0xfacc15, emissive: 0x713f12 });
       const banner = new THREE.Mesh(bannerGeo, bannerMat);
-      banner.position.set(0, 6.0, 0);
+      banner.position.set(0, 5.8, 0);
 
       finishGateGroup.add(leftPillar, rightPillar, banner);
       finishGateGroup.position.set(0, 0, zPos);
@@ -666,31 +788,31 @@
     }
 
     function spawnParticleBurst(pos, colorHex) {
-      const geo = new THREE.BoxGeometry(0.22, 0.22, 0.22);
+      const pCount = 14;
+      const geo = new THREE.BoxGeometry(0.2, 0.2, 0.2);
       const mat = new THREE.MeshBasicMaterial({ color: colorHex });
-      for (let i = 0; i < 10; i++) {
-        const p = new THREE.Mesh(geo, mat);
-        p.position.copy(pos);
-        p.userData = {
-          vx: (Math.random() - 0.5) * 8,
-          vy: 2 + Math.random() * 5,
-          vz: (Math.random() - 0.5) * 8,
-          life: 0.45
-        };
-        scene.add(p);
-        particlesList.push(p);
+      for (let i = 0; i < pCount; i++) {
+        const mesh = new THREE.Mesh(geo, mat);
+        mesh.position.copy(pos);
+        const vel = new THREE.Vector3(
+          (Math.random() - 0.5) * 12,
+          Math.random() * 8 + 2,
+          (Math.random() - 0.5) * 12
+        );
+        scene.add(mesh);
+        particleBursts.push({ mesh, vel, life: 0.65 });
       }
     }
 
     function clearRaceEntities() {
+      trafficList.forEach(t => scene.remove(t.mesh));
+      trafficList = [];
       coinsList.forEach(c => scene.remove(c));
       coinsList = [];
       powerupsList.forEach(p => scene.remove(p));
       powerupsList = [];
-      trafficList.forEach(t => scene.remove(t.mesh));
-      trafficList = [];
-      particlesList.forEach(p => scene.remove(p));
-      particlesList = [];
+      particleBursts.forEach(p => scene.remove(p.mesh));
+      particleBursts = [];
       if (finishGateGroup) {
         scene.remove(finishGateGroup);
         finishGateGroup = null;
@@ -707,39 +829,36 @@
 
     function setupInputs() {
       window.addEventListener('keydown', (e) => {
-        if (e.code === 'ArrowLeft' || e.code === 'KeyA') keys.left = true;
-        if (e.code === 'ArrowRight' || e.code === 'KeyD') keys.right = true;
-        if (e.code === 'ArrowUp' || e.code === 'KeyW') keys.up = true;
-        if (e.code === 'ArrowDown' || e.code === 'KeyS') keys.down = true;
-        if (e.code === 'Space' || e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
-          keys.nitro = true;
-          if (state.mode === 'RACING') e.preventDefault();
-        }
-        if (e.code === 'KeyP' || e.code === 'Escape') {
-          if (state.mode === 'RACING' || state.mode === 'PAUSED') {
-            togglePauseRace();
-          }
-        }
+        if (state.mode !== 'RACING') return;
+        const code = e.code;
+        if (code === 'ArrowLeft' || code === 'KeyA') keys.left = true;
+        if (code === 'ArrowRight' || code === 'KeyD') keys.right = true;
+        if (code === 'ArrowUp' || code === 'KeyW') keys.up = true;
+        if (code === 'ArrowDown' || code === 'KeyS') keys.down = true;
+        if (code === 'Space') keys.nitro = true;
+        if (code === 'KeyP') togglePauseRace();
       });
 
       window.addEventListener('keyup', (e) => {
-        if (e.code === 'ArrowLeft' || e.code === 'KeyA') keys.left = false;
-        if (e.code === 'ArrowRight' || e.code === 'KeyD') keys.right = false;
-        if (e.code === 'ArrowUp' || e.code === 'KeyW') keys.up = false;
-        if (e.code === 'ArrowDown' || e.code === 'KeyS') keys.down = false;
-        if (e.code === 'Space' || e.code === 'ShiftLeft' || e.code === 'ShiftRight') keys.nitro = false;
+        const code = e.code;
+        if (code === 'ArrowLeft' || code === 'KeyA') keys.left = false;
+        if (code === 'ArrowRight' || code === 'KeyD') keys.right = false;
+        if (code === 'ArrowUp' || code === 'KeyW') keys.up = false;
+        if (code === 'ArrowDown' || code === 'KeyS') keys.down = false;
+        if (code === 'Space') keys.nitro = false;
       });
 
       function bindHoldButton(btnId, keyName) {
         const btn = document.getElementById(btnId);
         if (!btn) return;
-        const startHold = (ev) => {
-          ev.preventDefault();
+        const startHold = (e) => {
+          e.preventDefault();
+          initAudio();
           keys[keyName] = true;
           btn.classList.add('active-press');
         };
-        const endHold = (ev) => {
-          ev.preventDefault();
+        const endHold = (e) => {
+          e.preventDefault();
           keys[keyName] = false;
           btn.classList.remove('active-press');
         };
@@ -829,9 +948,10 @@
     function togglePauseRace() {
       if (state.mode === 'RACING') {
         state.mode = 'PAUSED';
-        resetKeys();
+        playSound('click');
         openResultModal('PAUSED');
       } else if (state.mode === 'PAUSED') {
+        playSound('click');
         state.mode = 'RACING';
         syncScreenVisibility();
       }
@@ -842,10 +962,11 @@
       resetKeys();
       if (won) {
         playSound('win');
+        // Progressive level unlocking: completing level N unlocks level N + 1
         if (state.selectedLevelId >= state.highestUnlockedLevel && state.selectedLevelId < LEVELS.length) {
           state.highestUnlockedLevel = state.selectedLevelId + 1;
         }
-        const bonus = Math.round(20 * getSelectedLevel().coinMult);
+        const bonus = Math.round(25 * getSelectedLevel().coinMult);
         state.raceCoins += bonus;
         state.coins += bonus;
         saveGameData();
@@ -868,15 +989,20 @@
       const topSpeed = usingNitro ? car.maxSpeed * 1.34 : car.maxSpeed;
 
       if (usingNitro) {
+        state.speed = Math.min(topSpeed, state.speed + car.accel * 1.45 * dt);
         state.nitro = Math.max(0, state.nitro - 28 * dt);
-        state.speed = Math.min(topSpeed, state.speed + car.accel * 1.65 * dt);
+      } else if (keys.down) {
+        state.speed = Math.max(15, state.speed - 90 * dt);
+      } else if (state.autoAccel) {
+        if (state.speed < car.maxSpeed) {
+          state.speed = Math.min(car.maxSpeed, state.speed + car.accel * 0.85 * dt);
+        } else {
+          state.speed = Math.max(car.maxSpeed, state.speed - 35 * dt);
+        }
       } else {
-        state.nitro = Math.min(100, state.nitro + 9.5 * dt);
-        if (keys.down) {
-          state.speed = Math.max(25, state.speed - car.accel * 1.9 * dt);
-        } else if (state.autoAccel) {
+        if (keys.up) {
           if (state.speed < car.maxSpeed) {
-            state.speed = Math.min(car.maxSpeed, state.speed + car.accel * dt);
+            state.speed = Math.min(car.maxSpeed, state.speed + car.accel * 0.85 * dt);
           } else {
             state.speed = Math.max(car.maxSpeed, state.speed - 40 * dt);
           }
@@ -900,16 +1026,46 @@
         shieldBubbleMesh.rotation.y += 2.5 * dt;
       }
 
+      // Steering
       const steerDir = (keys.right ? 1 : 0) - (keys.left ? 1 : 0);
-      const lateralSpeed = (car.handling * 0.34);
+      const lateralSpeed = (car.handling * 0.35);
       state.playerX += steerDir * lateralSpeed * dt;
-      const maxOffset = ROAD_WIDTH / 2 - 1.25;
-      state.playerX = Math.max(-maxOffset, Math.min(maxOffset, state.playerX));
+
+      // Road Edge & Guardrail Detection
+      const barrierContactLimit = (ROAD_WIDTH / 2) - 1.10; // ~5.90
+      if (Math.abs(state.playerX) >= barrierContactLimit) {
+        if (state.speed > 5) {
+          if (state.shieldTimer > 0) {
+            playSound('powerup');
+            spawnParticleBurst(new THREE.Vector3(Math.sign(state.playerX) * (ROAD_WIDTH / 2 - 0.2), 0.6, 0), 0x22d3ee);
+            showFloatingPopup('SHIELD DEFLECT!', 'text-cyan-300');
+            state.playerX = Math.sign(state.playerX) * (barrierContactLimit - 0.35);
+            cameraShake = 0.35;
+          } else if (state.invulnerableTimer <= 0) {
+            state.hearts -= 1;
+            state.invulnerableTimer = 1.6;
+            state.speed = Math.max(25, state.speed * 0.55);
+            playSound('crash');
+            spawnParticleBurst(new THREE.Vector3(Math.sign(state.playerX) * (ROAD_WIDTH / 2 - 0.2), 0.6, 0), 0xef4444);
+            cameraShake = 0.7;
+            showFloatingPopup('BARRIER CRASH! -1 ARMOR', 'text-rose-400');
+            state.playerX = Math.sign(state.playerX) * (barrierContactLimit - 0.45);
+            if (state.hearts <= 0) {
+              updateHUD();
+              finishRace(false);
+              return;
+            }
+          }
+        }
+      }
+
+      // Hard clamp so player never clips outside the highway
+      state.playerX = Math.max(-barrierContactLimit, Math.min(barrierContactLimit, state.playerX));
 
       if (playerCarGroup) {
         playerCarGroup.position.x = state.playerX;
         const targetRotZ = -steerDir * 0.08;
-        const targetRotY = -steerDir * 0.11;
+        const targetRotY = -steerDir * 0.12;
         playerCarGroup.rotation.z += (targetRotZ - playerCarGroup.rotation.z) * 10 * dt;
         playerCarGroup.rotation.y += (targetRotY - playerCarGroup.rotation.y) * 10 * dt;
 
@@ -925,9 +1081,18 @@
 
       state.distance += forwardStep;
 
+      // Base camera positioning
       camera.position.x += (state.playerX * 0.55 - camera.position.x) * 7 * dt;
       camera.position.y = 4.15;
       camera.position.z = 9.2;
+
+      // Camera Shake
+      if (cameraShake > 0) {
+        camera.position.x += (Math.random() - 0.5) * cameraShake;
+        camera.position.y += (Math.random() - 0.5) * cameraShake;
+        cameraShake = Math.max(0, cameraShake - dt * 2.6);
+      }
+
       camera.lookAt(state.playerX * 0.35, 1.1, -14);
 
       laneDashMeshes.forEach(d => {
@@ -976,6 +1141,7 @@
         }
       }
 
+      // Coins
       for (let i = coinsList.length - 1; i >= 0; i--) {
         const coin = coinsList[i];
         coin.rotation.z += 3.4 * dt;
@@ -1007,6 +1173,7 @@
         }
       }
 
+      // Powerups
       for (let i = powerupsList.length - 1; i >= 0; i--) {
         const p = powerupsList[i];
         p.rotation.y += 3.2 * dt;
@@ -1035,7 +1202,12 @@
         }
       }
 
+      // Traffic Cars Collision Detection (Full Edge Hitbox with Yaw Rotation)
       const trafficForwardSpeed = (car.maxSpeed * level.trafficSpeedRatio) * 0.42;
+      const playerAngleY = playerCarGroup ? Math.abs(playerCarGroup.rotation.y) : 0;
+      const effectiveCarWidth = 2.18 + playerAngleY * 1.5; // Accounts for car diagonal bounding width
+      const effectiveCarLength = 4.25;
+
       for (let i = trafficList.length - 1; i >= 0; i--) {
         const t = trafficList[i];
         const relStep = forwardStep - trafficForwardSpeed * dt;
@@ -1045,13 +1217,15 @@
         const dx = Math.abs(state.playerX - t.mesh.position.x);
         const dz = Math.abs(t.mesh.position.z);
 
-        if (dx < 1.72 && dz < 3.65) {
+        // Edge-of-car collision check
+        if (dx < effectiveCarWidth && dz < effectiveCarLength) {
           if (state.shieldTimer > 0) {
             playSound('powerup');
             spawnParticleBurst(t.mesh.position, 0x22d3ee);
             showFloatingPopup('SHIELD SMASH! +5', 'text-cyan-300');
             state.raceCoins += 5;
             state.coins += 5;
+            cameraShake = 0.4;
             scene.remove(t.mesh);
             trafficList.splice(i, 1);
             continue;
@@ -1060,8 +1234,9 @@
             state.invulnerableTimer = 2.0;
             state.speed = Math.max(30, state.speed * 0.55);
             playSound('crash');
+            cameraShake = 0.75;
             spawnParticleBurst(playerCarGroup.position, 0xef4444);
-            showFloatingPopup('CRASH! -1 ARMOR', 'text-rose-400');
+            showFloatingPopup('CAR CRASH! -1 ARMOR', 'text-rose-400');
             scene.remove(t.mesh);
             trafficList.splice(i, 1);
             if (state.hearts <= 0) {
@@ -1073,13 +1248,13 @@
           }
         }
 
-        if (!t.passedNear && t.mesh.position.z > 1.8 && dx >= 1.72 && dx < 2.85) {
+        // Near-Miss Reward (Only when actually passing close without touching edges)
+        if (!t.passedNear && t.mesh.position.z > 2.0 && dx >= effectiveCarWidth && dx < 3.25) {
           t.passedNear = true;
           state.raceCoins += 3;
           state.coins += 3;
           state.nitro = Math.min(100, state.nitro + 12);
-          playSound('coin');
-          showFloatingPopup('NEAR MISS! +3 COINS', 'text-amber-300');
+          showFloatingPopup('CLOSE PASS! +3 & BOOST', 'text-emerald-300');
         }
 
         if (t.mesh.position.z > 16) {
@@ -1088,16 +1263,15 @@
         }
       }
 
-      for (let i = particlesList.length - 1; i >= 0; i--) {
-        const p = particlesList[i];
-        p.userData.life -= dt;
-        p.position.x += p.userData.vx * dt;
-        p.position.y += p.userData.vy * dt;
-        p.position.z += p.userData.vz * dt;
-        p.userData.vy -= 9.8 * dt;
-        if (p.userData.life <= 0) {
-          scene.remove(p);
-          particlesList.splice(i, 1);
+      // Particles
+      for (let i = particleBursts.length - 1; i >= 0; i--) {
+        const pb = particleBursts[i];
+        pb.life -= dt;
+        pb.mesh.position.addScaledVector(pb.vel, dt);
+        pb.vel.y -= 14 * dt;
+        if (pb.life <= 0) {
+          scene.remove(pb.mesh);
+          particleBursts.splice(i, 1);
         }
       }
 
@@ -1106,91 +1280,82 @@
 
     function animateLoop(now) {
       requestAnimationFrame(animateLoop);
-      const dt = Math.min((now - lastFrameTime) / 1000, 0.05);
+      const dt = Math.min(0.1, (now - lastFrameTime) / 1000);
       lastFrameTime = now;
 
       if (state.mode === 'RACING') {
         updateRacePhysics(dt);
-      } else {
-        menuOrbitAngle += 0.45 * dt;
+      } else if (state.mode === 'MENU') {
+        menuOrbitAngle += 0.5 * dt;
         if (playerCarGroup) {
+          playerCarGroup.rotation.y = menuOrbitAngle;
           playerCarGroup.position.set(0, 0, 0);
-          playerCarGroup.rotation.set(0, 0, 0);
-          playerCarGroup.visible = true;
-          playerWheels.forEach(w => { w.rotation.x -= 2.2 * dt; });
         }
-        if (camera) {
-          camera.position.x = Math.sin(menuOrbitAngle) * 6.8;
-          camera.position.z = Math.cos(menuOrbitAngle) * 6.8;
-          camera.position.y = 2.85;
-          camera.lookAt(0, 0.75, 0);
-        }
+        camera.position.set(Math.sin(menuOrbitAngle * 0.4) * 6, 3.2, Math.cos(menuOrbitAngle * 0.4) * 6);
+        camera.lookAt(0, 0.8, 0);
       }
 
-      if (renderer && scene && camera) {
-        renderer.render(scene, camera);
-      }
+      renderer.render(scene, camera);
     }
 
     function updateHUD() {
-      const level = getSelectedLevel();
       document.getElementById('hud-total-coins').textContent = state.coins.toLocaleString();
-      document.getElementById('hud-race-coins').textContent = `+${state.raceCoins}`;
-      document.getElementById('hud-speed').textContent = Math.round(state.speed);
-      document.getElementById('hud-nitro-fill').style.width = `${Math.round(state.nitro)}%`;
 
-      const pct = Math.min(100, Math.floor((state.distance / level.distance) * 100));
-      document.getElementById('hud-level-badge').textContent = `LVL ${level.id}`;
-      document.getElementById('hud-progress-fill').style.width = `${pct}%`;
-      document.getElementById('hud-progress-text').textContent = `${pct}%`;
+      if (state.mode === 'RACING') {
+        const level = getSelectedLevel();
+        const pct = Math.min(100, Math.max(0, Math.floor((state.distance / level.distance) * 100)));
+        document.getElementById('hud-progress-fill').style.width = `${pct}%`;
+        document.getElementById('hud-progress-text').textContent = `${pct}%`;
+        document.getElementById('hud-level-badge').textContent = `LVL ${level.id}`;
 
-      const heartsEl = document.getElementById('hud-hearts');
-      let heartsHtml = '';
-      for (let i = 0; i < 3; i++) {
-        heartsHtml += i < state.hearts
-          ? '<span class="text-rose-400">&#10084;</span>'
-          : '<span class="text-slate-600">&#10084;</span>';
-      }
-      heartsEl.innerHTML = heartsHtml;
+        const heartsContainer = document.getElementById('hud-hearts');
+        let heartsHtml = '';
+        for (let i = 0; i < 3; i++) {
+          if (i < state.hearts) {
+            heartsHtml += '<span>&#10084;</span>';
+          } else {
+            heartsHtml += '<span class="opacity-30">&#10084;</span>';
+          }
+        }
+        heartsContainer.innerHTML = heartsHtml;
 
-      const shieldTag = document.getElementById('hud-shield-tag');
-      if (state.shieldTimer > 0) {
-        shieldTag.classList.remove('hidden');
-      } else {
-        shieldTag.classList.add('hidden');
+        const shieldTag = document.getElementById('hud-shield-tag');
+        shieldTag.classList.toggle('hidden', state.shieldTimer <= 0);
+
+        document.getElementById('hud-race-coins').textContent = `+${state.raceCoins}`;
+        document.getElementById('hud-speed').textContent = Math.round(state.speed);
+        document.getElementById('hud-nitro-fill').style.width = `${Math.round(state.nitro)}%`;
       }
     }
 
     function renderMainDashboard() {
       const car = getSelectedCar();
       const level = getSelectedLevel();
-      const isUnlocked = state.unlockedCars.includes(car.id);
 
-      document.getElementById('hud-total-coins').textContent = state.coins.toLocaleString();
       document.getElementById('menu-car-name').textContent = car.name;
       document.getElementById('menu-car-desc').textContent = car.desc;
 
-      const badgeEl = document.getElementById('menu-car-badge');
-      const actionBtn = document.getElementById('btn-car-action');
+      const isOwned = state.unlockedCars.includes(car.id);
+      const carBadge = document.getElementById('menu-car-badge');
+      const carActionBtn = document.getElementById('btn-car-action');
 
-      if (isUnlocked) {
-        badgeEl.textContent = 'UNLOCKED';
-        badgeEl.className = 'px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30';
-        actionBtn.textContent = 'Ready to Race';
-        actionBtn.className = 'px-3.5 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 font-bold text-xs cursor-default';
+      if (isOwned) {
+        carBadge.textContent = 'OWNED';
+        carBadge.className = 'px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30';
+        carActionBtn.textContent = (state.selectedCarId === car.id) ? 'Equipped' : 'Equip Car';
+        carActionBtn.className = 'px-3.5 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs transition';
       } else {
-        badgeEl.textContent = `${car.cost} COINS`;
-        badgeEl.className = 'px-2.5 py-1 rounded-lg text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30';
-        const canAfford = state.coins >= car.cost;
-        actionBtn.textContent = `Unlock (${car.cost} Coins)`;
-        actionBtn.className = canAfford
-          ? 'px-3.5 py-1.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-xs transition cursor-pointer'
-          : 'px-3.5 py-1.5 rounded-lg bg-slate-800 text-slate-400 font-bold text-xs border border-slate-700 cursor-pointer';
+        carBadge.textContent = `${car.cost} COINS`;
+        carBadge.className = 'px-2.5 py-1 rounded-lg text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30';
+        carActionBtn.textContent = `Unlock (${car.cost} Coins)`;
+        carActionBtn.className = (state.coins >= car.cost)
+          ? 'px-3.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs transition'
+          : 'px-3.5 py-1.5 rounded-lg bg-slate-800 text-slate-400 font-bold text-xs cursor-not-allowed';
       }
 
       document.getElementById('stat-speed-bar').style.width = `${Math.round((car.maxSpeed / 190) * 100)}%`;
       document.getElementById('stat-handling-bar').style.width = `${Math.round((car.handling / 50) * 100)}%`;
-      document.getElementById('stat-magnet-bar').style.width = `${Math.round((car.magnetRadius / 6.5) * 100)}%`;
+      document.getElementById('stat-magnet-bar').style.width = `${Math.round((car.magnetRadius / 7.0) * 100)}%`;
 
       document.getElementById('menu-level-name').textContent = `${level.id}. ${level.name}`;
       document.getElementById('menu-level-desc').textContent = level.desc;
@@ -1198,17 +1363,39 @@
       document.getElementById('menu-level-mult').textContent = `${level.coinMult}x Coins`;
       document.getElementById('menu-level-traffic').textContent = level.trafficLabel;
 
+      const levelStatus = document.getElementById('menu-level-status');
+      const isLevelUnlocked = level.id <= state.highestUnlockedLevel;
+      if (isLevelUnlocked) {
+        levelStatus.textContent = 'UNLOCKED';
+        levelStatus.className = 'px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-400/30';
+      } else {
+        levelStatus.textContent = `LOCKED (LVL ${level.id - 1})`;
+        levelStatus.className = 'px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-rose-500/20 text-rose-300 border border-rose-400/30';
+      }
+
+      // Quick Pills Carousel around selected level
       const pillsContainer = document.getElementById('menu-level-pills');
       pillsContainer.innerHTML = '';
-      LEVELS.forEach(lvl => {
+      const startLvl = Math.max(1, state.selectedLevelId - 2);
+      const endLvl = Math.min(LEVELS.length, startLvl + 4);
+      for (let lid = startLvl; lid <= endLvl; lid++) {
+        const lvl = LEVELS[lid - 1];
         const active = lvl.id === state.selectedLevelId;
+        const unlocked = lvl.id <= state.highestUnlockedLevel;
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = active
-          ? 'py-2 rounded-xl font-extrabold text-xs bg-sky-400 text-slate-950 shadow-md transition'
-          : 'py-2 rounded-xl font-bold text-xs bg-slate-800/90 hover:bg-slate-700 text-slate-300 border border-slate-700 transition';
-        btn.textContent = `Lvl ${lvl.id}`;
+          ? 'px-3 py-1.5 rounded-xl font-extrabold text-xs bg-sky-400 text-slate-950 shadow-md transition flex items-center gap-1 shrink-0'
+          : (unlocked
+            ? 'px-3 py-1.5 rounded-xl font-bold text-xs bg-slate-800/90 hover:bg-slate-700 text-slate-300 border border-slate-700 transition flex items-center gap-1 shrink-0'
+            : 'px-3 py-1.5 rounded-xl font-bold text-xs bg-slate-900/60 text-slate-500 border border-slate-800 transition flex items-center gap-1 shrink-0 opacity-60');
+        btn.innerHTML = unlocked ? `Lvl ${lvl.id}` : `&#128274; ${lvl.id}`;
         btn.addEventListener('click', () => {
+          if (!unlocked) {
+            playSound('crash');
+            showFloatingPopup(`Complete Stage ${lvl.id - 1} to unlock!`, 'text-rose-400');
+            return;
+          }
           playSound('click');
           state.selectedLevelId = lvl.id;
           saveGameData();
@@ -1217,7 +1404,7 @@
           renderMainDashboard();
         });
         pillsContainer.appendChild(btn);
-      });
+      }
     }
 
     function renderGarageModal() {
@@ -1241,15 +1428,19 @@
                 <span class="w-4 h-4 rounded-full border border-white/40" style="background:${colorHexStr}"></span>
                 <h3 class="font-extrabold text-white text-base">${car.name}</h3>
               </div>
-              <span class="text-[11px] font-bold px-2 py-0.5 rounded ${
+              <span class="px-2 py-0.5 rounded text-[11px] font-bold ${
                 unlocked ? 'bg-emerald-500/20 text-emerald-300' : 'bg-amber-500/20 text-amber-300'
-              }">${unlocked ? 'OWNED' : car.cost + ' COINS'}</span>
+              }">
+                ${unlocked ? 'UNLOCKED' : `${car.cost} COINS`}
+              </span>
             </div>
             <p class="text-xs text-slate-400 mt-1">${car.desc}</p>
           </div>
-          <div class="space-y-1.5 text-[11px] text-slate-300">
-            <div class="flex justify-between"><span>Top Speed</span><span class="font-bold text-amber-300">${car.maxSpeed} km/h</span></div>
-            <div class="flex justify-between"><span>Coin Magnet</span><span class="font-bold text-emerald-300">${car.magnetRadius}m radius</span></div>
+          <div class="space-y-1.5 text-xs text-slate-300">
+            <div class="flex justify-between"><span>Top Speed</span><span class="font-bold text-white">${car.maxSpeed} km/h</span></div>
+            <div class="flex justify-between"><span>Acceleration</span><span class="font-bold text-amber-300">${car.accel}</span></div>
+            <div class="flex justify-between"><span>Handling</span><span class="font-bold text-sky-300">${car.handling}</span></div>
+            <div class="flex justify-between"><span>Coin Magnet</span><span class="font-bold text-emerald-300">${car.magnetRadius}m</span></div>
           </div>
         `;
 
@@ -1258,37 +1449,38 @@
         if (unlocked) {
           btn.textContent = selected ? 'Equipped' : 'Select Car';
           btn.className = selected
-            ? 'w-full py-2 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 font-extrabold text-xs'
-            : 'w-full py-2 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-extrabold text-xs transition';
-        } else {
-          btn.textContent = canAfford ? `Buy for ${car.cost} Coins` : `Need ${car.cost} Coins`;
-          btn.className = canAfford
-            ? 'w-full py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-xs transition'
-            : 'w-full py-2 rounded-xl bg-slate-800 text-slate-500 font-bold text-xs border border-slate-700';
-        }
-
-        btn.addEventListener('click', () => {
-          if (unlocked) {
+            ? 'w-full py-2 rounded-xl bg-slate-700 text-slate-300 font-bold text-xs cursor-default'
+            : 'w-full py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs transition';
+          btn.addEventListener('click', () => {
             playSound('click');
             state.selectedCarId = car.id;
             saveGameData();
             rebuildPlayerCar();
             renderGarageModal();
             renderMainDashboard();
-          } else if (state.coins >= car.cost) {
-            state.coins -= car.cost;
-            state.unlockedCars.push(car.id);
-            state.selectedCarId = car.id;
-            playSound('win');
-            saveGameData();
-            rebuildPlayerCar();
-            renderGarageModal();
-            renderMainDashboard();
-          } else {
-            playSound('crash');
-            showFloatingPopup(`Need ${car.cost - state.coins} more coins!`, 'text-rose-400');
-          }
-        });
+          });
+        } else {
+          btn.textContent = canAfford ? `Buy for ${car.cost} Coins` : `Need ${car.cost - state.coins} More Coins`;
+          btn.className = canAfford
+            ? 'w-full py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs transition'
+            : 'w-full py-2 rounded-xl bg-slate-800 text-slate-500 font-bold text-xs cursor-not-allowed';
+          btn.addEventListener('click', () => {
+            if (state.coins >= car.cost) {
+              state.coins -= car.cost;
+              state.unlockedCars.push(car.id);
+              state.selectedCarId = car.id;
+              saveGameData();
+              playSound('win');
+              showFloatingPopup(`UNLOCKED ${car.name.toUpperCase()}!`, 'text-emerald-300');
+              rebuildPlayerCar();
+              renderGarageModal();
+              renderMainDashboard();
+            } else {
+              playSound('crash');
+              showFloatingPopup(`Need ${car.cost - state.coins} more coins!`, 'text-rose-400');
+            }
+          });
+        }
 
         card.appendChild(btn);
         grid.appendChild(card);
@@ -1297,23 +1489,60 @@
 
     function renderLevelsModal() {
       const grid = document.getElementById('levels-grid');
+      const filterBar = document.getElementById('levels-filter-bar');
+      const countEl = document.getElementById('levels-unlocked-count');
+      if (countEl) countEl.textContent = state.highestUnlockedLevel;
+
+      // Filter Tabs
+      if (filterBar) {
+        filterBar.innerHTML = '';
+        LEVEL_ZONES.forEach((zone, zIdx) => {
+          const tabBtn = document.createElement('button');
+          tabBtn.type = 'button';
+          const isActive = zIdx === activeZoneIndex;
+          tabBtn.className = isActive
+            ? 'px-3 py-1.5 rounded-xl font-black bg-sky-400 text-slate-950 whitespace-nowrap shadow transition'
+            : 'px-3 py-1.5 rounded-xl font-bold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 whitespace-nowrap transition';
+          tabBtn.textContent = zone.name;
+          tabBtn.addEventListener('click', () => {
+            playSound('click');
+            activeZoneIndex = zIdx;
+            renderLevelsModal();
+          });
+          filterBar.appendChild(tabBtn);
+        });
+      }
+
       grid.innerHTML = '';
-      LEVELS.forEach(lvl => {
+      const zone = LEVEL_ZONES[activeZoneIndex] || LEVEL_ZONES[0];
+      const filteredLevels = LEVELS.filter(l => l.id >= zone.range[0] && l.id <= zone.range[1]);
+
+      filteredLevels.forEach(lvl => {
         const selected = state.selectedLevelId === lvl.id;
+        const unlocked = lvl.id <= state.highestUnlockedLevel;
         const skyHexStr = '#' + lvl.skyColor.toString(16).padStart(6, '0');
 
         const card = document.createElement('div');
         card.className = `rounded-2xl p-4 border flex flex-col justify-between gap-3 transition ${
-          selected ? 'bg-slate-800/95 border-sky-400 shadow-lg' : 'bg-slate-900/80 border-slate-700/80'
+          selected
+            ? 'bg-slate-800/95 border-sky-400 shadow-xl ring-2 ring-sky-400/40'
+            : (unlocked
+              ? 'bg-slate-900/80 border-slate-700/80 hover:border-slate-600'
+              : 'bg-slate-950/80 border-slate-850/60 opacity-60 level-locked')
         }`;
 
         card.innerHTML = `
           <div>
             <div class="flex items-center justify-between gap-2">
               <div class="flex items-center gap-2">
-                <span class="w-3.5 h-3.5 rounded-full border border-white/40" style="background:${skyHexStr}"></span>
+                <span class="w-3.5 h-3.5 rounded-full border border-white/40 shrink-0" style="background:${skyHexStr}"></span>
                 <h3 class="font-extrabold text-white text-base">Stage ${lvl.id}: ${lvl.name}</h3>
               </div>
+              <span class="px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider ${
+                unlocked ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-400/30' : 'bg-rose-500/20 text-rose-300 border border-rose-400/30'
+              }">
+                ${unlocked ? 'UNLOCKED' : 'LOCKED'}
+              </span>
             </div>
             <p class="text-xs text-slate-400 mt-1">${lvl.desc}</p>
           </div>
@@ -1326,19 +1555,27 @@
 
         const btn = document.createElement('button');
         btn.type = 'button';
-        btn.textContent = selected ? 'Play Selected Stage' : 'Select & Play Stage';
-        btn.className = selected
-          ? 'w-full py-2 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-extrabold text-xs transition'
-          : 'w-full py-2 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-extrabold text-xs transition';
-
-        btn.addEventListener('click', () => {
-          state.selectedLevelId = lvl.id;
-          saveGameData();
-          applyLevelTheme(lvl);
-          populateInitialScenery();
-          renderMainDashboard();
-          startRace();
-        });
+        if (unlocked) {
+          btn.textContent = selected ? 'Play Selected Stage' : 'Select & Play Stage';
+          btn.className = selected
+            ? 'w-full py-2.5 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-black text-xs transition shadow'
+            : 'w-full py-2.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-black text-xs transition shadow';
+          btn.addEventListener('click', () => {
+            state.selectedLevelId = lvl.id;
+            saveGameData();
+            applyLevelTheme(lvl);
+            populateInitialScenery();
+            renderMainDashboard();
+            startRace();
+          });
+        } else {
+          btn.innerHTML = `&#128274; Complete Stage ${lvl.id - 1} to Unlock`;
+          btn.className = 'w-full py-2.5 rounded-xl bg-slate-800/80 text-slate-500 font-bold text-xs cursor-not-allowed border border-slate-700/60';
+          btn.addEventListener('click', () => {
+            playSound('crash');
+            showFloatingPopup(`Complete Stage ${lvl.id - 1} first!`, 'text-rose-400');
+          });
+        }
 
         card.appendChild(btn);
         grid.appendChild(card);
@@ -1370,15 +1607,15 @@
         badge.textContent = `STAGE ${level.id} COMPLETE`;
         badge.className = 'px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-400/30';
         title.textContent = 'Finish Line Crossed!';
-        sub.textContent = `Includes Stage ${level.id} victory coin bonus!`;
+        sub.textContent = `Stage ${level.id} cleared! Stage ${Math.min(50, level.id + 1)} is now unlocked!`;
         if (level.id < LEVELS.length) {
           btnNext.classList.remove('hidden');
         }
       } else {
-        badge.textContent = 'WRECKED OUT';
+        badge.textContent = 'CRASHED OUT';
         badge.className = 'px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider bg-rose-500/20 text-rose-300 border border-rose-400/30';
-        title.textContent = 'Armor Depleted!';
-        sub.textContent = 'You kept all coins collected during this run.';
+        title.textContent = 'Car Destroyed!';
+        sub.textContent = 'Watch out for track edge barriers and traffic. You keep all collected coins!';
       }
 
       showOverlayPanel('panel-result');
@@ -1401,13 +1638,15 @@
     }
 
     function syncScreenVisibility(forceOverlay = false) {
-      const isRacing = state.mode === 'RACING' && !forceOverlay;
-      document.getElementById('overlay-screen').classList.toggle('hidden', isRacing);
+      const isRacing = (state.mode === 'RACING') && !forceOverlay;
       document.getElementById('hud-race-progress-wrap').classList.toggle('hidden', !isRacing);
       document.getElementById('hud-race-progress-wrap').classList.toggle('flex', isRacing);
       document.getElementById('hud-telemetry').classList.toggle('hidden', !isRacing);
       document.getElementById('hud-controls').classList.toggle('hidden', !isRacing);
       document.getElementById('btn-toggle-pause').classList.toggle('hidden', !isRacing);
+
+      const overlay = document.getElementById('overlay-screen');
+      overlay.classList.toggle('hidden', isRacing);
     }
 
     function bindUIEvents() {
@@ -1421,48 +1660,53 @@
 
       document.getElementById('btn-open-garage').addEventListener('click', () => {
         playSound('click');
-        if (state.mode === 'RACING') state.mode = 'PAUSED';
         renderGarageModal();
         showOverlayPanel('panel-garage');
       });
 
       document.getElementById('btn-close-garage').addEventListener('click', () => {
         playSound('click');
-        state.mode = 'MENU';
         renderMainDashboard();
         showOverlayPanel('panel-main');
       });
 
       document.getElementById('btn-open-levels').addEventListener('click', () => {
         playSound('click');
-        if (state.mode === 'RACING') state.mode = 'PAUSED';
         renderLevelsModal();
         showOverlayPanel('panel-levels');
       });
 
+      const openHubBtn = document.getElementById('btn-open-levels-hub');
+      if (openHubBtn) {
+        openHubBtn.addEventListener('click', () => {
+          playSound('click');
+          renderLevelsModal();
+          showOverlayPanel('panel-levels');
+        });
+      }
+
       document.getElementById('btn-close-levels').addEventListener('click', () => {
         playSound('click');
-        state.mode = 'MENU';
         renderMainDashboard();
         showOverlayPanel('panel-main');
       });
 
       document.getElementById('btn-toggle-pause').addEventListener('click', () => {
-        playSound('click');
         togglePauseRace();
       });
 
       document.getElementById('btn-toggle-sound').addEventListener('click', () => {
+        initAudio();
         state.soundEnabled = !state.soundEnabled;
-        document.getElementById('sound-icon').innerHTML = state.soundEnabled ? '&#128266;' : '&#128263;';
-        if (state.soundEnabled) playSound('click');
+        document.getElementById('sound-icon').textContent = state.soundEnabled ? '\u{1F50A}' : '\u{1F507}';
+        showFloatingPopup(state.soundEnabled ? 'SOUND ON' : 'SOUND MUTED', 'text-slate-300');
       });
 
       document.getElementById('btn-claim-bonus').addEventListener('click', () => {
         state.coins += 100;
         saveGameData();
         playSound('coin');
-        showFloatingPopup('+100 BONUS COINS ADDED!', 'text-amber-300');
+        showFloatingPopup('+100 BONUS COINS!', 'text-amber-300');
         renderMainDashboard();
       });
 
@@ -1483,6 +1727,38 @@
         rebuildPlayerCar();
         renderMainDashboard();
       });
+
+      // Level Prev/Next Steppers on Dashboard
+      const btnPrevLvl = document.getElementById('btn-prev-level');
+      if (btnPrevLvl) {
+        btnPrevLvl.addEventListener('click', () => {
+          if (state.selectedLevelId > 1) {
+            playSound('click');
+            state.selectedLevelId -= 1;
+            saveGameData();
+            applyLevelTheme(getSelectedLevel());
+            populateInitialScenery();
+            renderMainDashboard();
+          }
+        });
+      }
+
+      const btnNextLvlNav = document.getElementById('btn-next-level-nav');
+      if (btnNextLvlNav) {
+        btnNextLvlNav.addEventListener('click', () => {
+          if (state.selectedLevelId < state.highestUnlockedLevel) {
+            playSound('click');
+            state.selectedLevelId += 1;
+            saveGameData();
+            applyLevelTheme(getSelectedLevel());
+            populateInitialScenery();
+            renderMainDashboard();
+          } else if (state.selectedLevelId < LEVELS.length) {
+            playSound('crash');
+            showFloatingPopup(`Complete Stage ${state.selectedLevelId} to unlock next!`, 'text-rose-400');
+          }
+        });
+      }
 
       document.getElementById('btn-car-action').addEventListener('click', () => {
         const car = getSelectedCar();
