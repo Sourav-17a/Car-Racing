@@ -632,75 +632,10 @@
         streetLightPoles.push(stLeft);
       }
 
-      // Overhead Electronic Highway Gantries
-      const gantryPillarGeo = new THREE.BoxGeometry(0.45, 6.8, 0.45);
-      const gantryTrussGeo = new THREE.BoxGeometry(ROAD_WIDTH + 3.2, 0.6, 0.6);
-      const gantryBoardGeo = new THREE.BoxGeometry(9.5, 1.4, 0.35);
-      const trussMat = new THREE.MeshStandardMaterial({ color: 0x475569, roughness: 0.45, metalness: 0.85 });
-      const boardMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.6 });
-      const signTextMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
 
-      for (let gz = 20; gz >= -300; gz -= 110) {
-        const gantry = new THREE.Group();
-        const p1 = new THREE.Mesh(gantryPillarGeo, trussMat);
-        p1.position.set(-ROAD_WIDTH / 2 - 1.2, 3.4, 0);
-        const p2 = new THREE.Mesh(gantryPillarGeo, trussMat);
-        p2.position.set(ROAD_WIDTH / 2 + 1.2, 3.4, 0);
-        const cross = new THREE.Mesh(gantryTrussGeo, trussMat);
-        cross.position.set(0, 6.4, 0);
-        const board = new THREE.Mesh(gantryBoardGeo, boardMat);
-        board.position.set(0, 5.7, -0.2);
-        const matrixLine = new THREE.Mesh(new THREE.BoxGeometry(8.8, 0.18, 0.05), signTextMat);
-        matrixLine.position.set(0, 5.7, -0.4);
-        gantry.add(p1, p2, cross, board, matrixLine);
-        gantry.position.set(0, 0, gz);
-        gantry.traverse(c => { if (c.isMesh) { c.castShadow = true; c.receiveShadow = true; } });
-        scene.add(gantry);
-        highwayGantries.push(gantry);
-      }
     }
 
-    // Aerodynamic Speed Wind Streaks
-    function createSpeedWindStreaks() {
-      if (speedWindLines) scene.remove(speedWindLines);
-      const group = new THREE.Group();
-      const count = 40;
-      const windGeo = new THREE.CylinderGeometry(0.016, 0.016, 3.2, 4);
-      windGeo.rotateX(Math.PI / 2);
-      const windMat = new THREE.MeshBasicMaterial({
-        color: 0x93c5fd,
-        transparent: true,
-        opacity: 0.35
-      });
 
-      for (let i = 0; i < count; i++) {
-        const streak = new THREE.Mesh(windGeo, windMat);
-        streak.position.set(
-          (Math.random() - 0.5) * 11,
-          0.4 + Math.random() * 4.2,
-          -Math.random() * 40 - 2
-        );
-        streak.userData = { speed: 170 + Math.random() * 90 };
-        group.add(streak);
-      }
-      group.visible = false;
-      scene.add(group);
-      speedWindLines = group;
-    }
-
-    function updateSpeedWindStreaks(dt, carSpeed) {
-      if (!speedWindLines || !speedWindLines.visible) return;
-      speedWindLines.position.x = state.playerX * 0.45;
-      const speedFactor = (carSpeed / 100);
-      speedWindLines.children.forEach(streak => {
-        streak.position.z += streak.userData.speed * speedFactor * dt;
-        if (streak.position.z > 8) {
-          streak.position.z = -35 - Math.random() * 20;
-          streak.position.x = (Math.random() - 0.5) * 11;
-          streak.position.y = 0.4 + Math.random() * 4.0;
-        }
-      });
-    }
 
     // Procedural HDR Panoramic Environment Map for Automotive Specular Reflections
     function createProceduralEnvironmentMap(renderer) {
@@ -1024,11 +959,8 @@
         roadReflectors.push(ref1, ref2);
       }
 
-      // Highway Props (Streetlights & Gantries)
+      // Highway Props (Streetlights)
       createHighwayProps();
-
-      // High-Speed Aerodynamic Wind Streaks
-      createSpeedWindStreaks();
 
       // Distant Horizon Mountain Ridges (Left & Right)
       mountainGroup = new THREE.Group();
@@ -1442,26 +1374,8 @@
       contactMesh.position.y = 0.022;
       group.add(contactMesh);
 
-      // Realistic Projector Headlight Cones (Left & Right)
-      const beamGeo = new THREE.ConeGeometry(0.72, 16, 16, 1, true);
-      beamGeo.rotateX(-Math.PI / 2);
-      beamGeo.translate(0, 0, -8);
-      const beamMat = new THREE.MeshBasicMaterial({
-        color: 0xffffff,
-        transparent: true,
-        opacity: 0.16,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
-        side: THREE.DoubleSide
-      });
-      const lightBeamLeft = new THREE.Mesh(beamGeo, beamMat);
-      lightBeamLeft.position.set(-cWidth * 0.35, 0.45, -cLength / 2);
-      const lightBeamRight = new THREE.Mesh(beamGeo, beamMat);
-      lightBeamRight.position.set(cWidth * 0.35, 0.45, -cLength / 2);
-      group.add(lightBeamLeft, lightBeamRight);
-
       if (!isTraffic) {
-        const spot = new THREE.SpotLight(0xfffbeb, 1.6, 50, Math.PI / 7, 0.55, 1.2);
+        const spot = new THREE.SpotLight(0xfffbeb, 1.4, 45, Math.PI / 7, 0.55, 1.2);
         spot.position.set(0, 0.8, -cLength / 2);
         spot.target.position.set(0, 0, -35);
         group.add(spot);
@@ -1470,7 +1384,7 @@
 
       // Real-time Shadow Casting & Receiving on Vehicle
       group.traverse(child => {
-        if (child.isMesh && child !== contactMesh && child !== lightBeamLeft && child !== lightBeamRight) {
+        if (child.isMesh && child !== contactMesh) {
           if (child !== nitroFlameMesh && child !== nitroFlameMesh2 && child !== shieldBubbleMesh) {
             child.castShadow = true;
             child.receiveShadow = true;
@@ -1777,7 +1691,7 @@
       tireSmokeParticles = [];
       frictionSparks.forEach(s => scene.remove(s.mesh));
       frictionSparks = [];
-      if (speedWindLines) speedWindLines.visible = false;
+
       if (finishGateGroup) {
         scene.remove(finishGateGroup);
         finishGateGroup = null;
@@ -2061,14 +1975,7 @@
       updateTireSmoke(dt);
       updateFrictionSparks(dt);
 
-      // High-Speed Aerodynamic Wind Streaks
-      if (speedWindLines) {
-        const showWind = state.speed > 110;
-        speedWindLines.visible = showWind;
-        if (showWind) {
-          updateSpeedWindStreaks(dt, state.speed);
-        }
-      }
+
 
       const speedRatio = Math.min(1.0, state.speed / car.maxSpeed);
       const targetFov = usingNitro ? 84 : (60 + speedRatio * 14);
@@ -2220,10 +2127,7 @@
         if (sl.position.z > 20) sl.position.z -= 280;
       });
 
-      highwayGantries.forEach(g => {
-        g.position.z += forwardStep;
-        if (g.position.z > 25) g.position.z -= 320;
-      });
+
 
       sceneryItems.forEach(prop => {
         prop.position.z += forwardStep;
@@ -2444,8 +2348,7 @@
         document.getElementById('hud-progress-text').textContent = `${pct}%`;
         document.getElementById('hud-level-badge').textContent = `LVL ${level.id}`;
 
-        const pin = document.getElementById('hud-progress-pin');
-        if (pin) pin.style.left = `${pct}%`;
+
 
         const heartsContainer = document.getElementById('hud-hearts');
         let heartsHtml = '';

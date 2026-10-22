@@ -42,13 +42,9 @@
     <!-- Center Race Progress Ribbon (Visible during race) -->
     <div id="hud-race-progress-wrap" class="hidden flex-1 max-w-xs sm:max-w-md mx-auto glass-panel px-3 py-1.5 rounded-2xl items-center gap-2.5 shadow-xl border border-sky-400/20">
       <span id="hud-level-badge" class="text-xs font-black uppercase tracking-wider px-2 py-0.5 rounded-lg bg-sky-500/20 text-sky-300 border border-sky-400/30 whitespace-nowrap">LVL 1</span>
-      <!-- Interactive track line with moving car pin -->
-      <div class="relative flex-1 h-3 bg-slate-900 rounded-full overflow-visible border border-slate-700/80 flex items-center">
+      <!-- Clean track progress bar -->
+      <div class="relative flex-1 h-2.5 bg-slate-900 rounded-full overflow-hidden border border-slate-700/80 flex items-center">
         <div id="hud-progress-fill" class="h-full bg-gradient-to-r from-emerald-400 via-sky-400 to-amber-400 rounded-full transition-all duration-100" style="width: 0%"></div>
-        <!-- Car Pin indicator -->
-        <div id="hud-progress-pin" class="absolute -top-1 transform -translate-x-1/2 transition-all duration-100 text-xs filter drop-shadow(0 0 4px rgba(250, 204, 21, 0.9))" style="left: 0%">
-          &#127950;
-        </div>
       </div>
       <span id="hud-progress-text" class="text-xs font-black text-white tabular-nums w-12 text-right">0%</span>
     </div>
