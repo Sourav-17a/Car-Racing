@@ -16,6 +16,10 @@
   <!-- 3D Viewport Container -->
   <div id="canvas-container"></div>
 
+  <!-- Speed Blur & Nitro Visual Overlays -->
+  <div id="speed-vignette"></div>
+  <div id="nitro-speed-lines"></div>
+
   <!-- Floating Dynamic Feedback Container -->
   <div id="popup-container" class="pointer-events-none fixed inset-x-0 top-24 z-30 flex flex-col items-center gap-1"></div>
 
@@ -35,13 +39,18 @@
       </div>
     </div>
 
-    <!-- Center Race Progress Bar (Visible during race) -->
-    <div id="hud-race-progress-wrap" class="hidden flex-1 max-w-xs sm:max-w-md mx-auto glass-pill px-3 py-1.5 rounded-xl items-center gap-2.5 shadow-lg">
-      <span id="hud-level-badge" class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-400/30 whitespace-nowrap">LVL 1</span>
-      <div class="flex-1 h-2.5 bg-slate-800 rounded-full overflow-hidden border border-slate-700">
-        <div id="hud-progress-fill" class="h-full bg-gradient-to-r from-emerald-400 via-sky-400 to-amber-400 transition-all duration-100" style="width: 0%"></div>
+    <!-- Center Race Progress Ribbon (Visible during race) -->
+    <div id="hud-race-progress-wrap" class="hidden flex-1 max-w-xs sm:max-w-md mx-auto glass-panel px-3 py-1.5 rounded-2xl items-center gap-2.5 shadow-xl border border-sky-400/20">
+      <span id="hud-level-badge" class="text-xs font-black uppercase tracking-wider px-2 py-0.5 rounded-lg bg-sky-500/20 text-sky-300 border border-sky-400/30 whitespace-nowrap">LVL 1</span>
+      <!-- Interactive track line with moving car pin -->
+      <div class="relative flex-1 h-3 bg-slate-900 rounded-full overflow-visible border border-slate-700/80 flex items-center">
+        <div id="hud-progress-fill" class="h-full bg-gradient-to-r from-emerald-400 via-sky-400 to-amber-400 rounded-full transition-all duration-100" style="width: 0%"></div>
+        <!-- Car Pin indicator -->
+        <div id="hud-progress-pin" class="absolute -top-1 transform -translate-x-1/2 transition-all duration-100 text-xs filter drop-shadow(0 0 4px rgba(250, 204, 21, 0.9))" style="left: 0%">
+          &#127950;
+        </div>
       </div>
-      <span id="hud-progress-text" class="text-xs font-bold text-slate-200 tabular-nums w-10 text-right">0%</span>
+      <span id="hud-progress-text" class="text-xs font-black text-white tabular-nums w-12 text-right">0%</span>
     </div>
 
     <!-- Right Quick Actions -->
@@ -66,7 +75,7 @@
   <!-- In-Race Telemetry HUD (Top Sub-bar) -->
   <div id="hud-telemetry" class="hidden fixed top-14 sm:top-16 inset-x-0 z-10 px-3 sm:px-6 flex items-center justify-between pointer-events-none">
     <!-- Left: Hearts / Shield & Race Coins -->
-    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-1.5 sm:gap-3">
+    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-1.5 sm:gap-3 pointer-events-auto">
       <div class="glass-pill px-3 py-1 rounded-xl flex items-center gap-1.5">
         <span class="text-xs text-slate-400 font-semibold uppercase">Armor</span>
         <div id="hud-hearts" class="flex items-center gap-1 text-rose-400 text-sm sm:text-base"></div>
@@ -78,16 +87,45 @@
       </div>
     </div>
 
-    <!-- Right: Speedometer & Nitro Bar -->
-    <div class="flex flex-col items-end gap-1.5">
-      <div class="glass-pill px-3 py-1 rounded-xl flex items-baseline gap-1.5">
-        <span id="hud-speed" class="text-lg sm:text-2xl font-black text-white tabular-nums">0</span>
-        <span class="text-[11px] font-bold text-sky-400 uppercase">KM/H</span>
-      </div>
-      <div class="glass-pill px-2.5 py-1 rounded-xl flex items-center gap-2 w-36 sm:w-44">
-        <span class="text-[10px] font-extrabold uppercase tracking-wider text-cyan-300">NITRO</span>
-        <div class="flex-1 h-2 bg-slate-800 rounded-full overflow-hidden">
-          <div id="hud-nitro-fill" class="h-full bg-gradient-to-r from-cyan-400 to-blue-500 transition-all duration-75" style="width: 100%"></div>
+    <!-- Right: Cyber-Arc Speedometer & Nitro Cluster -->
+    <div class="flex flex-col items-end gap-1 pointer-events-auto">
+      <div class="glass-panel px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-2xl flex items-center gap-2.5 sm:gap-3 shadow-2xl border border-sky-400/30">
+        <!-- Circular Arc Gauge -->
+        <div class="relative w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center shrink-0">
+          <svg class="w-full h-full -rotate-90 transform" viewBox="0 0 100 100">
+            <!-- Background Arc Track -->
+            <circle cx="50" cy="50" r="40" fill="transparent" stroke="rgba(30, 41, 59, 0.85)" stroke-width="7" stroke-dasharray="251.3" stroke-dashoffset="62.8" stroke-linecap="round"/>
+            <!-- Active Speed Arc -->
+            <circle id="hud-speed-arc" class="tachometer-ring transition-all duration-75" cx="50" cy="50" r="40" fill="transparent" stroke="url(#speed-gradient)" stroke-width="7" stroke-dasharray="251.3" stroke-dashoffset="251.3" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="speed-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#38bdf8"/>
+                <stop offset="60%" stop-color="#06b6d4"/>
+                <stop offset="85%" stop-color="#f59e0b"/>
+                <stop offset="100%" stop-color="#ef4444"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+            <span id="hud-gear" class="text-[8px] sm:text-[9px] font-black uppercase text-cyan-300 tracking-wider leading-none">GEAR 1</span>
+            <span id="hud-speed" class="text-base sm:text-xl font-black text-white tabular-nums leading-none tracking-tight my-0.5">0</span>
+            <span class="text-[7px] font-extrabold text-slate-400 tracking-wider leading-none">KM/H</span>
+          </div>
+        </div>
+
+        <!-- Nitro Battery & Lateral G / Status -->
+        <div class="flex flex-col gap-1 w-20 sm:w-24">
+          <div class="flex items-center justify-between text-[9px] font-black uppercase tracking-wider">
+            <span class="text-cyan-300 flex items-center gap-0.5"><span>&#9889;</span>NITRO</span>
+            <span id="hud-nitro-pct" class="text-slate-300">100%</span>
+          </div>
+          <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden p-0.5 border border-cyan-500/30">
+            <div id="hud-nitro-fill" class="h-full bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-500 rounded-full transition-all duration-75 shadow-lg" style="width: 100%"></div>
+          </div>
+          <div class="flex items-center justify-between text-[8px] text-slate-400 font-bold">
+            <span class="text-slate-300">G-FORCE</span>
+            <span id="hud-gforce" class="text-amber-400 font-mono">0.0G</span>
+          </div>
         </div>
       </div>
     </div>

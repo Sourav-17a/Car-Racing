@@ -447,12 +447,22 @@
     let curbTexture = null;
     let contactShadowTexture = null;
     let terrainTexture = null;
+    let envMap = null;
     let roadReflectors = [];
     let streetLightPoles = [];
     let highwayGantries = [];
     let speedWindLines = null;
     let tireSmokeParticles = [];
     let tireSmokeTimer = 0;
+    let frictionSparks = [];
+    let mountainGroup = null;
+    let showroomTurntable = null;
+    let showroomSpotlight = null;
+    let isDraggingCar = false;
+    let dragStartX = 0;
+    let dragStartY = 0;
+    let orbitPitch = 3.2;
+    let nitroShockRings = [];
 
     const ROAD_WIDTH = 14;
     const LANES = [-4.2, 0, 4.2];
@@ -692,6 +702,115 @@
       });
     }
 
+    // Procedural HDR Panoramic Environment Map for Automotive Specular Reflections
+    function createProceduralEnvironmentMap(renderer) {
+      const canvas = document.createElement('canvas');
+      canvas.width = 1024;
+      canvas.height = 512;
+      const ctx = canvas.getContext('2d');
+
+      // 1. Atmosphere Gradient (Zenith to Horizon to Ground)
+      const skyGrad = ctx.createLinearGradient(0, 0, 0, 512);
+      skyGrad.addColorStop(0, '#0369a1');     // Deep sky zenith
+      skyGrad.addColorStop(0.35, '#38bdf8');  // Azure daylight
+      skyGrad.addColorStop(0.48, '#fed7aa');  // Horizon warmth
+      skyGrad.addColorStop(0.52, '#f97316');  // Golden sunset rim
+      skyGrad.addColorStop(0.55, '#1e293b');  // Road & distant ridge
+      skyGrad.addColorStop(0.72, '#0f172a');  // Asphalt tarmac bounce
+      skyGrad.addColorStop(1.0, '#020617');   // Nadir
+      ctx.fillStyle = skyGrad;
+      ctx.fillRect(0, 0, 1024, 512);
+
+      // 2. High-Altitude Atmospheric Clouds
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.22)';
+      for (let c = 0; c < 16; c++) {
+        const cx = (c * 72) % 1024;
+        const cy = 90 + (c % 4) * 22;
+        ctx.beginPath();
+        ctx.arc(cx, cy, 42 + (c % 4) * 12, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(cx + 32, cy + 5, 28 + (c % 3) * 10, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // 3. Radiant Celestial Sun Disc
+      const sunGrad = ctx.createRadialGradient(280, 230, 4, 280, 230, 130);
+      sunGrad.addColorStop(0, '#ffffff');
+      sunGrad.addColorStop(0.18, '#fef08a');
+      sunGrad.addColorStop(0.5, 'rgba(251, 146, 60, 0.55)');
+      sunGrad.addColorStop(1, 'rgba(251, 146, 60, 0)');
+      ctx.fillStyle = sunGrad;
+      ctx.beginPath();
+      ctx.arc(280, 230, 130, 0, Math.PI * 2);
+      ctx.fill();
+
+      // 4. Distant Mountain & City Skyline along Horizon
+      ctx.fillStyle = '#0f172a';
+      ctx.beginPath();
+      ctx.moveTo(0, 275);
+      for (let x = 0; x <= 1024; x += 16) {
+        const h = 265 + Math.sin(x * 0.02) * 12 + Math.cos(x * 0.045) * 8;
+        ctx.lineTo(x, h);
+      }
+      ctx.lineTo(1024, 285);
+      ctx.lineTo(1024, 275);
+      ctx.lineTo(0, 275);
+      ctx.fill();
+
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.mapping = THREE.EquirectangularReflectionMapping;
+      const pmremGen = new THREE.PMREMGenerator(renderer);
+      pmremGen.compileEquirectangularShader();
+      const env = pmremGen.fromEquirectangular(texture).texture;
+      pmremGen.dispose();
+      return env;
+    }
+
+    // Guardrail & Collision Friction Sparks
+    function spawnFrictionSparks(x, y, z, dirX) {
+      const sparkCount = 18;
+      const geo = new THREE.BoxGeometry(0.06, 0.06, 0.18);
+      const mat = new THREE.MeshBasicMaterial({ color: 0xfbbf24 });
+      for (let i = 0; i < sparkCount; i++) {
+        const mesh = new THREE.Mesh(geo, mat);
+        mesh.position.set(
+          x + (Math.random() - 0.5) * 0.25,
+          y + (Math.random() - 0.5) * 0.25,
+          z + (Math.random() - 0.5) * 0.7
+        );
+        mesh.rotation.x = Math.random() * Math.PI;
+        mesh.rotation.y = Math.random() * Math.PI;
+        const vel = new THREE.Vector3(
+          -dirX * (3 + Math.random() * 6),
+          2.5 + Math.random() * 4.5,
+          10 + Math.random() * 16
+        );
+        scene.add(mesh);
+        frictionSparks.push({ mesh, vel, life: 0.35, maxLife: 0.35 });
+      }
+    }
+
+    function updateFrictionSparks(dt) {
+      for (let i = frictionSparks.length - 1; i >= 0; i--) {
+        const s = frictionSparks[i];
+        s.life -= dt;
+        s.mesh.position.addScaledVector(s.vel, dt);
+        s.vel.y -= 22 * dt;
+        if (s.mesh.position.y < 0.02) {
+          s.mesh.position.y = 0.02;
+          s.vel.y = -s.vel.y * 0.45;
+          s.vel.x *= 0.75;
+        }
+        const scale = s.life / s.maxLife;
+        s.mesh.scale.set(scale, scale, scale);
+        if (s.life <= 0) {
+          scene.remove(s.mesh);
+          frictionSparks.splice(i, 1);
+        }
+      }
+    }
+
     // Braking Tire Smoke System
     function spawnTireSmoke(x, y, z) {
       const geo = new THREE.SphereGeometry(0.26, 6, 6);
@@ -757,6 +876,12 @@
       if (!curbTexture) curbTexture = createCurbTexture();
       if (!contactShadowTexture) contactShadowTexture = createContactShadowTexture();
       if (!terrainTexture) terrainTexture = createTerrainTexture();
+
+      // Real-World IBL Specular Reflections for Automotive Clearcoat
+      if (!envMap) {
+        envMap = createProceduralEnvironmentMap(renderer);
+      }
+      scene.environment = envMap;
 
       // Atmospheric Sky & Ground Bounce Lighting
       const hemiLight = new THREE.HemisphereLight(0xe0f2fe, 0x1e293b, 0.72);
@@ -904,6 +1029,52 @@
 
       // High-Speed Aerodynamic Wind Streaks
       createSpeedWindStreaks();
+
+      // Distant Horizon Mountain Ridges (Left & Right)
+      mountainGroup = new THREE.Group();
+      const mountainMat = new THREE.MeshLambertMaterial({ color: 0x1e293b });
+      const mountainGeo = new THREE.ConeGeometry(38, 55, 5);
+      for (let mz = -120; mz >= -380; mz -= 48) {
+        const mLeft = new THREE.Mesh(mountainGeo, mountainMat);
+        mLeft.position.set(-88 - Math.random() * 25, 22, mz);
+        mLeft.scale.set(1.0 + Math.random() * 0.5, 0.8 + Math.random() * 0.6, 1.0 + Math.random() * 0.5);
+        mountainGroup.add(mLeft);
+
+        const mRight = new THREE.Mesh(mountainGeo, mountainMat);
+        mRight.position.set(88 + Math.random() * 25, 22, mz);
+        mRight.scale.set(1.0 + Math.random() * 0.5, 0.8 + Math.random() * 0.6, 1.0 + Math.random() * 0.5);
+        mountainGroup.add(mRight);
+      }
+      scene.add(mountainGroup);
+
+      // Luxury Showroom Turntable Podium
+      showroomTurntable = new THREE.Group();
+      const ttBaseGeo = new THREE.CylinderGeometry(3.6, 3.8, 0.16, 64);
+      const ttBaseMat = new THREE.MeshStandardMaterial({
+        color: 0x181e28,
+        roughness: 0.25,
+        metalness: 0.88
+      });
+      const ttBase = new THREE.Mesh(ttBaseGeo, ttBaseMat);
+      ttBase.position.y = -0.08;
+      ttBase.receiveShadow = true;
+      showroomTurntable.add(ttBase);
+
+      const ttRingGeo = new THREE.TorusGeometry(3.72, 0.035, 12, 64);
+      const ttRingMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
+      const ttRing = new THREE.Mesh(ttRingGeo, ttRingMat);
+      ttRing.rotation.x = Math.PI / 2;
+      ttRing.position.y = 0.01;
+      showroomTurntable.add(ttRing);
+
+      scene.add(showroomTurntable);
+
+      // Studio Spotlight for Showroom
+      showroomSpotlight = new THREE.SpotLight(0xfffbeb, 2.2, 28, Math.PI / 4, 0.7, 1.2);
+      showroomSpotlight.position.set(0, 9, 0);
+      showroomSpotlight.target.position.set(0, 0, 0);
+      scene.add(showroomSpotlight);
+      scene.add(showroomSpotlight.target);
 
       rebuildPlayerCar();
       applyLevelTheme(getSelectedLevel());
@@ -1200,20 +1371,49 @@
         neon.position.y = 0.08;
         group.add(neon);
 
-        // Dual Nitro Thruster Jets
-        const flameGeo = new THREE.ConeGeometry(0.35, 1.9, 8);
+        // Dual Supersonic Nitro Thrusters with Pulsating Shock Diamonds
+        const flameGeo = new THREE.ConeGeometry(0.38, 2.2, 8);
         flameGeo.rotateX(Math.PI / 2);
-        const flameMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
+        const flameMat = new THREE.MeshBasicMaterial({
+          color: 0x00d4ff,
+          transparent: true,
+          opacity: 0.88,
+          blending: THREE.AdditiveBlending
+        });
+
+        const coreGeo = new THREE.ConeGeometry(0.18, 1.5, 8);
+        coreGeo.rotateX(Math.PI / 2);
+        const coreMat = new THREE.MeshBasicMaterial({
+          color: 0xffffff,
+          blending: THREE.AdditiveBlending
+        });
 
         nitroFlameMesh = new THREE.Mesh(flameGeo, flameMat);
-        nitroFlameMesh.position.set(-0.45, 0.26, cLength / 2 + 1.1);
+        nitroFlameMesh.position.set(-0.45, 0.26, cLength / 2 + 1.2);
+        nitroFlameMesh.add(new THREE.Mesh(coreGeo, coreMat));
         nitroFlameMesh.visible = false;
         group.add(nitroFlameMesh);
 
         nitroFlameMesh2 = new THREE.Mesh(flameGeo, flameMat);
-        nitroFlameMesh2.position.set(0.45, 0.26, cLength / 2 + 1.1);
+        nitroFlameMesh2.position.set(0.45, 0.26, cLength / 2 + 1.2);
+        nitroFlameMesh2.add(new THREE.Mesh(coreGeo, coreMat));
         nitroFlameMesh2.visible = false;
         group.add(nitroFlameMesh2);
+
+        // Supersonic Shock Diamond Rings
+        nitroShockRings = [];
+        const ringGeo = new THREE.TorusGeometry(0.24, 0.025, 8, 16);
+        const ringMat = new THREE.MeshBasicMaterial({ color: 0x67e8f9, blending: THREE.AdditiveBlending });
+        [1.6, 2.1].forEach(rz => {
+          const r1 = new THREE.Mesh(ringGeo, ringMat);
+          r1.position.set(-0.45, 0.26, cLength / 2 + rz);
+          r1.visible = false;
+          const r2 = new THREE.Mesh(ringGeo, ringMat);
+          r2.position.set(0.45, 0.26, cLength / 2 + rz);
+          r2.visible = false;
+          group.add(r1, r2);
+          nitroShockRings.push(r1, r2);
+        });
 
         // Shield Bubble
         const bubbleGeo = new THREE.SphereGeometry(2.6, 18, 14);
@@ -1316,6 +1516,9 @@
           dirLight.intensity = 1.35;
           dirLight.color.setHex(0xfff7ed);
         }
+      }
+      if (mountainGroup) {
+        mountainGroup.children.forEach(m => m.material.color.setHex(level.fogColor));
       }
     }
 
@@ -1572,6 +1775,8 @@
       particleBursts = [];
       tireSmokeParticles.forEach(p => scene.remove(p.mesh));
       tireSmokeParticles = [];
+      frictionSparks.forEach(s => scene.remove(s.mesh));
+      frictionSparks = [];
       if (speedWindLines) speedWindLines.visible = false;
       if (finishGateGroup) {
         scene.remove(finishGateGroup);
@@ -1634,6 +1839,47 @@
       bindHoldButton('btn-steer-right', 'right');
       bindHoldButton('btn-brake', 'down');
       bindHoldButton('btn-nitro', 'nitro');
+
+      // Interactive 360 Showroom Turntable Drag Orbit
+      const canvasContainer = document.getElementById('canvas-container');
+      const handleStart = (clientX, clientY) => {
+        if (state.mode === 'MENU') {
+          isDraggingCar = true;
+          dragStartX = clientX;
+          dragStartY = clientY;
+          if (canvasContainer) canvasContainer.classList.add('showroom-grabbable');
+        }
+      };
+      const handleMove = (clientX, clientY) => {
+        if (isDraggingCar && state.mode === 'MENU') {
+          const dx = clientX - dragStartX;
+          const dy = clientY - dragStartY;
+          dragStartX = clientX;
+          dragStartY = clientY;
+          menuOrbitAngle += dx * 0.012;
+          orbitPitch = Math.max(1.8, Math.min(5.5, orbitPitch - dy * 0.012));
+        }
+      };
+      const handleEnd = () => {
+        isDraggingCar = false;
+        if (canvasContainer) canvasContainer.classList.remove('showroom-grabbable');
+      };
+
+      window.addEventListener('mousedown', (e) => {
+        if (e.target.tagName !== 'BUTTON' && !e.target.closest('button')) handleStart(e.clientX, e.clientY);
+      });
+      window.addEventListener('mousemove', (e) => handleMove(e.clientX, e.clientY));
+      window.addEventListener('mouseup', handleEnd);
+
+      window.addEventListener('touchstart', (e) => {
+        if (e.touches.length > 0 && e.target.tagName !== 'BUTTON' && !e.target.closest('button')) {
+          handleStart(e.touches[0].clientX, e.touches[0].clientY);
+        }
+      }, { passive: true });
+      window.addEventListener('touchmove', (e) => {
+        if (e.touches.length > 0) handleMove(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+      window.addEventListener('touchend', handleEnd);
     }
 
     function resetKeys() {
@@ -1682,6 +1928,8 @@
       populateInitialScenery();
 
       state.mode = 'RACING';
+      if (showroomTurntable) showroomTurntable.visible = false;
+      if (showroomSpotlight) showroomSpotlight.visible = false;
       state.distance = 0;
       state.raceCoins = 0;
       state.speed = 35;
@@ -1809,8 +2057,9 @@
         }
       }
 
-      // Update tire smoke particles
+      // Update tire smoke and friction sparks
       updateTireSmoke(dt);
+      updateFrictionSparks(dt);
 
       // High-Speed Aerodynamic Wind Streaks
       if (speedWindLines) {
@@ -1821,18 +2070,28 @@
         }
       }
 
-      const targetFov = usingNitro ? 72 : 60;
-      camera.fov += (targetFov - camera.fov) * 8 * dt;
+      const speedRatio = Math.min(1.0, state.speed / car.maxSpeed);
+      const targetFov = usingNitro ? 84 : (60 + speedRatio * 14);
+      camera.fov += (targetFov - camera.fov) * 7 * dt;
       camera.updateProjectionMatrix();
 
       if (nitroFlameMesh && nitroFlameMesh2) {
         nitroFlameMesh.visible = usingNitro;
         nitroFlameMesh2.visible = usingNitro;
         if (usingNitro) {
-          const flameScale = 0.85 + Math.random() * 0.45;
+          const flameScale = 0.95 + Math.random() * 0.45;
           nitroFlameMesh.scale.z = flameScale;
           nitroFlameMesh2.scale.z = flameScale;
         }
+      }
+      if (nitroShockRings && nitroShockRings.length > 0) {
+        nitroShockRings.forEach((ring, rIdx) => {
+          ring.visible = usingNitro;
+          if (usingNitro) {
+            const scale = 0.85 + Math.sin(performance.now() * 0.03 + rIdx) * 0.25;
+            ring.scale.set(scale, scale, 1);
+          }
+        });
       }
       if (shieldBubbleMesh) {
         shieldBubbleMesh.visible = state.shieldTimer > 0;
@@ -1848,6 +2107,9 @@
       const barrierContactLimit = (ROAD_WIDTH / 2) - 1.10; // ~5.90
       if (Math.abs(state.playerX) >= barrierContactLimit) {
         if (state.speed > 5) {
+          // Continuous dynamic friction sparks along the guardrail
+          const side = Math.sign(state.playerX);
+          spawnFrictionSparks(side * (ROAD_WIDTH / 2 - 0.25), 0.45, 0, side);
           if (state.shieldTimer > 0) {
             playSound('powerup');
             spawnParticleBurst(new THREE.Vector3(Math.sign(state.playerX) * (ROAD_WIDTH / 2 - 0.2), 0.6, 0), 0x22d3ee);
@@ -1928,10 +2190,11 @@
 
       state.distance += forwardStep;
 
-      // Base camera positioning
+      // Base camera positioning with dynamic nitro pull-back
+      const targetCamZ = usingNitro ? 9.85 : 9.2;
       camera.position.x += (state.playerX * 0.55 - camera.position.x) * 7 * dt;
       camera.position.y = 4.15;
-      camera.position.z = 9.2;
+      camera.position.z += (targetCamZ - camera.position.z) * 6 * dt;
 
       // Camera Shake
       if (cameraShake > 0) {
@@ -2148,15 +2411,23 @@
       if (state.mode === 'RACING') {
         updateRacePhysics(dt);
       } else if (state.mode === 'MENU') {
-        menuOrbitAngle += 0.5 * dt;
+        if (!isDraggingCar) {
+          menuOrbitAngle += 0.45 * dt;
+        }
         if (playerCarGroup) {
           playerCarGroup.rotation.y = menuOrbitAngle;
           playerCarGroup.rotation.x = 0;
           playerCarGroup.rotation.z = 0;
           playerCarGroup.position.set(0, 0, 0);
         }
-        camera.position.set(Math.sin(menuOrbitAngle * 0.4) * 6, 3.2, Math.cos(menuOrbitAngle * 0.4) * 6);
-        camera.lookAt(0, 0.8, 0);
+        if (showroomTurntable) {
+          showroomTurntable.rotation.y = menuOrbitAngle * 0.75;
+          showroomTurntable.visible = true;
+        }
+        if (showroomSpotlight) showroomSpotlight.visible = true;
+
+        camera.position.set(Math.sin(menuOrbitAngle * 0.5) * 6.5, orbitPitch, Math.cos(menuOrbitAngle * 0.5) * 6.5);
+        camera.lookAt(0, 0.75, 0);
       }
 
       renderer.render(scene, camera);
@@ -2166,11 +2437,15 @@
       document.getElementById('hud-total-coins').textContent = state.coins.toLocaleString();
 
       if (state.mode === 'RACING') {
+        const car = getSelectedCar();
         const level = getSelectedLevel();
         const pct = Math.min(100, Math.max(0, Math.floor((state.distance / level.distance) * 100)));
         document.getElementById('hud-progress-fill').style.width = `${pct}%`;
         document.getElementById('hud-progress-text').textContent = `${pct}%`;
         document.getElementById('hud-level-badge').textContent = `LVL ${level.id}`;
+
+        const pin = document.getElementById('hud-progress-pin');
+        if (pin) pin.style.left = `${pct}%`;
 
         const heartsContainer = document.getElementById('hud-hearts');
         let heartsHtml = '';
@@ -2189,6 +2464,54 @@
         document.getElementById('hud-race-coins').textContent = `+${state.raceCoins}`;
         document.getElementById('hud-speed').textContent = Math.round(state.speed);
         document.getElementById('hud-nitro-fill').style.width = `${Math.round(state.nitro)}%`;
+
+        const nitroPct = document.getElementById('hud-nitro-pct');
+        if (nitroPct) nitroPct.textContent = `${Math.round(state.nitro)}%`;
+
+        // Cyber-Arc Tachometer Gauge
+        const speedArc = document.getElementById('hud-speed-arc');
+        if (speedArc) {
+          const maxDisplay = 280;
+          const arcCircum = 251.3;
+          const fillFrac = Math.min(1.0, state.speed / maxDisplay);
+          const offset = arcCircum - (188.5 * fillFrac);
+          speedArc.style.strokeDashoffset = `${offset}`;
+          speedArc.classList.toggle('tachometer-ring-red', fillFrac > 0.85);
+        }
+
+        // Virtual Sequential Gear Ratio
+        const gearEl = document.getElementById('hud-gear');
+        if (gearEl) {
+          const ratio = state.speed / car.maxSpeed;
+          let gear = 'GEAR 1';
+          if (ratio > 0.90) gear = 'TOP GEAR';
+          else if (ratio > 0.74) gear = 'GEAR 6';
+          else if (ratio > 0.58) gear = 'GEAR 5';
+          else if (ratio > 0.42) gear = 'GEAR 4';
+          else if (ratio > 0.26) gear = 'GEAR 3';
+          else if (ratio > 0.10) gear = 'GEAR 2';
+          gearEl.textContent = gear;
+        }
+
+        // Real-time Lateral G-Force calculation
+        const gforceEl = document.getElementById('hud-gforce');
+        if (gforceEl) {
+          const steerDir = (keys.right ? 1 : 0) - (keys.left ? 1 : 0);
+          const latG = (Math.abs(steerDir) * (state.speed / 130) * (car.handling / 38)).toFixed(1);
+          gforceEl.textContent = `${latG}G`;
+        }
+
+        // Speed Vignette & Nitro Speed Lines in DOM
+        const vignette = document.getElementById('speed-vignette');
+        if (vignette) {
+          const vigOpacity = Math.max(0, Math.min(0.85, (state.speed - 110) / 150));
+          vignette.style.opacity = `${vigOpacity}`;
+        }
+        const nitroVig = document.getElementById('nitro-speed-lines');
+        if (nitroVig) {
+          const usingNitro = (keys.nitro || keys.up) && state.nitro > 1;
+          nitroVig.style.opacity = usingNitro ? '0.85' : '0';
+        }
       }
     }
 

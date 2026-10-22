@@ -25,17 +25,60 @@ canvas {
   width: 100%;
   height: 100%;
 }
+
+/* Speed Blur & Vignette Overlays */
+#speed-vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  background: radial-gradient(circle at center, transparent 38%, rgba(2, 6, 23, 0.45) 75%, rgba(2, 6, 23, 0.88) 100%);
+  opacity: 0;
+  transition: opacity 0.12s ease-out;
+}
+#nitro-speed-lines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 6;
+  background: radial-gradient(ellipse at center, transparent 32%, rgba(56, 189, 248, 0.16) 70%, rgba(6, 182, 212, 0.4) 100%);
+  opacity: 0;
+  mix-blend-mode: screen;
+  transition: opacity 0.1s ease-out;
+}
+
+/* Modern Glassmorphic Panels */
 .glass-panel {
-  background: rgba(15, 23, 42, 0.86);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
 }
 .glass-pill {
   background: rgba(15, 23, 42, 0.82);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
 }
+
+/* Cyber Dashboard Tachometer */
+.tachometer-ring {
+  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.65));
+}
+.tachometer-ring-red {
+  filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.85));
+}
+
+/* Showroom Grab Cursors */
+.showroom-grabbable {
+  cursor: grab;
+}
+.showroom-grabbable:active {
+  cursor: grabbing;
+}
+
+/* Modern Touch Controls */
 .control-btn {
   touch-action: manipulation;
   transition: transform 0.08s ease, background-color 0.15s ease, box-shadow 0.15s ease;
@@ -44,8 +87,10 @@ canvas {
   transform: scale(0.92);
   background: rgba(56, 189, 248, 0.4) !important;
   border-color: rgba(56, 189, 248, 0.9) !important;
-  box-shadow: 0 0 20px rgba(56, 189, 248, 0.6) !important;
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.65) !important;
 }
+
+/* Popups & Animations */
 @keyframes floatPop {
   0% { opacity: 1; transform: translateY(0) scale(0.9); }
   50% { opacity: 1; transform: translateY(-18px) scale(1.08); }
@@ -54,6 +99,16 @@ canvas {
 .floating-popup {
   animation: floatPop 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+@keyframes nitroPulse {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(34, 211, 238, 0.6)); }
+  50% { filter: drop-shadow(0 0 12px rgba(34, 211, 238, 0.95)); }
+}
+.nitro-active-glow {
+  animation: nitroPulse 0.65s infinite ease-in-out;
+}
+
+/* Scrollbars */
 .custom-scroll::-webkit-scrollbar {
   width: 6px;
   height: 6px;
