@@ -1800,6 +1800,16 @@
           });
         }
 
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', (e) => {
+          if (e.target.tagName === 'BUTTON') return;
+          playSound('click');
+          state.selectedCarId = car.id;
+          rebuildPlayerCar();
+          renderGarageModal();
+          renderMainDashboard();
+        });
+
         card.appendChild(btn);
         grid.appendChild(card);
       });
@@ -1981,6 +1991,15 @@
         renderGarageModal();
         showOverlayPanel('panel-garage');
       });
+
+      const openGarageHub = document.getElementById('btn-open-garage-hub');
+      if (openGarageHub) {
+        openGarageHub.addEventListener('click', () => {
+          playSound('click');
+          renderGarageModal();
+          showOverlayPanel('panel-garage');
+        });
+      }
 
       document.getElementById('btn-close-garage').addEventListener('click', () => {
         playSound('click');
