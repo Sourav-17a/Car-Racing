@@ -1,6 +1,6 @@
 # 🏎️ Nitro Horizon 3D &mdash; Arcade Car Racing Game
 
-A fast-paced, arcade-style 3D car racing game built for the browser using **Three.js**, **Tailwind CSS**, and **Web Audio API**. Dodge traffic, grab spinning coins, collect shields and nitro canisters, unlock high-performance supercars, and race through 50 progressive stages across 10 dynamic environments.
+A fast-paced, arcade-style 3D car racing game built for the browser using **Three.js**, **Tailwind CSS**, and **Web Audio API**. Dodge traffic, grab spinning coins, collect shields and nitro canisters, unlock 10 real-world supercars, and race through 50 progressive stages across 10 dynamic environments.
 
 ---
 
@@ -13,9 +13,27 @@ Play directly in your desktop or mobile browser at:
 
 ## ✨ Features
 
-- **3D Graphics & Physical Guardrails**: Built using Three.js with procedural geometries, dynamic lighting, motion blur particle streams, neon underglow, 3D barrier rails with posts, and camera shake impacts.
+- **10 Real-World Supercars with Progressive Unlocks**:
+  - 🚗 **Suzuki Swift Sport** &bull; *Starter (FREE)* &bull; 125 km/h &bull; Braking: 75 km/s &bull; Lightweight Japanese hot-hatch with quick city handling.
+  - 🏎️ **Honda Civic Type R** &bull; *10,000 Coins* &bull; 140 km/h &bull; Braking: 95 km/s &bull; Track-bred turbo tuner with front splitter & triple center exhaust.
+  - 🚙 **Ford Mustang GT V8** &bull; *25,000 Coins* &bull; 155 km/h &bull; Braking: 115 km/s &bull; American muscle icon packed with a roaring 5.0L Coyote V8 and quad exhausts.
+  - 🚗 **BMW M4 Competition** &bull; *50,000 Coins* &bull; 172 km/h &bull; Braking: 140 km/s &bull; Iconic German coupe with famous double-kidney grille and M carbon brakes.
+  - 🏎️ **Audi R8 V10 Plus** &bull; *90,000 Coins* &bull; 188 km/h &bull; Braking: 165 km/s &bull; Mid-engine howling V10 supercar featuring carbon sideblades & Quattro grip.
+  - 🏁 **Porsche 911 GT3 RS** &bull; *150,000 Coins* &bull; 205 km/h &bull; Braking: 195 km/s &bull; High-downforce track weapon with swan-neck rear wing & carbon ceramics.
+  - ⚡ **Lamborghini Huracán STO** &bull; *230,000 Coins* &bull; 220 km/h &bull; Braking: 225 km/s &bull; Stealth-fighter Italian V10 with roof air scoop & extreme aero.
+  - 🐎 **Ferrari SF90 Stradale** &bull; *330,000 Coins* &bull; 238 km/h &bull; Braking: 255 km/s &bull; 1,000 HP hybrid Italian stallion with F1 nose & instant carbon brakes.
+  - 🚀 **McLaren P1 GTR** &bull; *450,000 Coins* &bull; 252 km/h &bull; Braking: 285 km/s &bull; F1-inspired hypercar with massive carbon rear wing & teardrop canopy.
+  - 👑 **Bugatti Chiron Super Sport** &bull; *600,000 Coins* &bull; 270 km/h &bull; Braking: 320 km/s &bull; Quad-turbo W16 apex king with horseshoe grille, longtail body & 300+ mph stopping power.
+- **Advanced High-Performance Braking System**:
+  - Each car features a dedicated braking power rating (`car.braking`).
+  - High-tier cars with carbon-ceramic brakes slow down significantly faster for aggressive late-braking maneuvers.
+  - Full visual details: visible metallic brake rotor discs and bright Brembo brake calipers behind the alloy wheels, plus illuminated brake lights when decelerating.
+- **Detailed 3D Car Models**:
+  - Real-world signature styling cues: BMW dual-kidney grilles, Bugatti horseshoe grille and C-line curve, Audi carbon side blades, Porsche GT3 RS swan-neck wing, Mustang racing stripes, and custom quad exhausts.
+  - Dual nitro flame exhausts shooting directly from exhaust tips.
+  - Functional side door mirrors, front aero splitters, and rear diffusers.
 - **Realistic Edge & Barrier Crash Detection**:
-  - **Track Edge / Guardrail Collision**: Hitting or grinding against the road guardrail now deals physical damage, slows the car down, bursts sparks, and shakes the camera.
+  - **Track Edge / Guardrail Collision**: Hitting or grinding against the road guardrail deals physical damage, slows the car down, bursts sparks, and shakes the camera.
   - **Full Edge-to-Edge Car Hitbox**: Physical car dimensions, wheels, wings, bumpers, and steering yaw angles are fully detectable &mdash; touching any edge of a traffic car triggers a real collision!
 - **50 Progressive Unlockable Levels**:
   - Complete Level 1 to unlock Level 2, Level 2 to unlock Level 3, all the way to Level 50!
@@ -30,12 +48,6 @@ Play directly in your desktop or mobile browser at:
     8. ⚡ **Electric Thunderstorm** (Levels 36–40, 6,550m – 7,200m)
     9. 🌌 **Cosmic Nebula** (Levels 41–45, 7,400m – 8,250m)
     10. 🏆 **Apex Grand Prix** (Levels 46–50, 8,500m – 10,000m)
-- **5 Unlockable 3D Cars**:
-  - 🚗 **Street Cruiser**: Crimson coupe balanced for effortless handling.
-  - 🏎️ **Drift Viper**: Cyan tuner with razor-sharp lane response.
-  - 🚙 **Desert Titan**: Heavy armored rally beast with strong coin magnet pull.
-  - ⚡ **Cyber Blade**: Futuristic wedge supercar with high-output nitro jets.
-  - 🚀 **Apex Hyperion**: Ultimate hypercar with maximum velocity and magnet reach.
 - **Phone-Ergonomic Two-Thumb Mobile Controls**:
   - **Left side of screen**: Large Steer Left button (◀) & Brake (▼).
   - **Right side of screen**: Nitro boost (⚡) & Large Steer Right button (▶).
@@ -44,7 +56,7 @@ Play directly in your desktop or mobile browser at:
   - 🧲 **Coin Magnet**: Automatically pulls nearby coins towards your vehicle.
   - 🛡️ **Armor Shield**: Absorbs barrier or traffic collisions without taking damage.
   - ⚡ **Nitro Refill**: Instantly tops up your boost meter.
-- **Procedural Sound Engine**: Powered by Web Audio API &mdash; no heavy audio downloads required. Real-time synthesized engine revving, nitro boost whoosh, crash effects, and win chimes.
+- **Procedural Sound Engine**: Powered by Web Audio API &mdash; synthesized engine revving, brake squeal, nitro boost whoosh, crash effects, and win chimes.
 - **Persistent Progress**: Automatically saves your coins, unlocked vehicles, and highest unlocked stage in `localStorage`.
 
 ---
@@ -58,36 +70,6 @@ Play directly in your desktop or mobile browser at:
 | **Nitro Boost** | `Spacebar` or `W` or `Up Arrow (↑)` | **Right side:** Nitro button (⚡) |
 | **Steer Right** | `D` or `Right Arrow (→)` | **Right side:** Right button (▶) |
 | **Pause Game** | `P` | Pause icon (⏸) |
-
-> **Tip:** You can toggle **Easy Cruise Control** on the main dashboard to automatically accelerate so you can focus entirely on steering and dodging traffic.
-
----
-
-## 📂 Project Structure
-
-```text
-Car-Racing/
-├── index.html        # Main HTML markup, HUD overlays, garage & menus
-├── css/
-│   └── style.css     # Glassmorphism UI styles, HUD layouts & animations
-├── js/
-│   └── game.js       # Three.js 3D engine, game loop, physics, sound & logic
-├── .gitignore        # Git ignore file for editor and OS caches
-├── LICENSE           # MIT License
-└── README.md         # Game overview, controls, and deployment instructions
-```
-
----
-
-## 🚀 How to Deploy
-
-### GitHub Pages (Already Configured)
-- Deployed directly from the `main` branch.
-- Play online anytime at: `https://sourav-17a.github.io/Car-Racing/`
-
-### Vercel / Netlify
-- Import this repository into [Vercel](https://vercel.com) or [Netlify](https://netlify.com).
-- Deploys instantly with zero configuration needed.
 
 ---
 

@@ -48,7 +48,7 @@
     <div class="flex items-center gap-1.5 sm:gap-2 pointer-events-auto">
       <button id="btn-open-garage" type="button" class="glass-pill px-2.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-200 hover:bg-slate-800/90 hover:text-amber-300 transition flex items-center gap-1.5 shadow-lg">
         <span>&#128663;</span>
-        <span class="hidden sm:inline">Garage</span>
+        <span class="hidden sm:inline">Garage (10 Cars)</span>
       </button>
       <button id="btn-open-levels" type="button" class="glass-pill px-2.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-200 hover:bg-slate-800/90 hover:text-sky-300 transition flex items-center gap-1.5 shadow-lg">
         <span>&#127937;</span>
@@ -135,14 +135,14 @@
           <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-xs font-bold mb-1">
             <span>3D ARCADE RACING</span>
             <span>&bull;</span>
-            <span>50 PROGRESSIVE LEVELS &amp; 5 CARS</span>
+            <span>10 REAL-WORLD CARS &amp; 50 LEVELS</span>
           </div>
           <h1 class="text-2xl sm:text-4xl font-black tracking-tight text-white">NITRO HORIZON 3D</h1>
-          <p class="text-xs sm:text-sm text-slate-300 mt-0.5">Dodge traffic, conquer 50 unique tracks across 10 biomes, unlock hypercars, and avoid the lethal barriers!</p>
+          <p class="text-xs sm:text-sm text-slate-300 mt-0.5">Race from Suzuki Swift Sport up to BMW M4, Ferrari SF90, and Bugatti Chiron with high-performance brakes!</p>
         </div>
         <div class="flex items-center gap-2 self-start sm:self-center">
           <button id="btn-claim-bonus" type="button" class="px-3 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/40 text-amber-300 text-xs font-bold transition flex items-center gap-1.5 shadow">
-            <span>+100 Free Coins</span>
+            <span>+10,000 Free Coins</span>
           </button>
         </div>
       </div>
@@ -154,8 +154,8 @@
           <div class="flex items-start justify-between gap-2">
             <div>
               <span class="text-[11px] font-bold uppercase tracking-wider text-amber-400">Selected Car</span>
-              <h2 id="menu-car-name" class="text-lg sm:text-xl font-extrabold text-white mt-0.5">Street Cruiser</h2>
-              <p id="menu-car-desc" class="text-xs text-slate-400 mt-0.5">Balanced turbo coupe built for smooth cornering.</p>
+              <h2 id="menu-car-name" class="text-lg sm:text-xl font-extrabold text-white mt-0.5">Suzuki Swift Sport</h2>
+              <p id="menu-car-desc" class="text-xs text-slate-400 mt-0.5">Agile hot-hatch starter car with responsive city handling.</p>
             </div>
             <span id="menu-car-badge" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">OWNED</span>
           </div>
@@ -165,19 +165,25 @@
             <div class="flex items-center gap-2">
               <span class="w-20 text-slate-400 font-medium">Top Speed</span>
               <div class="flex-1 h-2 bg-slate-800 rounded-full overflow-hidden">
-                <div id="stat-speed-bar" class="h-full bg-amber-400 rounded-full" style="width: 60%"></div>
+                <div id="stat-speed-bar" class="h-full bg-amber-400 rounded-full" style="width: 45%"></div>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-20 text-slate-400 font-medium">Braking</span>
+              <div class="flex-1 h-2 bg-slate-800 rounded-full overflow-hidden">
+                <div id="stat-braking-bar" class="h-full bg-rose-400 rounded-full" style="width: 35%"></div>
               </div>
             </div>
             <div class="flex items-center gap-2">
               <span class="w-20 text-slate-400 font-medium">Handling</span>
               <div class="flex-1 h-2 bg-slate-800 rounded-full overflow-hidden">
-                <div id="stat-handling-bar" class="h-full bg-sky-400 rounded-full" style="width: 70%"></div>
+                <div id="stat-handling-bar" class="h-full bg-sky-400 rounded-full" style="width: 60%"></div>
               </div>
             </div>
             <div class="flex items-center gap-2">
               <span class="w-20 text-slate-400 font-medium">Coin Magnet</span>
               <div class="flex-1 h-2 bg-slate-800 rounded-full overflow-hidden">
-                <div id="stat-magnet-bar" class="h-full bg-emerald-400 rounded-full" style="width: 50%"></div>
+                <div id="stat-magnet-bar" class="h-full bg-emerald-400 rounded-full" style="width: 40%"></div>
               </div>
             </div>
           </div>
@@ -235,12 +241,12 @@
       </div>
     </div>
 
-    <!-- 2. GARAGE MODAL PANEL -->
-    <div id="panel-garage" class="hidden glass-panel w-full max-w-4xl rounded-3xl p-5 sm:p-7 shadow-2xl border border-slate-700/80 flex-col gap-4 max-h-[90vh] overflow-y-auto custom-scroll">
+    <!-- 2. GARAGE MODAL PANEL (10 REAL-WORLD CARS) -->
+    <div id="panel-garage" class="hidden glass-panel w-full max-w-5xl rounded-3xl p-5 sm:p-7 shadow-2xl border border-slate-700/80 flex-col gap-4 max-h-[90vh] overflow-y-auto custom-scroll">
       <div class="flex items-center justify-between border-b border-slate-700/70 pb-3">
         <div>
-          <h2 class="text-xl sm:text-2xl font-black text-white">3D CAR GARAGE</h2>
-          <p class="text-xs sm:text-sm text-slate-300">Spend race coins to unlock faster cars with stronger coin magnets.</p>
+          <h2 class="text-xl sm:text-2xl font-black text-white">3D CAR GARAGE (10 REAL-WORLD SUPERCARS)</h2>
+          <p class="text-xs sm:text-sm text-slate-300">Unlock high-performance rides from Swift Sport to Ferrari and Bugatti with superior speed and Brembo braking!</p>
         </div>
         <button id="btn-close-garage" type="button" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-bold transition">
           &larr; Back
@@ -301,7 +307,7 @@
         <button id="btn-resume-race" type="button" class="hidden flex-1 py-3 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-sm transition">
           Resume Race
         </button>
-        <button id="btn-next-level" type="button" class="hidden flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-400 to-sky-400 hover:from-emerald-300 hover:to-sky-300 text-slate-950 font-extrabold text-sm transition">
+        <button id="btn-next-level" type="button" class="hidden flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-400 to-sky-400 hover:from-emerald-300 hover:to-sky-400 text-slate-950 font-extrabold text-sm transition">
           Next Level &rarr;
         </button>
         <button id="btn-retry-race" type="button" class="flex-1 py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-sm border border-slate-600 transition">

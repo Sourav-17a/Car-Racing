@@ -1,73 +1,173 @@
     const CARS = [
       {
-        id: 'cruiser',
-        name: 'Street Cruiser',
-        desc: 'Balanced crimson turbo coupe built for effortless handling.',
+        id: 'swift',
+        name: 'Suzuki Swift Sport',
+        desc: 'Lightweight, agile Japanese hot-hatch with rapid city cornering and responsive disc brakes.',
         cost: 0,
-        bodyColor: 0xef4444,
-        accentColor: 0xfef08a,
+        bodyColor: 0xfacc15,
+        accentColor: 0x0f172a,
+        neonColor: 0x38bdf8,
+        caliperColor: 0xef4444,
+        maxSpeed: 125,
+        accel: 60,
+        braking: 75,
+        handling: 36,
+        magnetRadius: 3.2,
+        style: 'hatchback',
+        brandTag: 'Hot Hatch'
+      },
+      {
+        id: 'civic',
+        name: 'Honda Civic Type R',
+        desc: 'Track-bred turbo tuner with aerodynamic front splitter, triple center exhaust, and Brembo brakes.',
+        cost: 10000,
+        bodyColor: 0xf8fafc,
+        accentColor: 0xdc2626,
         neonColor: 0xf87171,
-        maxSpeed: 115,
-        accel: 58,
-        handling: 32,
-        magnetRadius: 3.0,
-        style: 'coupe'
-      },
-      {
-        id: 'viper',
-        name: 'Drift Viper',
-        desc: 'Agile cyan street tuner with rapid lane response and wide spoiler.',
-        cost: 50,
-        bodyColor: 0x06b6d4,
-        accentColor: 0xf43f5e,
-        neonColor: 0x22d3ee,
-        maxSpeed: 132,
+        caliperColor: 0xdc2626,
+        maxSpeed: 140,
         accel: 68,
+        braking: 95,
         handling: 40,
-        magnetRadius: 3.6,
-        style: 'tuner'
+        magnetRadius: 3.8,
+        style: 'tuner_hatch',
+        brandTag: 'Track Tuner'
       },
       {
-        id: 'titan',
-        name: 'Desert Titan',
-        desc: 'Armored gold-and-onyx rally beast with extra coin magnet pull.',
-        cost: 120,
-        bodyColor: 0xf59e0b,
-        accentColor: 0x1e293b,
-        neonColor: 0xfbbf24,
-        maxSpeed: 145,
-        accel: 74,
-        handling: 35,
-        magnetRadius: 4.5,
-        style: 'muscle'
+        id: 'mustang',
+        name: 'Ford Mustang GT V8',
+        desc: 'American muscle icon packed with a roaring 5.0L Coyote V8, quad exhausts, and heavy-duty stopping power.',
+        cost: 25000,
+        bodyColor: 0x0284c7,
+        accentColor: 0xffffff,
+        neonColor: 0x38bdf8,
+        caliperColor: 0xfacc15,
+        maxSpeed: 155,
+        accel: 76,
+        braking: 115,
+        handling: 38,
+        magnetRadius: 4.4,
+        style: 'muscle_v8',
+        brandTag: 'V8 Muscle'
       },
       {
-        id: 'cyber',
-        name: 'Cyber Blade',
-        desc: 'Futuristic synthwave wedge supercar with high-output nitro jets.',
-        cost: 250,
-        bodyColor: 0xa855f7,
-        accentColor: 0x22d3ee,
-        neonColor: 0xe879f9,
-        maxSpeed: 162,
-        accel: 85,
-        handling: 44,
-        magnetRadius: 5.2,
-        style: 'super'
-      },
-      {
-        id: 'hyperion',
-        name: 'Apex Hyperion',
-        desc: 'Ultimate emerald & gold hypercar with maximum velocity and magnet.',
-        cost: 500,
-        bodyColor: 0x10b981,
-        accentColor: 0xfacc15,
+        id: 'bmw',
+        name: 'BMW M4 Competition',
+        desc: 'Twin-turbo German precision coupe boasting the iconic double-kidney grille, M sport differential, and carbon brakes.',
+        cost: 50000,
+        bodyColor: 0x059669,
+        accentColor: 0x111827,
         neonColor: 0x34d399,
-        maxSpeed: 185,
-        accel: 96,
-        handling: 48,
-        magnetRadius: 6.4,
-        style: 'hyper'
+        caliperColor: 0x0284c7,
+        maxSpeed: 172,
+        accel: 85,
+        braking: 140,
+        handling: 44,
+        magnetRadius: 5.0,
+        style: 'bmw_coupe',
+        brandTag: 'German Precision'
+      },
+      {
+        id: 'audi_r8',
+        name: 'Audi R8 V10 Plus',
+        desc: 'Mid-engine howling V10 supercar featuring signature carbon sideblades, Quattro AWD, and ceramic discs.',
+        cost: 90000,
+        bodyColor: 0x64748b,
+        accentColor: 0xdc2626,
+        neonColor: 0xf87171,
+        caliperColor: 0xdc2626,
+        maxSpeed: 188,
+        accel: 93,
+        braking: 165,
+        handling: 46,
+        magnetRadius: 5.6,
+        style: 'audi_super',
+        brandTag: 'V10 Supercar'
+      },
+      {
+        id: 'porsche',
+        name: 'Porsche 911 GT3 RS',
+        desc: 'Extreme track weapon with giant swan-neck rear wing, fender louvers, and laser-precise carbon ceramics.',
+        cost: 150000,
+        bodyColor: 0x0284c7,
+        accentColor: 0xef4444,
+        neonColor: 0x38bdf8,
+        caliperColor: 0xfacc15,
+        maxSpeed: 205,
+        accel: 102,
+        braking: 195,
+        handling: 50,
+        magnetRadius: 6.2,
+        style: 'gt3_rs',
+        brandTag: 'Track Weapon'
+      },
+      {
+        id: 'lamborghini',
+        name: 'Lamborghini Huracan STO',
+        desc: 'Stealth-fighter Italian V10 dressed in aggressive carbon aero, roof air scoop, and high-G brake calipers.',
+        cost: 230000,
+        bodyColor: 0xf97316,
+        accentColor: 0x0284c7,
+        neonColor: 0xfbbf24,
+        caliperColor: 0xef4444,
+        maxSpeed: 220,
+        accel: 110,
+        braking: 225,
+        handling: 52,
+        magnetRadius: 6.8,
+        style: 'lambo_wedge',
+        brandTag: 'Italian V10'
+      },
+      {
+        id: 'ferrari',
+        name: 'Ferrari SF90 Stradale',
+        desc: '1,000 HP hybrid Italian stallion with twin-turbo V8, F1 aero nose, and instantaneous carbon-ceramic anchors.',
+        cost: 330000,
+        bodyColor: 0xdc2626,
+        accentColor: 0xfacc15,
+        neonColor: 0xef4444,
+        caliperColor: 0xfacc15,
+        maxSpeed: 238,
+        accel: 120,
+        braking: 255,
+        handling: 54,
+        magnetRadius: 7.5,
+        style: 'ferrari_f1',
+        brandTag: 'Hyper Hybrid'
+      },
+      {
+        id: 'mclaren',
+        name: 'McLaren P1 GTR',
+        desc: 'Formula 1 inspired British hypercar equipped with a colossal carbon rear wing, dihedral scoops, and DRS boost.',
+        cost: 450000,
+        bodyColor: 0xeab308,
+        accentColor: 0x18181b,
+        neonColor: 0xfef08a,
+        caliperColor: 0x06b6d4,
+        maxSpeed: 252,
+        accel: 130,
+        braking: 285,
+        handling: 56,
+        magnetRadius: 8.2,
+        style: 'mclaren_aero',
+        brandTag: 'Track Hypercar'
+      },
+      {
+        id: 'bugatti',
+        name: 'Bugatti Chiron Super Sport',
+        desc: 'Quad-turbo W16 king of hypercars with iconic horseshoe grille, aerodynamic longtail, and 300+ mph stopping power.',
+        cost: 600000,
+        bodyColor: 0x090d16,
+        accentColor: 0xf97316,
+        neonColor: 0xf97316,
+        caliperColor: 0xf97316,
+        maxSpeed: 270,
+        accel: 142,
+        braking: 320,
+        handling: 58,
+        magnetRadius: 9.0,
+        style: 'bugatti_longtail',
+        brandTag: 'W16 Apex King'
       }
     ];
 
@@ -162,8 +262,8 @@
 
     const state = {
       coins: 0,
-      unlockedCars: ['cruiser'],
-      selectedCarId: 'cruiser',
+      unlockedCars: ['swift'],
+      selectedCarId: 'swift',
       selectedLevelId: 1,
       highestUnlockedLevel: 1,
       autoAccel: true,
@@ -187,9 +287,18 @@
           const parsed = JSON.parse(raw);
           if (typeof parsed.coins === 'number') state.coins = parsed.coins;
           if (Array.isArray(parsed.unlockedCars) && parsed.unlockedCars.length > 0) {
-            state.unlockedCars = parsed.unlockedCars;
+            // Filter to ensure unlocked cars exist in CARS catalog
+            const valid = parsed.unlockedCars.filter(id => CARS.some(c => c.id === id));
+            if (valid.length > 0) state.unlockedCars = valid;
           }
-          if (parsed.selectedCarId) state.selectedCarId = parsed.selectedCarId;
+          if (!state.unlockedCars.includes('swift')) {
+            state.unlockedCars.unshift('swift');
+          }
+          if (parsed.selectedCarId && CARS.some(c => c.id === parsed.selectedCarId)) {
+            state.selectedCarId = parsed.selectedCarId;
+          } else {
+            state.selectedCarId = state.unlockedCars[0] || 'swift';
+          }
           if (parsed.selectedLevelId) state.selectedLevelId = Math.min(LEVELS.length, Math.max(1, parsed.selectedLevelId));
           if (parsed.highestUnlockedLevel) state.highestUnlockedLevel = Math.min(LEVELS.length, Math.max(1, parsed.highestUnlockedLevel));
         }
@@ -280,6 +389,18 @@
         filter.connect(gain);
         gain.connect(audioCtx.destination);
         noise.start(now);
+      } else if (type === 'brake') {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(320, now);
+        osc.frequency.exponentialRampToValueAtTime(160, now + 0.18);
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.18);
       } else if (type === 'win') {
         const notes = [523.25, 659.25, 783.99, 1046.5];
         notes.forEach((freq, idx) => {
@@ -311,7 +432,8 @@
 
     let scene, camera, renderer;
     let roadMesh, groundMesh, finishGateGroup;
-    let playerCarGroup, playerWheels = [], nitroFlameMesh, shieldBubbleMesh;
+    let playerCarGroup, playerWheels = [], nitroFlameMesh, nitroFlameMesh2, shieldBubbleMesh;
+    let playerBrakeLights = [];
     let laneDashMeshes = [];
     let sceneryItems = [];
     let trafficList = [];
@@ -342,11 +464,11 @@
       renderer.toneMappingExposure = 1.05;
       container.appendChild(renderer.domElement);
 
-      const hemiLight = new THREE.HemisphereLight(0xffffff, 0x334155, 0.75);
+      const hemiLight = new THREE.HemisphereLight(0xffffff, 0x334155, 0.8);
       hemiLight.position.set(0, 50, 0);
       scene.add(hemiLight);
 
-      const dirLight = new THREE.DirectionalLight(0xfffbeb, 1.15);
+      const dirLight = new THREE.DirectionalLight(0xfffbeb, 1.2);
       dirLight.position.set(25, 45, 20);
       scene.add(dirLight);
 
@@ -436,100 +558,269 @@
       renderer.setSize(w, h);
     }
 
+    // High-Detail 3D Car Construction with Aero, Brakes, Calipers, Grilles & Exhausts
     function createCarMesh(carSpec, isTraffic = false) {
       const group = new THREE.Group();
       const wheels = [];
+      const brakeLights = [];
 
-      const bodyMat = new THREE.MeshPhongMaterial({ color: carSpec.bodyColor, shininess: 85 });
-      const accentMat = new THREE.MeshPhongMaterial({ color: carSpec.accentColor, shininess: 60 });
-      const glassMat = new THREE.MeshPhongMaterial({ color: 0x0f172a, shininess: 120 });
-      const wheelMat = new THREE.MeshLambertMaterial({ color: 0x111827 });
-      const rimMat = new THREE.MeshBasicMaterial({ color: 0xe2e8f0 });
+      const bodyMat = new THREE.MeshPhongMaterial({ color: carSpec.bodyColor, shininess: 95 });
+      const accentMat = new THREE.MeshPhongMaterial({ color: carSpec.accentColor, shininess: 70 });
+      const carbonMat = new THREE.MeshPhongMaterial({ color: 0x111827, shininess: 60 });
+      const glassMat = new THREE.MeshPhongMaterial({ color: 0x090d16, shininess: 130, transparent: true, opacity: 0.88 });
+      const tireMat = new THREE.MeshLambertMaterial({ color: 0x141414 });
+      const rimMat = new THREE.MeshPhongMaterial({ color: 0xe2e8f0, shininess: 120 });
+      const rotorMat = new THREE.MeshPhongMaterial({ color: 0x94a3b8, shininess: 100 });
+      const caliperMat = new THREE.MeshPhongMaterial({ color: carSpec.caliperColor || 0xef4444, shininess: 90 });
+      const chromeMat = new THREE.MeshPhongMaterial({ color: 0xf8fafc, shininess: 140 });
 
-      const chassisHeight = carSpec.style === 'muscle' ? 0.68 : 0.52;
-      const chassisGeo = new THREE.BoxGeometry(2.0, chassisHeight, 4.2);
-      const chassis = new THREE.Mesh(chassisGeo, bodyMat);
-      chassis.position.y = 0.58;
-      group.add(chassis);
-
-      const stripeGeo = new THREE.BoxGeometry(0.65, chassisHeight + 0.02, 4.22);
-      const stripe = new THREE.Mesh(stripeGeo, accentMat);
-      stripe.position.y = 0.58;
-      group.add(stripe);
-
-      const cabinWidth = carSpec.style === 'hyper' ? 1.45 : 1.68;
-      const cabinGeo = new THREE.BoxGeometry(cabinWidth, 0.48, 2.0);
-      const cabin = new THREE.Mesh(cabinGeo, glassMat);
-      cabin.position.set(0, 1.02, -0.15);
-      group.add(cabin);
-
-      const roofGeo = new THREE.BoxGeometry(cabinWidth - 0.12, 0.08, 1.5);
-      const roof = new THREE.Mesh(roofGeo, bodyMat);
-      roof.position.set(0, 1.27, -0.15);
-      group.add(roof);
-
-      if (!isTraffic || Math.random() > 0.5) {
-        const wingGeo = new THREE.BoxGeometry(1.95, 0.08, 0.38);
-        const wing = new THREE.Mesh(wingGeo, accentMat);
-        wing.position.set(0, 1.06, 1.85);
-        group.add(wing);
+      // Dimensions based on style
+      let cWidth = 2.05, cLength = 4.25, cHeight = 0.52, cabW = 1.6, cabH = 0.48;
+      if (carSpec.style === 'hatchback') {
+        cWidth = 1.95; cLength = 3.85; cHeight = 0.62; cabW = 1.62; cabH = 0.52;
+      } else if (carSpec.style === 'tuner_hatch') {
+        cWidth = 2.05; cLength = 4.15; cHeight = 0.54; cabW = 1.60; cabH = 0.48;
+      } else if (carSpec.style === 'muscle_v8') {
+        cWidth = 2.15; cLength = 4.35; cHeight = 0.58; cabW = 1.68; cabH = 0.48;
+      } else if (carSpec.style === 'bmw_coupe') {
+        cWidth = 2.08; cLength = 4.28; cHeight = 0.52; cabW = 1.58; cabH = 0.46;
+      } else if (carSpec.style === 'audi_super' || carSpec.style === 'gt3_rs') {
+        cWidth = 2.12; cLength = 4.25; cHeight = 0.48; cabW = 1.50; cabH = 0.44;
+      } else if (carSpec.style === 'lambo_wedge' || carSpec.style === 'ferrari_f1' || carSpec.style === 'mclaren_aero') {
+        cWidth = 2.16; cLength = 4.35; cHeight = 0.45; cabW = 1.45; cabH = 0.42;
+      } else if (carSpec.style === 'bugatti_longtail') {
+        cWidth = 2.22; cLength = 4.55; cHeight = 0.48; cabW = 1.52; cabH = 0.44;
       }
 
-      const headMat = new THREE.MeshBasicMaterial({ color: 0xfef08a });
-      const tailMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
-      const lightGeo = new THREE.BoxGeometry(0.38, 0.16, 0.1);
+      // 1. Lower Chassis & Aerodynamic Floor
+      const chassisGeo = new THREE.BoxGeometry(cWidth, cHeight, cLength);
+      const chassis = new THREE.Mesh(chassisGeo, bodyMat);
+      chassis.position.y = cHeight / 2 + 0.32;
+      group.add(chassis);
 
-      const hlLeft = new THREE.Mesh(lightGeo, headMat);
-      hlLeft.position.set(-0.68, 0.6, -2.11);
-      const hlRight = new THREE.Mesh(lightGeo, headMat);
-      hlRight.position.set(0.68, 0.6, -2.11);
+      // 2. Carbon Front Splitter
+      const splitterGeo = new THREE.BoxGeometry(cWidth + 0.08, 0.08, 0.45);
+      const splitter = new THREE.Mesh(splitterGeo, carbonMat);
+      splitter.position.set(0, 0.22, -cLength / 2 - 0.1);
+      group.add(splitter);
 
-      const tlLeft = new THREE.Mesh(lightGeo, tailMat);
-      tlLeft.position.set(-0.68, 0.62, 2.11);
-      const tlRight = new THREE.Mesh(lightGeo, tailMat);
-      tlRight.position.set(0.68, 0.62, 2.11);
-      group.add(hlLeft, hlRight, tlLeft, tlRight);
+      // 3. Front Grille & Brand Signature
+      if (carSpec.style === 'bmw_coupe') {
+        // Dual Kidney Grille
+        const kidneyGeo = new THREE.BoxGeometry(0.32, 0.28, 0.1);
+        const kLeft = new THREE.Mesh(kidneyGeo, carbonMat);
+        kLeft.position.set(-0.24, 0.55, -cLength / 2 - 0.01);
+        const kRight = new THREE.Mesh(kidneyGeo, carbonMat);
+        kRight.position.set(0.24, 0.55, -cLength / 2 - 0.01);
+        group.add(kLeft, kRight);
+      } else if (carSpec.style === 'bugatti_longtail') {
+        // Horseshoe Grille
+        const archGeo = new THREE.CylinderGeometry(0.32, 0.32, 0.1, 16);
+        const arch = new THREE.Mesh(archGeo, chromeMat);
+        arch.rotation.x = Math.PI / 2;
+        arch.position.set(0, 0.55, -cLength / 2 - 0.01);
+        group.add(arch);
+      } else {
+        // Air Intake Grille
+        const grillGeo = new THREE.BoxGeometry(cWidth * 0.65, 0.22, 0.08);
+        const grill = new THREE.Mesh(grillGeo, carbonMat);
+        grill.position.set(0, 0.45, -cLength / 2 - 0.01);
+        group.add(grill);
+      }
 
-      const wheelGeo = new THREE.CylinderGeometry(0.42, 0.42, 0.34, 16);
-      wheelGeo.rotateZ(Math.PI / 2);
+      // 4. Hood Creases & Air Extractor Vents
+      const ventGeo = new THREE.BoxGeometry(0.35, 0.04, 0.65);
+      const ventL = new THREE.Mesh(ventGeo, carbonMat);
+      ventL.position.set(-0.55, chassis.position.y + cHeight / 2 + 0.02, -cLength * 0.22);
+      const ventR = new THREE.Mesh(ventGeo, carbonMat);
+      ventR.position.set(0.55, chassis.position.y + cHeight / 2 + 0.02, -cLength * 0.22);
+      group.add(ventL, ventR);
+
+      // 5. Cabin Glasshouse & Windshield
+      const cabinGeo = new THREE.BoxGeometry(cabW, cabH, cLength * 0.48);
+      const cabin = new THREE.Mesh(cabinGeo, glassMat);
+      cabin.position.set(0, chassis.position.y + cHeight / 2 + cabH / 2, -0.1);
+      group.add(cabin);
+
+      // Roof Panel
+      const roofGeo = new THREE.BoxGeometry(cabW - 0.12, 0.06, cLength * 0.38);
+      const roof = new THREE.Mesh(roofGeo, bodyMat);
+      roof.position.set(0, cabin.position.y + cabH / 2 + 0.03, -0.1);
+      group.add(roof);
+
+      // 6. Side Mirrors
+      const mirrorGeo = new THREE.BoxGeometry(0.24, 0.12, 0.16);
+      const mirL = new THREE.Mesh(mirrorGeo, bodyMat);
+      mirL.position.set(-cWidth / 2 - 0.12, cabin.position.y, -cLength * 0.18);
+      const mirR = new THREE.Mesh(mirrorGeo, bodyMat);
+      mirR.position.set(cWidth / 2 + 0.12, cabin.position.y, -cLength * 0.18);
+      group.add(mirL, mirR);
+
+      // 7. Signature Styling Elements per Car
+      if (carSpec.style === 'audi_super') {
+        // Audi R8 Carbon Sideblades
+        const bladeGeo = new THREE.BoxGeometry(0.08, cHeight * 0.9, 0.95);
+        const bL = new THREE.Mesh(bladeGeo, carbonMat);
+        bL.position.set(-cWidth / 2 - 0.02, chassis.position.y, 0.4);
+        const bR = new THREE.Mesh(bladeGeo, carbonMat);
+        bR.position.set(cWidth / 2 + 0.02, chassis.position.y, 0.4);
+        group.add(bL, bR);
+      } else if (carSpec.style === 'bugatti_longtail') {
+        // Bugatti C-line Chrome Curve
+        const cRingGeo = new THREE.TorusGeometry(0.75, 0.05, 8, 16, Math.PI * 1.2);
+        const cLeft = new THREE.Mesh(cRingGeo, chromeMat);
+        cLeft.position.set(-cWidth / 2 - 0.02, chassis.position.y + 0.15, 0.1);
+        cLeft.rotation.y = Math.PI / 2;
+        const cRight = new THREE.Mesh(cRingGeo, chromeMat);
+        cRight.position.set(cWidth / 2 + 0.02, chassis.position.y + 0.15, 0.1);
+        cRight.rotation.y = -Math.PI / 2;
+        group.add(cLeft, cRight);
+      } else if (carSpec.style === 'muscle_v8') {
+        // Mustang Center Racing Stripes
+        const stripeGeo = new THREE.BoxGeometry(0.55, cHeight + 0.02, cLength + 0.02);
+        const stripe = new THREE.Mesh(stripeGeo, accentMat);
+        stripe.position.set(0, chassis.position.y, 0);
+        group.add(stripe);
+      }
+
+      // 8. Rear Spoiler / Wing
+      if (carSpec.style === 'gt3_rs') {
+        // High swan-neck GT3 RS wing
+        const uprightGeo = new THREE.BoxGeometry(0.08, 0.65, 0.25);
+        const uL = new THREE.Mesh(uprightGeo, carbonMat);
+        uL.position.set(-0.65, chassis.position.y + cHeight / 2 + 0.32, cLength / 2 - 0.3);
+        const uR = new THREE.Mesh(uprightGeo, carbonMat);
+        uR.position.set(0.65, chassis.position.y + cHeight / 2 + 0.32, cLength / 2 - 0.3);
+        const mainWingGeo = new THREE.BoxGeometry(cWidth + 0.25, 0.08, 0.55);
+        const mainWing = new THREE.Mesh(mainWingGeo, accentMat);
+        mainWing.position.set(0, uL.position.y + 0.34, cLength / 2 - 0.3);
+        group.add(uL, uR, mainWing);
+      } else if (carSpec.style === 'hatchback') {
+        // Roof Hatch Spoiler
+        const hatchWingGeo = new THREE.BoxGeometry(cabW, 0.08, 0.35);
+        const hatchWing = new THREE.Mesh(hatchWingGeo, accentMat);
+        hatchWing.position.set(0, roof.position.y + 0.04, cLength * 0.15);
+        group.add(hatchWing);
+      } else {
+        // Sport Lip or Hypercar Wing
+        const wingW = cWidth * 0.95;
+        const wingGeo = new THREE.BoxGeometry(wingW, 0.08, 0.42);
+        const wing = new THREE.Mesh(wingGeo, accentMat);
+        wing.position.set(0, chassis.position.y + cHeight / 2 + 0.15, cLength / 2 - 0.25);
+        const standL = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.25, 0.15), carbonMat);
+        standL.position.set(-wingW * 0.35, chassis.position.y + cHeight / 2 + 0.06, cLength / 2 - 0.25);
+        const standR = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.25, 0.15), carbonMat);
+        standR.position.set(wingW * 0.35, chassis.position.y + cHeight / 2 + 0.06, cLength / 2 - 0.25);
+        group.add(wing, standL, standR);
+      }
+
+      // 9. Modern Headlights & Taillights
+      const hlGeo = new THREE.BoxGeometry(0.42, 0.15, 0.08);
+      const hlMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+      const hlLeft = new THREE.Mesh(hlGeo, hlMat);
+      hlLeft.position.set(-cWidth * 0.35, chassis.position.y + 0.08, -cLength / 2 - 0.01);
+      const hlRight = new THREE.Mesh(hlGeo, hlMat);
+      hlRight.position.set(cWidth * 0.35, chassis.position.y + 0.08, -cLength / 2 - 0.01);
+      group.add(hlLeft, hlRight);
+
+      // Full LED Taillight Lightbar
+      const tlGeo = new THREE.BoxGeometry(cWidth * 0.88, 0.12, 0.08);
+      const tlMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
+      const tlBar = new THREE.Mesh(tlGeo, tlMat);
+      tlBar.position.set(0, chassis.position.y + 0.08, cLength / 2 + 0.01);
+      group.add(tlBar);
+      brakeLights.push(tlBar);
+
+      // 10. Rear Exhaust Tips & Diffuser
+      const diffGeo = new THREE.BoxGeometry(cWidth * 0.8, 0.15, 0.3);
+      const diff = new THREE.Mesh(diffGeo, carbonMat);
+      diff.position.set(0, 0.22, cLength / 2 - 0.05);
+      group.add(diff);
+
+      const exhaustGeo = new THREE.CylinderGeometry(0.08, 0.08, 0.25, 12);
+      exhaustGeo.rotateX(Math.PI / 2);
+      const ex1 = new THREE.Mesh(exhaustGeo, chromeMat);
+      ex1.position.set(-0.45, 0.26, cLength / 2 + 0.08);
+      const ex2 = new THREE.Mesh(exhaustGeo, chromeMat);
+      ex2.position.set(0.45, 0.26, cLength / 2 + 0.08);
+      group.add(ex1, ex2);
+
+      // 11. Wheels with Rubber Tires, Alloys, Rotor Discs & Brembo Brake Calipers
+      const wheelRadius = 0.42;
+      const wheelWidth = 0.34;
+      const tireGeo = new THREE.CylinderGeometry(wheelRadius, wheelRadius, wheelWidth, 18);
+      tireGeo.rotateZ(Math.PI / 2);
+      const rimGeo = new THREE.CylinderGeometry(wheelRadius * 0.65, wheelRadius * 0.65, wheelWidth + 0.02, 10);
+      rimGeo.rotateZ(Math.PI / 2);
+      const rotorGeo = new THREE.CylinderGeometry(wheelRadius * 0.72, wheelRadius * 0.72, 0.1, 16);
+      rotorGeo.rotateZ(Math.PI / 2);
+      const caliperGeo = new THREE.BoxGeometry(0.12, 0.22, 0.14);
+
+      const halfW = cWidth / 2 + 0.02;
+      const wheelZOffset = cLength * 0.33;
       const wheelCoords = [
-        [-1.02, 0.42, -1.32],
-        [1.02, 0.42, -1.32],
-        [-1.02, 0.42, 1.32],
-        [1.02, 0.42, 1.32]
+        [-halfW, wheelRadius, -wheelZOffset],
+        [halfW, wheelRadius, -wheelZOffset],
+        [-halfW, wheelRadius, wheelZOffset],
+        [halfW, wheelRadius, wheelZOffset]
       ];
-      wheelCoords.forEach(([wx, wy, wz]) => {
-        const wMesh = new THREE.Mesh(wheelGeo, wheelMat);
-        wMesh.position.set(wx, wy, wz);
-        const hubGeo = new THREE.CylinderGeometry(0.22, 0.22, 0.36, 8);
-        hubGeo.rotateZ(Math.PI / 2);
-        const hub = new THREE.Mesh(hubGeo, rimMat);
-        wMesh.add(hub);
-        group.add(wMesh);
-        wheels.push(wMesh);
+
+      wheelCoords.forEach(([wx, wy, wz], wIdx) => {
+        const wheelAssembly = new THREE.Group();
+        wheelAssembly.position.set(wx, wy, wz);
+
+        // Tire
+        const tireMesh = new THREE.Mesh(tireGeo, tireMat);
+        wheelAssembly.add(tireMesh);
+
+        // Rim
+        const rimMesh = new THREE.Mesh(rimGeo, rimMat);
+        wheelAssembly.add(rimMesh);
+
+        // Brake Rotor Disc
+        const rotorMesh = new THREE.Mesh(rotorGeo, rotorMat);
+        rotorMesh.position.x = (wx < 0) ? 0.04 : -0.04;
+        wheelAssembly.add(rotorMesh);
+
+        // Sport Brake Caliper
+        const caliperMesh = new THREE.Mesh(caliperGeo, caliperMat);
+        caliperMesh.position.set((wx < 0) ? 0.04 : -0.04, 0.14, -0.06);
+        wheelAssembly.add(caliperMesh);
+
+        group.add(wheelAssembly);
+        wheels.push(wheelAssembly);
       });
 
+      // 12. Underglow & Nitro Thrusters
       if (!isTraffic) {
-        const neonGeo = new THREE.PlaneGeometry(2.2, 4.3);
+        const neonGeo = new THREE.PlaneGeometry(cWidth + 0.2, cLength + 0.1);
         const neonMat = new THREE.MeshBasicMaterial({
           color: carSpec.neonColor || 0x38bdf8,
           transparent: true,
-          opacity: 0.42
+          opacity: 0.45
         });
         const neon = new THREE.Mesh(neonGeo, neonMat);
         neon.rotation.x = -Math.PI / 2;
         neon.position.y = 0.08;
         group.add(neon);
 
-        const flameGeo = new THREE.ConeGeometry(0.45, 1.8, 8);
+        // Dual Nitro Thruster Jets
+        const flameGeo = new THREE.ConeGeometry(0.35, 1.9, 8);
         flameGeo.rotateX(Math.PI / 2);
         const flameMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
+
         nitroFlameMesh = new THREE.Mesh(flameGeo, flameMat);
-        nitroFlameMesh.position.set(0, 0.55, 2.8);
+        nitroFlameMesh.position.set(-0.45, 0.26, cLength / 2 + 1.1);
         nitroFlameMesh.visible = false;
         group.add(nitroFlameMesh);
 
-        const bubbleGeo = new THREE.SphereGeometry(2.5, 18, 14);
+        nitroFlameMesh2 = new THREE.Mesh(flameGeo, flameMat);
+        nitroFlameMesh2.position.set(0.45, 0.26, cLength / 2 + 1.1);
+        nitroFlameMesh2.visible = false;
+        group.add(nitroFlameMesh2);
+
+        // Shield Bubble
+        const bubbleGeo = new THREE.SphereGeometry(2.6, 18, 14);
         const bubbleMat = new THREE.MeshBasicMaterial({
           color: 0x22d3ee,
           wireframe: true,
@@ -542,7 +833,7 @@
         group.add(shieldBubbleMesh);
       }
 
-      return { group, wheels };
+      return { group, wheels, brakeLights };
     }
 
     function rebuildPlayerCar() {
@@ -550,10 +841,12 @@
         scene.remove(playerCarGroup);
       }
       playerWheels = [];
+      playerBrakeLights = [];
       const spec = getSelectedCar();
       const built = createCarMesh(spec, false);
       playerCarGroup = built.group;
       playerWheels = built.wheels;
+      playerBrakeLights = built.brakeLights;
       playerCarGroup.position.set(state.playerX, 0, 0);
       scene.add(playerCarGroup);
     }
@@ -678,7 +971,6 @@
         ring.position.y = 7.5;
         group.add(obelisk, ring);
       } else {
-        // Default volcano spire
         const spire = new THREE.Mesh(
           new THREE.ConeGeometry(2.1, 6.5, 5),
           new THREE.MeshLambertMaterial({ color: 0x27272a })
@@ -966,7 +1258,8 @@
         if (state.selectedLevelId >= state.highestUnlockedLevel && state.selectedLevelId < LEVELS.length) {
           state.highestUnlockedLevel = state.selectedLevelId + 1;
         }
-        const bonus = Math.round(25 * getSelectedLevel().coinMult);
+        // Generous stage clear coin bonus scaled with level number & multiplier
+        const bonus = Math.round((250 + state.selectedLevelId * 180) * getSelectedLevel().coinMult);
         state.raceCoins += bonus;
         state.coins += bonus;
         saveGameData();
@@ -988,11 +1281,18 @@
       const usingNitro = (keys.nitro || keys.up) && state.nitro > 1;
       const topSpeed = usingNitro ? car.maxSpeed * 1.34 : car.maxSpeed;
 
+      // Real Breaking System: High-tier cars with carbon ceramic brakes stop faster
+      const brakingPower = car.braking || 85;
+
       if (usingNitro) {
         state.speed = Math.min(topSpeed, state.speed + car.accel * 1.45 * dt);
         state.nitro = Math.max(0, state.nitro - 28 * dt);
       } else if (keys.down) {
-        state.speed = Math.max(15, state.speed - 90 * dt);
+        state.speed = Math.max(15, state.speed - brakingPower * dt);
+        if (state.speed > 50 && Math.random() < 0.2) {
+          playSound('brake');
+          spawnParticleBurst(new THREE.Vector3(state.playerX, 0.25, 1.8), 0xf43f5e);
+        }
       } else if (state.autoAccel) {
         if (state.speed < car.maxSpeed) {
           state.speed = Math.min(car.maxSpeed, state.speed + car.accel * 0.85 * dt);
@@ -1011,14 +1311,24 @@
         }
       }
 
+      // Brake light activation
+      if (playerBrakeLights.length > 0) {
+        playerBrakeLights.forEach(bl => {
+          bl.material.color.setHex(keys.down ? 0xff0000 : 0xef4444);
+        });
+      }
+
       const targetFov = usingNitro ? 72 : 60;
       camera.fov += (targetFov - camera.fov) * 8 * dt;
       camera.updateProjectionMatrix();
 
-      if (nitroFlameMesh) {
+      if (nitroFlameMesh && nitroFlameMesh2) {
         nitroFlameMesh.visible = usingNitro;
+        nitroFlameMesh2.visible = usingNitro;
         if (usingNitro) {
-          nitroFlameMesh.scale.z = 0.85 + Math.random() * 0.45;
+          const flameScale = 0.85 + Math.random() * 0.45;
+          nitroFlameMesh.scale.z = flameScale;
+          nitroFlameMesh2.scale.z = flameScale;
         }
       }
       if (shieldBubbleMesh) {
@@ -1028,7 +1338,7 @@
 
       // Steering
       const steerDir = (keys.right ? 1 : 0) - (keys.left ? 1 : 0);
-      const lateralSpeed = (car.handling * 0.35);
+      const lateralSpeed = (car.handling * 0.36);
       state.playerX += steerDir * lateralSpeed * dt;
 
       // Road Edge & Guardrail Detection
@@ -1205,7 +1515,7 @@
       // Traffic Cars Collision Detection (Full Edge Hitbox with Yaw Rotation)
       const trafficForwardSpeed = (car.maxSpeed * level.trafficSpeedRatio) * 0.42;
       const playerAngleY = playerCarGroup ? Math.abs(playerCarGroup.rotation.y) : 0;
-      const effectiveCarWidth = 2.18 + playerAngleY * 1.5; // Accounts for car diagonal bounding width
+      const effectiveCarWidth = 2.18 + playerAngleY * 1.5;
       const effectiveCarLength = 4.25;
 
       for (let i = trafficList.length - 1; i >= 0; i--) {
@@ -1248,7 +1558,7 @@
           }
         }
 
-        // Near-Miss Reward (Only when actually passing close without touching edges)
+        // Near-Miss Reward
         if (!t.passedNear && t.mesh.position.z > 2.0 && dx >= effectiveCarWidth && dx < 3.25) {
           t.passedNear = true;
           state.raceCoins += 3;
@@ -1345,17 +1655,21 @@
         carActionBtn.textContent = (state.selectedCarId === car.id) ? 'Equipped' : 'Equip Car';
         carActionBtn.className = 'px-3.5 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs transition';
       } else {
-        carBadge.textContent = `${car.cost} COINS`;
+        carBadge.textContent = `${car.cost.toLocaleString()} COINS`;
         carBadge.className = 'px-2.5 py-1 rounded-lg text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30';
-        carActionBtn.textContent = `Unlock (${car.cost} Coins)`;
+        carActionBtn.textContent = `Unlock (${car.cost.toLocaleString()} Coins)`;
         carActionBtn.className = (state.coins >= car.cost)
           ? 'px-3.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs transition'
           : 'px-3.5 py-1.5 rounded-lg bg-slate-800 text-slate-400 font-bold text-xs cursor-not-allowed';
       }
 
-      document.getElementById('stat-speed-bar').style.width = `${Math.round((car.maxSpeed / 190) * 100)}%`;
-      document.getElementById('stat-handling-bar').style.width = `${Math.round((car.handling / 50) * 100)}%`;
-      document.getElementById('stat-magnet-bar').style.width = `${Math.round((car.magnetRadius / 7.0) * 100)}%`;
+      document.getElementById('stat-speed-bar').style.width = `${Math.round((car.maxSpeed / 270) * 100)}%`;
+      const brakingBar = document.getElementById('stat-braking-bar');
+      if (brakingBar) {
+        brakingBar.style.width = `${Math.round(((car.braking || 85) / 320) * 100)}%`;
+      }
+      document.getElementById('stat-handling-bar').style.width = `${Math.round((car.handling / 60) * 100)}%`;
+      document.getElementById('stat-magnet-bar').style.width = `${Math.round((car.magnetRadius / 9.0) * 100)}%`;
 
       document.getElementById('menu-level-name').textContent = `${level.id}. ${level.name}`;
       document.getElementById('menu-level-desc').textContent = level.desc;
@@ -1418,27 +1732,31 @@
 
         const card = document.createElement('div');
         card.className = `rounded-2xl p-4 border flex flex-col justify-between gap-3 transition ${
-          selected ? 'bg-slate-800/95 border-amber-400 shadow-lg' : 'bg-slate-900/80 border-slate-700/80'
+          selected ? 'bg-slate-800/95 border-amber-400 shadow-xl ring-2 ring-amber-400/40' : 'bg-slate-900/80 border-slate-700/80'
         }`;
 
         card.innerHTML = `
           <div>
             <div class="flex items-center justify-between gap-2">
               <div class="flex items-center gap-2">
-                <span class="w-4 h-4 rounded-full border border-white/40" style="background:${colorHexStr}"></span>
+                <span class="w-4 h-4 rounded-full border border-white/40 shrink-0" style="background:${colorHexStr}"></span>
                 <h3 class="font-extrabold text-white text-base">${car.name}</h3>
               </div>
-              <span class="px-2 py-0.5 rounded text-[11px] font-bold ${
-                unlocked ? 'bg-emerald-500/20 text-emerald-300' : 'bg-amber-500/20 text-amber-300'
+              <span class="px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider ${
+                unlocked ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-400/30' : 'bg-amber-500/20 text-amber-300 border border-amber-400/30'
               }">
-                ${unlocked ? 'UNLOCKED' : `${car.cost} COINS`}
+                ${unlocked ? 'OWNED' : (car.cost === 0 ? 'FREE' : `${car.cost.toLocaleString()} COINS`)}
               </span>
+            </div>
+            <div class="mt-1 flex items-center gap-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-800 text-sky-300 border border-slate-700">${car.brandTag || 'Supercar'}</span>
             </div>
             <p class="text-xs text-slate-400 mt-1">${car.desc}</p>
           </div>
           <div class="space-y-1.5 text-xs text-slate-300">
             <div class="flex justify-between"><span>Top Speed</span><span class="font-bold text-white">${car.maxSpeed} km/h</span></div>
             <div class="flex justify-between"><span>Acceleration</span><span class="font-bold text-amber-300">${car.accel}</span></div>
+            <div class="flex justify-between"><span>Braking System</span><span class="font-bold text-rose-300">${car.braking} km/s</span></div>
             <div class="flex justify-between"><span>Handling</span><span class="font-bold text-sky-300">${car.handling}</span></div>
             <div class="flex justify-between"><span>Coin Magnet</span><span class="font-bold text-emerald-300">${car.magnetRadius}m</span></div>
           </div>
@@ -1447,10 +1765,10 @@
         const btn = document.createElement('button');
         btn.type = 'button';
         if (unlocked) {
-          btn.textContent = selected ? 'Equipped' : 'Select Car';
+          btn.textContent = selected ? 'Equipped & Ready' : 'Select Car';
           btn.className = selected
-            ? 'w-full py-2 rounded-xl bg-slate-700 text-slate-300 font-bold text-xs cursor-default'
-            : 'w-full py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs transition';
+            ? 'w-full py-2.5 rounded-xl bg-slate-700 text-slate-300 font-bold text-xs cursor-default'
+            : 'w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs transition shadow';
           btn.addEventListener('click', () => {
             playSound('click');
             state.selectedCarId = car.id;
@@ -1460,10 +1778,10 @@
             renderMainDashboard();
           });
         } else {
-          btn.textContent = canAfford ? `Buy for ${car.cost} Coins` : `Need ${car.cost - state.coins} More Coins`;
+          btn.textContent = canAfford ? `Unlock for ${car.cost.toLocaleString()} Coins` : `Need ${(car.cost - state.coins).toLocaleString()} More Coins`;
           btn.className = canAfford
-            ? 'w-full py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs transition'
-            : 'w-full py-2 rounded-xl bg-slate-800 text-slate-500 font-bold text-xs cursor-not-allowed';
+            ? 'w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition shadow'
+            : 'w-full py-2.5 rounded-xl bg-slate-800 text-slate-500 font-bold text-xs cursor-not-allowed border border-slate-700/60';
           btn.addEventListener('click', () => {
             if (state.coins >= car.cost) {
               state.coins -= car.cost;
@@ -1477,7 +1795,7 @@
               renderMainDashboard();
             } else {
               playSound('crash');
-              showFloatingPopup(`Need ${car.cost - state.coins} more coins!`, 'text-rose-400');
+              showFloatingPopup(`Need ${(car.cost - state.coins).toLocaleString()} more coins!`, 'text-rose-400');
             }
           });
         }
@@ -1591,7 +1909,7 @@
       const btnNext = document.getElementById('btn-next-level');
 
       document.getElementById('result-distance').textContent = `${Math.min(level.distance, Math.floor(state.distance)).toLocaleString()}m`;
-      document.getElementById('result-coins').textContent = `+${state.raceCoins}`;
+      document.getElementById('result-coins').textContent = `+${state.raceCoins.toLocaleString()}`;
       document.getElementById('result-bank').textContent = state.coins.toLocaleString();
 
       btnResume.classList.add('hidden');
@@ -1703,10 +2021,10 @@
       });
 
       document.getElementById('btn-claim-bonus').addEventListener('click', () => {
-        state.coins += 100;
+        state.coins += 10000;
         saveGameData();
         playSound('coin');
-        showFloatingPopup('+100 BONUS COINS!', 'text-amber-300');
+        showFloatingPopup('+10,000 BONUS COINS!', 'text-amber-300');
         renderMainDashboard();
       });
 
@@ -1772,7 +2090,7 @@
           renderMainDashboard();
         } else {
           playSound('crash');
-          showFloatingPopup(`Need ${car.cost - state.coins} more coins!`, 'text-rose-400');
+          showFloatingPopup(`Need ${(car.cost - state.coins).toLocaleString()} more coins!`, 'text-rose-400');
         }
       });
 
@@ -1788,7 +2106,7 @@
             state.unlockedCars.push(car.id);
             saveGameData();
           } else {
-            state.selectedCarId = state.unlockedCars[0];
+            state.selectedCarId = state.unlockedCars[0] || 'swift';
             rebuildPlayerCar();
           }
         }
